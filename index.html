@@ -543,7 +543,7 @@ const REL = { 配偶: '配偶', 父母: '子女', 子女: '父母', 兄弟姊妹
 const CLOSED = ['已成交', '售後服務'];
 /* 五階段收單 SOP：每階段的檢核項目、實戰話術與異議處理小抄 */
 const SOP = [
-  { goal: '建立信任，取得保單健診的機會', items: [['s1a', '說明來意：不推商品，先幫忙整理保單'], ['s1b', '了解家庭結構與工作近況'], ['s1c', '記下至少 2 則生活情報'], ['s1d', '取得保單健診同意，約好下次時間']],
+  { goal: '建立信任，取得保單健診的機會', items: [['s1a', '說明來意：不推商品，先幫忙整理保單'], ['s1b', '了解家庭結構與工作近況'], ['s1c', '記下家庭與生活近況'], ['s1d', '取得保單健診同意，約好下次時間']],
     script: '今天不是來推商品的。很多人手上有好幾張保單，卻說不清楚自己保了什麼。我可以免費幫你整理成一張表，看完你自己決定要不要調整。',
     obj: [['我已經有保險了', '太好了，那更值得整理一次。我們只看現在的保障夠不夠用，不一定要買新的。'], ['我朋友就是做保險的', '有熟人照顧很安心。我這邊只是提供第二意見，整理好的表你也可以拿給他看。'], ['最近很忙', '了解。你把保單拍照傳給我，我整理好再約 20 分鐘跟你看結果就好。']] },
   { goal: '整理保障現況，讓客戶自己看見缺口', items: [['s2a', '收齊既有保單或保單明細'], ['s2b', '填入六大保障的現有與建議額度'], ['s2c', '確認預算範圍與優先順序'], ['s2d', '用簡報檢視說明健診結果']],
@@ -827,7 +827,7 @@ function homeView() {
   if (!cs.length) return `<div class="welcome">
     <div class="eyebrow">Lvli</div>
     <h1>每位客戶，都是一份會長大的履歷</h1>
-    <p>每位客戶一個專屬資料夾：關鍵日期、生活情報、保單缺口與每一次拜訪對話，全部收在同一頁。資料只存在這台裝置的瀏覽器裡，記得定期備份。</p>
+    <p>每位客戶一個專屬資料夾：關鍵日期、關係連結、保單缺口與每一次拜訪對話，全部收在同一頁。資料只存在這台裝置的瀏覽器裡，記得定期備份。</p>
     <div class="row" style="justify-content:center;gap:10px">
       <button class="btn primary" data-act="new-client">＋ 建立第一位客戶</button>
       <button class="btn" data-act="demo">載入範例看看</button>
@@ -929,7 +929,7 @@ function ring(n, goal) {
 function warmCandidates(rec) {
   const t = today(), out = [];
   state.prospects.filter(p => !p.clientId && p.status === 'todo' && (p.grade === 'A' || p.grade === 'B') && !rec.warm.includes('p' + p.id))
-    .sort((a, b) => a.grade.localeCompare(b.grade)).forEach(p => out.push({ kind: 'p', id: p.id, name: p.name, why: `名單 ${p.grade} 級・${GRADE_LABEL[p.grade]}` }));
+    .sort((a, b) => a.grade.localeCompare(b.grade)).forEach(p => out.push({ kind: 'p', id: p.id, name: p.name, why: `名單 ${p.grade} 級` }));
   state.clients.filter(c => ['A', 'B'].includes(c.grade || 'B') && !rec.warm.includes(c.id)).map(c => { const lc = lastContact(c); return { c, d: lc ? diffDays(t, parseD(lc)) : 999 }; })
     .filter(x => x.d >= 30).sort((a, b) => b.d - a.d).forEach(({ c, d }) => out.push({ kind: 'c', id: c.id, name: c.name, why: d === 999 ? '還沒有聯繫紀錄' : `已 ${d} 天沒聯繫` }));
   return out.slice(0, 5);
@@ -976,7 +976,6 @@ function searchView() {
     chk('姓名', c.name); chk('稱呼', c.nickname); chk('電話', c.phone); chk('LINE', c.line); chk('Email', c.email); chk('職業', c.occupation); chk('地址', c.address); chk('轉介紹人', c.referrer);
     chk('標籤', c.tags.map(x => '#' + x).join(' ')); chk('階段', c.stage);
     c.family.forEach(f => chk('家人', `${f.rel} ${f.name} ${f.note || ''}`));
-    c.memos.forEach(m => chk('生活情報', m.text));
     COVER.forEach(([k, n]) => chk('保障・' + n, c.coverage[k]?.note));
     c.policies.forEach(p => chk('既有保單', `${p.company} ${p.name} ${p.kind || ''} ${p.note || ''}`));
     c.proposals.forEach(p => chk('提案 ' + fmtD(p.date), `${p.kind} ${p.version || ''} ${p.content || ''} ${p.product || ''}`));
@@ -997,8 +996,7 @@ function searchView() {
 /* ========== prospect list（列名單） ========== */
 const PSTAT = { todo: '待聯繫', tried: '已聯繫', booked: '已約訪', pass: '暫不考慮' };
 const GRADES = ['A', 'B', 'C', 'D'];
-const GRADE_LABEL = { A: '馬上約', B: '先暖身', C: '放著養', D: '先隱藏' };
-const GRADE_TIP = 'A 馬上約｜B 先暖身｜C 放著養｜D 先隱藏（點擊切換）';
+const GRADE_TIP = '分級 A / B / C / D（點擊切換）';
 const KNOWN = ['1 年內', '1–3 年', '3–10 年', '10 年以上'];
 let pui = { status: '', grade: 'AB', tag: '', src: TAGS[1], g: 'B' };
 let tri = { done: { A: 0, B: 0, C: 0, D: 0 } };
@@ -1045,7 +1043,7 @@ function listView() {
       <input name="name" placeholder="輸入姓名，按 Enter 加入名單" autocomplete="off" required>
       <input name="rel" placeholder="關係 / 怎麼認識（大學同學、前同事）" autocomplete="off">
       <select name="tag">${allTags.map(t => `<option ${t === pui.src ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
-      <select name="grade" title="${GRADE_TIP}">${GRADES.map(g => `<option value="${g}" ${g === pui.g ? 'selected' : ''}>${g}・${GRADE_LABEL[g]}</option>`).join('')}</select>
+      <select name="grade" title="${GRADE_TIP}">${GRADES.map(g => `<option value="${g}" ${g === pui.g ? 'selected' : ''}>${g}</option>`).join('')}</select>
       <button class="btn primary">加入</button>
       <div class="hint">連續輸入不用動手指，來源與分級會沿用上一筆。一次有幾十、上百人？用下方「批次貼上」再閃卡分流。</div>
     </form>
@@ -1053,7 +1051,7 @@ function listView() {
 
   <section class="sec">
     <div class="filters">
-      ${[['AB', 'A + B 級'], ...GRADES.map(g => [g, `${g}・${GRADE_LABEL[g]}`]), ['', '全部']].map(([g, l]) => `<button class="fchip ${pui.grade === g ? 'on' : ''}" data-act="p-fgrade" data-v="${g}">${l}</button>`).join('')}
+      ${[['AB', 'A + B 級'], ...GRADES.map(g => [g, `${g} 級`]), ['', '全部']].map(([g, l]) => `<button class="fchip ${pui.grade === g ? 'on' : ''}" data-act="p-fgrade" data-v="${g}">${l}</button>`).join('')}
       <span style="width:8px"></span>
       ${allTags.map(t => `<button class="fchip ${pui.tag === t ? 'on' : ''}" data-act="p-ftag" data-v="${esc(t)}">#${esc(t)}</button>`).join('')}
     </div>
@@ -1065,15 +1063,15 @@ function newProspect(o) { return { id: uid(), name: '', rel: '', phone: '', note
 function convertProspect(p) {
   const c = blankClient();
   Object.assign(c, { name: p.name, phone: p.phone || '', grade: GRADES.includes(p.grade) ? p.grade : 'B', tags: [...(p.tags || [])], stage: STAGES[0] });
-  const memo = [p.rel, p.note].filter(Boolean).join('\n');
-  if (memo) c.memos.push({ id: uid(), text: memo, color: 0 });
+  const memo = [p.rel, p.known ? '認識 ' + p.known : '', p.note].filter(Boolean).join('\n');
+  if (memo) c.logs.push({ id: uid(), type: 'note', at: nowLocal(), content: '從名單建檔：' + memo, pain: '', next: null });
   const r = p.referrerId && getC(p.referrerId); if (r) { addLink(c, '轉介紹人', r); if (!c.tags.includes('轉介紹')) c.tags.push('轉介紹'); }
   state.clients.push(c); p.clientId = c.id; save();
   location.hash = '#c-' + c.id; toast(`已為「${p.name}」建立客戶資料夾`);
 }
 function prospectForm(p) {
   const spec = [{ k: 'name', label: '姓名', req: true }, { k: 'phone', label: '電話', type: 'tel' }, { k: 'rel', label: '關係 / 怎麼認識', full: true },
-    { k: 'grade', label: '分級', type: 'select', options: GRADES.map(g => [g, `${g}・${GRADE_LABEL[g]}`]) }, { k: 'known', label: '認識多久', type: 'select', options: ['', ...KNOWN] }, { k: 'status', label: '狀態', type: 'select', options: Object.entries(PSTAT) },
+    { k: 'grade', label: '分級', type: 'select', options: GRADES }, { k: 'known', label: '認識多久', type: 'select', options: ['', ...KNOWN] }, { k: 'status', label: '狀態', type: 'select', options: Object.entries(PSTAT) },
     { k: 'tagsText', label: '來源標籤（逗號分隔）', full: true },
     { k: 'referrerId', label: '轉介紹人（系統內客戶）', type: 'select', full: true, options: [['', '—'], ...state.clients.slice().sort(byName).map(o => [o.id, o.name])] }, { k: 'note', label: '備註', type: 'textarea', full: true }];
   modal({ title: '編輯名單', body: `<div class="fgrid">${fieldsHTML(spec, { ...p, tagsText: (p.tags || []).join(', ') })}</div>`,
@@ -1109,7 +1107,7 @@ function triageView() {
   const q = triQueue(), p = q[0], did = Object.values(tri.done).reduce((a, b) => a + b, 0), total = q.length + did;
   if (!p) return `<div class="tri"><div class="crumb"><a class="btn ghost sm" href="#list">← 回名單</a></div>
     <div class="card flash" style="text-align:center"><div class="eyebrow">閃卡分流</div><div class="fname">${did ? '分流完成' : '沒有待分流的名單'}</div>
-    ${did ? `<div class="tsum">${GRADES.map(g => `<div><b class="num">${tri.done[g]}</b><span>${g}・${GRADE_LABEL[g]}</span></div>`).join('')}</div>` : '<p class="muted">在名單頁按「批次貼上」，貼上一串名字就能開始。</p>'}
+    ${did ? `<div class="tsum">${GRADES.map(g => `<div><b class="num">${tri.done[g]}</b><span>${g} 級</span></div>`).join('')}</div>` : '<p class="muted">在名單頁按「批次貼上」，貼上一串名字就能開始。</p>'}
     <a class="btn primary" href="#list">回名單</a></div></div>`;
   const tags = [...new Set([...TAGS, ...state.prospects.flatMap(x => x.tags || [])])];
   return `<div class="tri">
@@ -1121,7 +1119,7 @@ function triageView() {
       <input id="triRel" class="trirel" value="${esc(p.rel || '')}" placeholder="怎麼認識？（可留空）" autocomplete="off">
       <div class="trirow"><span>認識多久</span>${KNOWN.map(k => `<button class="fchip ${p.known === k ? 'on' : ''}" data-act="tri-known" data-v="${k}">${k}</button>`).join('')}</div>
       <div class="trirow"><span>來源</span>${tags.map(t => `<button class="fchip ${(p.tags || []).includes(t) ? 'on' : ''}" data-act="tri-src" data-v="${esc(t)}">#${esc(t)}</button>`).join('')}</div>
-      <div class="gbtns">${GRADES.map((g, i) => `<button class="gbtn g${g}" data-act="tri-grade" data-v="${g}"><kbd>${i + 1}</kbd><b>${g}</b><span>${GRADE_LABEL[g]}</span></button>`).join('')}</div>
+      <div class="gbtns">${GRADES.map((g, i) => `<button class="gbtn g${g}" data-act="tri-grade" data-v="${g}"><kbd>${i + 1}</kbd><b>${g}</b></button>`).join('')}</div>
       <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn sm ghost" data-act="tri-skip">略過 (S)</button><span class="muted" style="font-size:12.5px">鍵盤 1 / 2 / 3 / 4 直接分級</span></div>
     </div></div>`;
 }
@@ -1184,13 +1182,6 @@ function clientView(c) {
 
       ${linksCard(c)}
 
-      <div class="card">
-        <div class="card-h"><h3>生活情報便利貼</h3><span class="sp"></span><button class="iconbtn" data-act="add-memo" data-c="${c.id}">＋ 貼一張</button></div>
-        ${c.memos.length ? `<div class="memos">${c.memos.map((m, i) => `<div class="memo-wrap">
-          <div class="memo c${(m.color ?? i) % 5}" contenteditable="plaintext-only" data-memo="${m.id}" data-c="${c.id}">${esc(m.text)}</div>
-          <button class="iconbtn del" data-act="del-memo" data-c="${c.id}" data-m="${m.id}" title="撕掉">×</button></div>`).join('')}</div>`
-          : '<div class="empty">禁忌、飲品偏好、最近換工作、小孩剛出生… 拜訪前看一眼就能開啟有溫度的對話。</div>'}
-      </div>
 
       <div class="card">
         ${covBlock(c)}
@@ -1332,7 +1323,7 @@ function logHTML(c, l) {
   return `<div class="ev t-${l.type}">
     <div class="d"><b>${d.getMonth() + 1}/${d.getDate()}</b><small>週${WD[d.getDay()]}・${pad(d.getHours())}:${pad(d.getMinutes())}</small></div>
     <div class="b">
-      <div class="h"><span class="ty">${LOGTYPES[l.type] || ''}</span><span class="sp"></span><button class="iconbtn" data-act="line-recap" data-c="${c.id}" data-l="${l.id}">LINE 會後整理</button><button class="iconbtn" data-act="edit-log" data-c="${c.id}" data-l="${l.id}">編輯</button></div>
+      <div class="h"><span class="ty">${LOGTYPES[l.type] || (l.type === 'note' ? '建檔備註' : '')}</span><span class="sp"></span>${l.type === 'note' ? '' : `<button class="iconbtn" data-act="line-recap" data-c="${c.id}" data-l="${l.id}">LINE 會後整理</button>`}<button class="iconbtn" data-act="edit-log" data-c="${c.id}" data-l="${l.id}">編輯</button></div>
       ${l.content ? `<div class="txt">${esc(l.content)}</div>` : ''}
       ${pains.length ? `<div class="pain">${pains.map(p => `<div>${esc(p)}</div>`).join('')}</div>` : ''}
       ${l.next && l.next.date ? `<div class="nx ${l.next.done ? 'done' : ''}"><input type="checkbox" class="check" data-act="toggle-next" data-c="${c.id}" data-l="${l.id}" ${l.next.done ? 'checked' : ''}>
@@ -1397,7 +1388,7 @@ const CLIENT_SPEC = [
   { k: 'phone', label: '電話', type: 'tel' }, { k: 'line', label: 'LINE ID / 名稱' },
   { k: 'email', label: 'Email', type: 'email' }, { k: 'referrer', label: '轉介紹人（系統外）' },
   { k: 'occupation', label: '職業 / 公司', ph: '竹科工程師' }, { k: 'occClass', label: '職業等級', type: 'select', options: [['', '—'], ...[1, 2, 3, 4, 5, 6].map(n => [String(n), `第 ${n} 類`])] },
-  { k: 'grade', label: '分級', type: 'select', options: GRADES.map(g => [g, `${g}・${GRADE_LABEL[g]}`]) },
+  { k: 'grade', label: '分級', type: 'select', options: GRADES },
   { k: 'address', label: '地址', full: true }
 ];
 function clientForm(c) {
@@ -1464,7 +1455,7 @@ async function exportExcel() {
   const C = state.clients;
   const sheets = {
     '客戶': C.map(c => { const k = keyDates(c); return { 姓名: c.name, 稱呼: c.nickname, 分級: c.grade || 'B', SOP完成項: Object.keys(c.sop || {}).length, 性別: c.gender, 生日: c.birthday, 實歲: k?.age ?? '', 保險年齡: k?.insAge ?? '', 電話: c.phone, LINE: c.line, Email: c.email, 職業: c.occupation, 職業等級: c.occClass, 地址: c.address, 轉介紹人: c.referrer, 標籤: c.tags.join('、'), 跟進溫度: c.stage,
-      家庭成員: c.family.map(f => `${f.rel}${f.name}${f.birthday ? '(' + f.birthday + ')' : ''}`).join('；'), 生活情報: c.memos.map(m => m.text).join('；'),
+      家庭成員: c.family.map(f => `${f.rel}${f.name}${f.birthday ? '(' + f.birthday + ')' : ''}`).join('；'),
       關係連結: c.links.map(l => `${l.rel}：${getC(l.to)?.name || ''}`).join('、'),
       ...Object.fromEntries(COVER.map(([kk, n, u]) => { const x = covInfo(c.coverage[kk]); return [n, [CSTAT[x.s], x.target > 0 ? `${fmtN(x.have || 0)}/${fmtN(x.target)}${u}` : x.have != null ? `${fmtN(x.have)}${u}` : '', c.coverage[kk]?.note].filter(Boolean).join('：')]; })) }; }),
     '拜訪日誌': C.flatMap(c => [...c.logs].sort((a, b) => b.at.localeCompare(a.at)).map(l => ({ 客戶: c.name, 時間: l.at.replace('T', ' '), 形式: LOGTYPES[l.type], 對話紀錄: l.content, 痛點: l.pain, 下次日期: l.next?.date || '', 下次目的: l.next?.purpose || '', 已完成: l.next ? (l.next.done ? '是' : '否') : '' }))),
@@ -1524,7 +1515,6 @@ function demo() {
   const at = (days, h = 14) => `${off(days)}T${pad(h)}:30`;
   const a = Object.assign(blankClient(), { name: '陳美玲', nickname: '美玲姐', gender: '女', birthday: off(12, 38), phone: '0912-345-678', line: 'meiling.chen', occupation: '國小老師', occClass: '1', grade: 'A', tags: ['緣故'], stage: '建議書討論',
     family: [{ id: uid(), rel: '配偶', name: '林志明', birthday: off(-200, 40), note: '工程師' }, { id: uid(), rel: '長女', name: '林小晴', birthday: off(-90, 6) }],
-    memos: [{ id: uid(), text: '拿鐵去冰、不加糖', color: 0 }, { id: uid(), text: '週三下午沒課，比較好約', color: 1 }, { id: uid(), text: '婆婆去年癌症住院，對癌症險很有感', color: 2 }],
     coverage: { life: { have: '100', target: '500', note: '僅公保' }, acc: { have: '100', target: '100' }, med: { have: '0', target: '20', note: '舊醫療只有日額，無實支' }, ci: { have: '0', target: '50' }, cancer: { have: '10', target: '50', note: '一次金 10 萬偏低' }, ltc: { have: '0', target: '3' }, hosp: { s: 'full', have: '2000' } },
     policies: [{ id: uid(), company: '某人壽', name: '終身醫療', kind: '主約', premium: '18600', start: off(-3650), note: '日額 2000，無實支實付' }],
     proposals: [{ id: uid(), date: off(-20), kind: '保單健診', version: '', result: 'open', content: '缺實支與重大傷病，壽險額度僅公保' }, { id: uid(), date: off(-5), kind: '建議書', version: 'v1 預算 3 萬', result: 'open', content: '實支 20 萬＋重大傷病 50 萬' }],
@@ -1532,7 +1522,6 @@ function demo() {
       { id: uid(), type: 'line', at: at(-2, 21), content: '她說先生覺得保費有點高，想看精簡版。', pain: '預算上限約年繳 2.5 萬', next: { date: off(0), purpose: '提供精簡版建議書 v2', done: false } }] });
   const b = Object.assign(blankClient(), { name: '王大明', nickname: '王哥', gender: '男', birthday: off(-165, 41), phone: '0988-111-222', occupation: '科技業主管', occClass: '1', grade: 'A', tags: ['轉介紹', '職域'], stage: '保單健診中',
     family: [{ id: uid(), rel: '配偶', name: '張雅婷' }, { id: uid(), rel: '長子', name: '王小宇', birthday: off(-30, 1), note: '剛滿週歲' }],
-    memos: [{ id: uid(), text: '房貸剛下來 1,200 萬', color: 3 }, { id: uid(), text: '不喝咖啡，喝無糖綠茶', color: 4 }],
     coverage: { life: { have: '300', target: '1500', note: '只有團險 3 倍年薪，房貸 1,200 萬' }, acc: { have: '100', target: '300' }, med: { have: '5', target: '30' } },
     logs: [{ id: uid(), type: 'call', at: at(-1, 12), content: '美玲轉介紹，電話破冰。剛升主管、小孩剛滿週歲。', pain: '房貸剛下來需要壽險保障\n離職後團險就沒了', next: { date: off(3), purpose: '面談做保單健診', done: false } }] });
   const c = Object.assign(blankClient(), { name: '李淑芬', gender: '女', birthday: off(-400, 55), phone: '02-2345-6789', occupation: '自營早餐店', occClass: '2', tags: ['陌生開發'], stage: '售後服務',
@@ -1571,7 +1560,7 @@ document.addEventListener('click', async e => {
       save(); render(); toast('暖身聯繫 +1'); break;
     }
     case 'f-cd': ui.showCD = !ui.showCD; render(); break;
-    case 'c-grade': c.grade = GRADES[(GRADES.indexOf(c.grade || 'B') + 1) % 4]; touch(c); render(); toast(`分級：${c.grade}・${GRADE_LABEL[c.grade]}`); break;
+    case 'c-grade': c.grade = GRADES[(GRADES.indexOf(c.grade || 'B') + 1) % 4]; touch(c); render(); toast(`分級：${c.grade}`); break;
     case 'sop-view': sopView = +el.dataset.v; render(); break;
     case 'sop-item': { c.sop = c.sop || {}; if (el.checked) { c.sop[el.dataset.i] = ymd(today()); mark('sop', c.id); } else delete c.sop[el.dataset.i]; touch(c); render(); break; }
     case 'sop-next': { const i = STAGES.indexOf(c.stage); c.stage = STAGES[Math.min(4, i + 1)]; sopView = null; mark('sop', c.id); touch(c); render(); toast('進入 ' + c.stage); break; }
