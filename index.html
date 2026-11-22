@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F8F6F2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>客戶卷宗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F8F6F2; --card:#FFFFFF; --line:#E8E2D7; --line2:#D8CFBF;
+  --ink:#2A2723; --ink2:#55504A; --muted:#8C857A; --faint:#B9B2A6;
+  --accent:#9A7A4C; --accent-soft:#F3ECE0;
+  --warn:#B0533B; --warn-soft:#F8E9E4;
+  --gap:#B9832A; --gap-soft:#F8EFDD;
+  --ok:#5C7A57; --ok-soft:#E9F0E6;
+  --blue:#56708A; --blue-soft:#E7EDF3;
+  --serif:"Noto Serif TC","Songti TC",serif;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.serif{font-family:var(--serif)}
+.muted{color:var(--muted)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+@media(max-width:600px){.wrap{padding:0 16px}}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(248,246,242,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.brand{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.08em;text-decoration:none;white-space:nowrap}
+.brand small{font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:.2em;color:var(--muted);margin-left:8px;text-transform:uppercase}
+.search{flex:1;position:relative;max-width:520px;margin-left:auto}
+.search input{width:100%;height:40px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:0 16px 0 38px;outline:none;transition:border-color .2s}
+.search input:focus{border-color:var(--accent)}
+.search svg{position:absolute;left:14px;top:12px;width:16px;height:16px;color:var(--muted)}
+.topbtns{display:flex;gap:8px}
+@media(max-width:720px){
+  .top .wrap{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;gap:10px}
+  .brand small{display:none}
+  .search{order:3;flex-basis:100%;max-width:none}
+  .topbtns{margin-left:auto}
+}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line2);background:var(--card);cursor:pointer;font-size:14px;white-space:nowrap;transition:all .15s;text-decoration:none}
+.btn:hover{border-color:var(--ink2)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.primary:hover{background:#000}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.ghost:hover{background:var(--accent-soft)}
+.btn.sm{height:30px;padding:0 11px;font-size:13px}
+.btn.danger{color:var(--warn)}
+.iconbtn{border:none;background:none;cursor:pointer;color:var(--muted);padding:4px 6px;border-radius:6px;font-size:13px}
+.iconbtn:hover{color:var(--ink);background:var(--accent-soft)}
+
+/* generic */
+main{padding:28px 0 80px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.sec{margin-top:36px}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.sec-h h2{font-family:var(--serif);font-weight:600;font-size:19px;margin:0;letter-spacing:.04em}
+.sec-h .count{font-size:13px;color:var(--muted)}
+.sec-h .sp{flex:1}
+.card-h{display:flex;align-items:center;gap:10px;margin:-2px 0 14px}
+.card-h h3{font-family:var(--serif);font-weight:600;font-size:16px;margin:0;letter-spacing:.04em}
+.card-h .sp{flex:1}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+.empty{color:var(--faint);font-size:14px;padding:6px 0}
+.chip{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;border:1px solid var(--line);background:var(--card);color:var(--ink2);white-space:nowrap}
+.chip.tag{background:var(--accent-soft);border-color:transparent;color:#7A5F38}
+.stage{border-color:transparent}
+.st-0{background:var(--blue-soft);color:var(--blue)}
+.st-1{background:var(--gap-soft);color:#94671C}
+.st-2{background:#F1E6EE;color:#865872}
+.st-3{background:var(--ok-soft);color:var(--ok)}
+.st-4{background:#ECEAE6;color:var(--ink2)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+mark{background:#F4E3B8;color:inherit;border-radius:3px;padding:0 1px}
+hr.thin{border:none;border-top:1px solid var(--line);margin:16px 0}
+
+/* home */
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:30px;margin:4px 0 0;letter-spacing:.06em}
+.hero .date{font-family:var(--serif);color:var(--ink2);font-size:15px}
+.stats{display:flex;gap:28px}
+.stats div{text-align:right}
+.stats b{display:block;font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.2}
+.stats span{font-size:12px;color:var(--muted)}
+.nudge{margin-top:20px;display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px dashed var(--line2);border-radius:var(--r);font-size:14px;color:var(--ink2)}
+.nudge .sp{flex:1}
+
+.focus{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,1fr);gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.focus::-webkit-scrollbar{height:6px}.focus::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px}
+.fcard{scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;cursor:pointer;text-decoration:none;display:block;transition:border-color .15s;position:relative}
+.fcard:hover{border-color:var(--line2)}
+.fcard .k{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.fcard .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.fcard.k-ins .dot{background:var(--warn)}
+.fcard .nm{font-family:var(--serif);font-weight:600;font-size:18px;margin:6px 0 2px}
+.fcard .desc{font-size:13px;color:var(--ink2)}
+.fcard .days{position:absolute;right:16px;top:14px;text-align:right;font-family:var(--serif)}
+.fcard .days b{font-size:26px;font-weight:600;line-height:1}
+.fcard .days small{display:block;font-size:11px;color:var(--muted);font-family:var(--sans)}
+
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.cols2{grid-template-columns:1fr}}
+.todo{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.todo:first-child{border-top:none;padding-top:0}
+.todo .when{width:62px;flex:none;font-family:var(--serif);font-size:14px;line-height:1.35}
+.todo .when small{display:block;font-family:var(--sans);font-size:11px;color:var(--muted)}
+.todo .when.over{color:var(--warn)}
+.todo .body{flex:1;min-width:0}
+.todo .who{font-family:var(--serif);font-weight:600;text-decoration:none}
+.todo .what{font-size:14px;color:var(--ink2)}
+.check{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:1px solid var(--line2);border-radius:50%;flex:none;cursor:pointer;margin:2px 0 0;background:var(--card);display:grid;place-items:center}
+.check:checked{background:var(--ok);border-color:var(--ok)}
+.check:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+
+.bday{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);text-decoration:none}
+.bday:first-child{border-top:none;padding-top:0}
+.bday .d{font-family:var(--serif);font-size:20px;width:44px;text-align:center;line-height:1.1}
+.bday .d small{display:block;font-size:11px;color:var(--muted);font-family:var(--sans)}
+.bday .n{flex:1;font-family:var(--serif);font-weight:600}
+.bday .n span{font-family:var(--sans);font-weight:400;font-size:13px;color:var(--muted);margin-left:6px}
+.bday.past{opacity:.5}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:14px}
+.fchip{height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:13px;color:var(--ink2)}
+.fchip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.filters select{height:30px;border:1px solid var(--line);border-radius:999px;background:var(--card);padding:0 10px;font-size:13px;margin-left:auto}
+.clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s}
+.ccard:hover{border-color:var(--line2);transform:translateY(-1px)}
+.ccard .t{display:flex;align-items:baseline;gap:8px}
+.ccard .t b{font-family:var(--serif);font-weight:600;font-size:18px}
+.ccard .t span{font-size:13px;color:var(--muted)}
+.ccard .t .chip{margin-left:auto}
+.ccard .meta{font-size:12.5px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+.ccard .nx{font-size:13px;color:var(--ink2);border-top:1px solid var(--line);padding-top:8px;margin-top:auto}
+
+.welcome{text-align:center;padding:72px 20px}
+.welcome h1{font-family:var(--serif);font-weight:600;font-size:28px;letter-spacing:.08em;margin:10px 0}
+.welcome p{color:var(--ink2);max-width:460px;margin:0 auto 24px}
+
+/* search */
+.sres{display:flex;flex-direction:column;gap:12px}
+.sitem{display:block;text-decoration:none}
+.sitem .nm{font-family:var(--serif);font-weight:600;font-size:17px}
+.sitem .hit{font-size:13.5px;color:var(--ink2);margin-top:6px;display:flex;gap:10px}
+.sitem .hit em{font-style:normal;color:var(--muted);flex:none;width:110px;font-size:12px;padding-top:1px}
+
+/* dossier */
+.crumb{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.crumb .sp{flex:1}
+.dhead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.dhead h1{font-family:var(--serif);font-weight:700;font-size:34px;margin:0;letter-spacing:.06em;line-height:1.25}
+.dhead h1 small{font-weight:500;font-size:16px;color:var(--muted);margin-left:10px;letter-spacing:.02em}
+.dhead .contact{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink2);margin-top:10px}
+.dhead .contact a{text-decoration:none;border-bottom:1px solid var(--line2)}
+.stagesel{appearance:none;-webkit-appearance:none;border:none;height:26px;padding:0 26px 0 12px;border-radius:999px;font-size:12.5px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.nextbar{margin-top:18px;padding:12px 16px;border-left:2px solid var(--accent);background:var(--card);border-radius:0 var(--r) var(--r) 0;font-size:14px;display:flex;gap:10px;align-items:center;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nextbar.over{border-left-color:var(--warn)}
+.nextbar b{font-family:var(--serif)}
+
+.kd{display:grid;grid-template-columns:repeat(4,1fr);margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.kd > div{padding:16px 18px;border-left:1px solid var(--line)}
+.kd > div:first-child{border-left:none}
+.kd .l{font-size:12px;color:var(--muted);letter-spacing:.08em}
+.kd .v{font-family:var(--serif);font-weight:600;font-size:28px;line-height:1.25}
+.kd .v small{font-size:14px;font-weight:500;margin-left:2px}
+.kd .s{font-size:12px;color:var(--ink2)}
+.kd .hot .v{color:var(--warn)}
+.kd.none{display:block;padding:16px 18px;color:var(--muted);font-size:14px}
+@media(max-width:700px){.kd{grid-template-columns:1fr 1fr}.kd > div:nth-child(3){border-left:none}.kd > div:nth-child(n+3){border-top:1px solid var(--line)}}
+
+.dgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:20px;margin-top:20px;align-items:start}
+.dgrid > div{display:flex;flex-direction:column;gap:20px;min-width:0}
+@media(max-width:900px){.dgrid{grid-template-columns:1fr}}
+
+.info{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14px;margin:0}
+.info dt{color:var(--muted)}
+.info dd{margin:0}
+
+.fam{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);cursor:pointer}
+.fam:first-of-type{border-top:none}
+.fam .rel{width:52px;flex:none;font-size:12px;color:var(--muted)}
+.fam .nm{font-family:var(--serif);font-weight:600}
+.fam .ex{font-size:13px;color:var(--muted);margin-left:auto;text-align:right}
+
+.memos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.memo{position:relative;border-radius:6px;padding:12px 14px 14px;font-size:14px;line-height:1.6;min-height:84px;outline:none;white-space:pre-wrap;word-break:break-word;border:1px solid transparent;transition:border-color .15s, box-shadow .15s}
+.memo:focus{border-color:var(--line2);box-shadow:0 2px 10px rgba(80,60,30,.06)}
+.memo:empty::before{content:"點此輸入…";color:var(--faint)}
+.memo.c0{background:#FBF5E6}.memo.c1{background:#F1F4EC}.memo.c2{background:#F6EFEF}.memo.c3{background:#EEF2F5}.memo.c4{background:#F4F1EA}
+.memo-wrap{position:relative}
+.memo-wrap .del{position:absolute;right:4px;top:2px;opacity:0;transition:opacity .15s}
+.memo-wrap:hover .del,.memo-wrap:focus-within .del{opacity:1}
+@media(hover:none){.memo-wrap .del{opacity:.6}}
+
+.cov{display:flex;flex-direction:column}
+.cov-row{display:grid;grid-template-columns:118px auto 1fr;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.cov-row:first-child{border-top:none;padding-top:0}
+.cov-row .n{font-size:14px}
+.cstat{height:24px;padding:0 10px;border-radius:999px;font-size:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted);white-space:nowrap;user-select:none}
+.cstat.full{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.cstat.gap{background:var(--gap-soft);border-color:transparent;color:#94671C}
+.cstat.none{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.cov-row .note{font-size:13px;color:var(--ink2);outline:none;min-height:22px;border-bottom:1px dashed transparent;white-space:pre-wrap;word-break:break-word}
+.cov-row .note:focus{border-bottom-color:var(--line2)}
+.cov-row .note:empty::before{content:"備註…";color:var(--faint)}
+@media(max-width:480px){.cov-row{grid-template-columns:96px auto}.cov-row .cstat{justify-self:start}.cov-row .note{grid-column:1/-1}}
+.covsum{display:flex;gap:4px;margin-left:auto}
+.covsum i{width:8px;height:8px;border-radius:2px;background:var(--line)}
+.covsum i.full{background:var(--ok)}.covsum i.gap{background:var(--gap)}.covsum i.none{background:var(--warn)}
+
+.pol{padding:10px 0;border-top:1px solid var(--line);cursor:pointer;font-size:14px}
+.pol:first-of-type{border-top:none}
+.pol .t{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pol .t b{font-weight:600}
+.pol .t .r{margin-left:auto;font-family:var(--serif);color:var(--ink2)}
+.pol .n{font-size:13px;color:var(--muted);white-space:pre-wrap}
+.subh{font-size:12px;color:var(--muted);letter-spacing:.12em;margin:18px 0 6px;display:flex;align-items:center}
+.subh .sp{flex:1}
+.res{font-size:11.5px;padding:1px 8px;border-radius:999px}
+.res.won{background:var(--ok-soft);color:var(--ok)}
+.res.lost{background:#ECEAE6;color:var(--muted)}
+.res.open{background:var(--gap-soft);color:#94671C}
+
+/* composer + timeline */
+.composer .types{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.composer .types label{cursor:pointer}
+.composer .types input{display:none}
+.composer .types span{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--ink2)}
+.composer .types input:checked + span{background:var(--ink);border-color:var(--ink);color:#fff}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld.full{grid-column:1/-1}
+.fld > span{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:#FDFCFA;padding:8px 11px;outline:none;transition:border-color .15s;min-height:40px}
+.fld textarea{resize:vertical;line-height:1.6}
+.fld ::placeholder{color:var(--faint)}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--accent);background:#fff}
+.nextbox{grid-column:1/-1;display:grid;grid-template-columns:160px 1fr;gap:12px;padding:12px;border-radius:8px;background:var(--accent-soft)}
+.nextbox .fld input{background:#fff}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}.nextbox{grid-template-columns:1fr}}
+.composer .act{display:flex;justify-content:flex-end;margin-top:12px}
+
+.tl{position:relative;margin-top:6px}
+.tl-year{font-family:var(--serif);font-size:13px;color:var(--muted);letter-spacing:.2em;margin:22px 0 10px;display:flex;align-items:center;gap:10px}
+.tl-year::after{content:"";flex:1;border-top:1px solid var(--line)}
+.ev{display:grid;grid-template-columns:64px 1fr;gap:14px;position:relative;padding-bottom:22px}
+.ev::before{content:"";position:absolute;left:79px;top:10px;bottom:-4px;border-left:1px solid var(--line)}
+.ev:last-child::before{display:none}
+.ev .d{text-align:right;font-family:var(--serif);line-height:1.25}
+.ev .d b{display:block;font-size:17px;font-weight:600}
+.ev .d small{font-family:var(--sans);font-size:11px;color:var(--muted)}
+.ev .b{position:relative;padding-left:18px;min-width:0}
+.ev .b::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--card);border:1px solid var(--accent)}
+.ev.t-line .b::before{border-color:var(--ok)}
+.ev.t-call .b::before{border-color:var(--blue)}
+.ev .h{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+.ev .h .sp{flex:1}
+.ev .h .ty{color:var(--ink2);font-weight:500}
+.ev .txt{white-space:pre-wrap;word-break:break-word;font-size:14.5px;margin-top:4px}
+.ev .pain{margin-top:8px;display:flex;flex-direction:column;gap:4px}
+.ev .pain div{font-size:13.5px;padding:4px 10px;border-left:2px solid var(--gap);background:var(--gap-soft);border-radius:0 6px 6px 0;color:#6E5320}
+.ev .nx{margin-top:8px;display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink2)}
+.ev .nx.done{color:var(--faint);text-decoration:line-through}
+.ev .nx .check{width:18px;height:18px;margin:0}
+
+/* dialog */
+dialog{border:none;border-radius:14px;padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 40px);background:var(--card);color:var(--ink);box-shadow:0 20px 60px rgba(40,30,20,.18)}
+dialog::backdrop{background:rgba(42,39,35,.35)}
+.mform{display:flex;flex-direction:column;max-height:calc(100vh - 40px)}
+.mform header{display:flex;align-items:center;padding:18px 22px 6px}
+.mform header h3{margin:0;font-family:var(--serif);font-weight:600;font-size:18px;flex:1}
+.mform .x{border:none;background:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+.mbody{padding:12px 22px;overflow:auto}
+.mform footer{display:flex;gap:8px;padding:14px 22px 18px;border-top:1px solid var(--line)}
+.mform footer .sp{flex:1}
+.tagpick{display:flex;flex-wrap:wrap;gap:6px}
+.tagpick label{cursor:pointer}
+.tagpick input{display:none}
+.tagpick span{display:inline-flex;height:30px;align-items:center;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:13px}
+.tagpick input:checked + span{background:var(--accent-soft);border-color:var(--accent);color:#7A5F38}
+.bk{display:flex;flex-direction:column;gap:10px}
+.bk button{justify-content:flex-start;height:auto;padding:12px 16px;border-radius:10px;text-align:left;flex-direction:column;align-items:flex-start;gap:0}
+.bk button b{font-weight:600}
+.bk button small{color:var(--muted);font-size:12.5px;white-space:normal}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:all .25s;pointer-events:none;z-index:99}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media print{.top,.composer,.crumb .btn,.iconbtn{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <a class="brand" href="#/">客戶卷宗<small>Client Dossier</small></a>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="搜尋姓名、對話、保單、備忘…" autocomplete="off">
+    </label>
+    <div class="topbtns">
+      <button class="btn" data-act="backup">備份 / 還原</button>
+      <button class="btn primary" data-act="new-client">＋ 客戶</button>
+    </div>
+  </div>
+</div>
+<main><div class="wrap" id="app"></div></main>
+<dialog id="modal"></dialog>
+<input type="file" id="importFile" accept=".json,application/json" hidden>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* ========== constants ========== */
+const KEY = 'lvli.crm.v1';
+const STAGES = ['初訪破冰','保單健診中','建議書討論','已成交','售後服務'];
+const TAGS = ['轉介紹','緣故','職域','陌生開發'];
+const LOGTYPES = { visit:'面談拜訪', call:'線上 / 電話', line:'LINE 關鍵對話' };
+const COVER = [['life','壽險'],['med','醫療實支'],['hosp','住院日額'],['ci','重大傷病 / 重疾'],['cancer','癌症'],['acc','意外 / 意外實支'],['ltc','失能 / 長照']];
+const CSTAT = { '':'未檢視', full:'已規劃完整', gap:'尚有缺口', none:'完全空白' };
+const CORDER = ['', 'full', 'gap', 'none'];
+const RESULTS = { open:'討論中', won:'已成交', lost:'未成交' };
+const WD = ['日','一','二','三','四','五','六'];
+const DAY = 86400000;
+
+/* ========== utils ========== */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseD = s => { if (!s) return null; const [y, m, d] = s.slice(0, 10).split('-').map(Number); return (y && m && d) ? new Date(y, m - 1, d) : null; };
+const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const diffDays = (a, b) => Math.round((a - b) / DAY);
+const nowLocal = () => { const d = new Date(); return `${ymd(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const fmtD = s => { const d = parseD(s); return d ? `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}` : ''; };
+const fmtMD = d => `${d.getMonth() + 1}/${d.getDate()}`;
+const relDay = n => n === 0 ? '今天' : n === 1 ? '明天' : n === -1 ? '昨天' : n < 0 ? `逾期 ${-n} 天` : `${n} 天後`;
+const ago = n => n <= 0 ? '今天' : n === 1 ? '昨天' : n < 60 ? `${n} 天前` : n < 730 ? `${Math.round(n / 30)} 個月前` : `${Math.round(n / 365)} 年前`;
+const money = v => { const n = Number(String(v).replace(/[^\d.]/g, '')); return n ? n.toLocaleString('zh-TW') : (v || ''); };
+
+/* birthday math (保險年齡：足歲 + 滿半年加一歲) */
+const isLeap = y => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+function bdayIn(b, y) { const m = b.getMonth(), d = b.getDate(); return (m === 1 && d === 29 && !isLeap(y)) ? new Date(y, 1, 28) : new Date(y, m, d); }
+function addMonths(d, n) { const t = new Date(d.getFullYear(), d.getMonth() + n, 1); const last = new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate(); t.setDate(Math.min(d.getDate(), last)); return t; }
+function ageOn(b, t) { let a = t.getFullYear() - b.getFullYear(); if (t < bdayIn(b, t.getFullYear())) a--; return a; }
+function lastBday(b, t) { const x = bdayIn(b, t.getFullYear()); return x > t ? bdayIn(b, t.getFullYear() - 1) : x; }
+function keyDates(c) {
+  const b = parseD(c.birthday); if (!b) return null;
+  const t = today();
+  const age = ageOn(b, t);
+  const lb = lastBday(b, t);
+  const half = addMonths(lb, 6);                 // 滿半年那天
+  const insAge = t > half ? age + 1 : age;
+  let nb = bdayIn(b, t.getFullYear()); if (nb < t) nb = bdayIn(b, t.getFullYear() + 1);
+  const toB = diffDays(nb, t);
+  let insChange = new Date(half.getTime() + DAY);   // 超過半年的第一天
+  if (insChange <= t) insChange = new Date(addMonths(nb, 6).getTime() + DAY);
+  const toIns = diffDays(insChange, t);
+  return { age, insAge, nextBday: nb, toB, turning: toB === 0 ? age : age + 1, insChange, toIns, insNext: insAge + 1 };
+}
+
+/* ========== state ========== */
+function blankClient() {
+  return { id: uid(), name: '', nickname: '', gender: '', birthday: '', phone: '', line: '', email: '', address: '', occupation: '', occClass: '', referrer: '',
+    tags: [], stage: STAGES[0], family: [], memos: [], coverage: {}, policies: [], proposals: [], logs: [], createdAt: Date.now(), updatedAt: Date.now() };
+}
+function normalize(c) { const b = blankClient(); for (const k in b) if (c[k] === undefined) c[k] = b[k]; return c; }
+function load() {
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.clients)) { s.clients.forEach(normalize); s.settings = s.settings || {}; return s; } } catch (e) {}
+  return { v: 1, clients: [], settings: {} };
+}
+let state = load();
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); }
+  catch (e) { toast('⚠ 儲存失敗：瀏覽器空間不足或被封鎖，請立即匯出備份'); }
+}
+const getC = id => state.clients.find(c => c.id === id);
+function touch(c) { c.updatedAt = Date.now(); save(); }
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+
+let ui = { stage: '', tag: '', sort: 'recent' };
+let query = '';
+
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2400); }
+
+/* ========== derived ========== */
+function lastContact(c) { return c.logs.reduce((m, l) => l.at > m ? l.at : m, ''); }
+function openNext(c) {
+  return c.logs.filter(l => l.next && l.next.date && !l.next.done).sort((a, b) => a.next.date.localeCompare(b.next.date))[0] || null;
+}
+function allTodos() {
+  const t = today(), out = [];
+  state.clients.forEach(c => c.logs.forEach(l => { if (l.next && l.next.date && !l.next.done) out.push({ c, l, d: diffDays(parseD(l.next.date), t) }); }));
+  return out.sort((a, b) => a.d - b.d);
+}
+function stageIdx(s) { const i = STAGES.indexOf(s); return i < 0 ? 4 : i; }
+const stageChip = s => `<span class="chip stage st-${stageIdx(s)}">${esc(s)}</span>`;
+
+/* ========== router ========== */
+function render() {
+  const h = location.hash.replace(/^#\/?/, '');
+  const app = $('#app');
+  if (h.startsWith('c/')) { const c = getC(h.slice(2)); if (c) { app.innerHTML = clientView(c); return; } }
+  app.innerHTML = query ? searchView() : homeView();
+}
+window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
+
+/* ========== home ========== */
+function homeView() {
+  const t = today(), cs = state.clients;
+  if (!cs.length) return `<div class="welcome">
+    <div class="eyebrow">Client Dossier</div>
+    <h1>你的第一本客戶卷宗</h1>
+    <p>每位客戶一個專屬資料夾：關鍵日期、生活情報、保單缺口與每一次拜訪對話，全部收在同一頁。資料只存在這台裝置的瀏覽器裡，記得定期備份。</p>
+    <div class="row" style="justify-content:center;gap:10px">
+      <button class="btn primary" data-act="new-client">＋ 建立第一位客戶</button>
+      <button class="btn" data-act="demo">載入範例看看</button>
+      <button class="btn ghost" data-act="import">從備份還原</button>
+    </div></div>`;
+
+  // focus: 30 days
+  const ev = [];
+  cs.forEach(c => { const k = keyDates(c); if (!k) return;
+    if (k.toB <= 30) ev.push({ c, kind: 'bday', days: k.toB, date: k.nextBday, desc: `${fmtMD(k.nextBday)}（${WD[k.nextBday.getDay()]}）生日・將滿 ${k.turning} 歲` });
+    if (k.toIns <= 30) ev.push({ c, kind: 'ins', days: k.toIns, date: k.insChange, desc: `${fmtMD(k.insChange)} 起保險年齡 ${k.insAge} → ${k.insNext} 歲・把握促成` });
+  });
+  ev.sort((a, b) => a.days - b.days);
+
+  const todos = allTodos();
+  const due = todos.filter(x => x.d <= 0), week = todos.filter(x => x.d > 0 && x.d <= 7);
+  const m = t.getMonth();
+  const bdays = cs.filter(c => { const b = parseD(c.birthday); return b && b.getMonth() === m; })
+    .map(c => ({ c, b: parseD(c.birthday) })).sort((a, b) => a.b.getDate() - b.b.getDate());
+
+  const lb = state.settings.lastBackup; const since = lb ? diffDays(t, new Date(new Date(lb).setHours(0,0,0,0))) : null;
+  const nudge = (since === null || since >= 30) ? `<div class="nudge">🗂 ${since === null ? '還沒有做過備份' : `距離上次備份已 ${since} 天`}，建議把資料匯出存進雲端硬碟。<span class="sp"></span><button class="btn sm" data-act="export-json">立即備份</button></div>` : '';
+
+  const todoHTML = arr => arr.length ? arr.map(({ c, l, d }) => `<div class="todo">
+      <input type="checkbox" class="check" data-act="done-next" data-c="${c.id}" data-l="${l.id}" title="完成">
+      <div class="when ${d < 0 ? 'over' : ''}">${fmtMD(parseD(l.next.date))}<small>${relDay(d)}</small></div>
+      <div class="body"><a class="who" href="#/c/${c.id}">${esc(c.name)}</a> ${stageChip(c.stage)}<div class="what">${esc(l.next.purpose || '（未填目的）')}</div></div></div>`).join('')
+    : '<div class="empty">沒有待辦，很好。</div>';
+
+  // list
+  let list = cs.filter(c => (!ui.stage || c.stage === ui.stage) && (!ui.tag || c.tags.includes(ui.tag)));
+  const sorters = {
+    recent: (a, b) => (lastContact(b) || '').localeCompare(lastContact(a) || '') || b.updatedAt - a.updatedAt,
+    next: (a, b) => ((openNext(a)?.next.date) || '9999').localeCompare((openNext(b)?.next.date) || '9999'),
+    name: (a, b) => a.name.localeCompare(b.name, 'zh-Hant'),
+    created: (a, b) => b.createdAt - a.createdAt
+  };
+  list.sort(sorters[ui.sort] || sorters.recent);
+  const allTags = [...new Set([...TAGS, ...cs.flatMap(c => c.tags)])];
+
+  return `
+  <div class="hero">
+    <div><div class="eyebrow">${t.getFullYear()} · ${pad(t.getMonth()+1)} · ${pad(t.getDate())}　星期${WD[t.getDay()]}</div><h1>今日卷宗</h1></div>
+    <div class="stats">
+      <div><b>${cs.length}</b><span>位客戶</span></div>
+      <div><b>${due.length}</b><span>今日待跟進</span></div>
+      <div><b>${cs.filter(c => c.stage === '已成交' || c.stage === '售後服務').length}</b><span>已成交 / 售後</span></div>
+    </div>
+  </div>
+  ${nudge}
+
+  <section class="sec">
+    <div class="sec-h"><h2>30 天內關懷與促成契機</h2><span class="count">${ev.length} 則</span></div>
+    ${ev.length ? `<div class="focus">${ev.map(e => `<a class="fcard k-${e.kind}" href="#/c/${e.c.id}">
+        <div class="k"><span class="dot"></span>${e.kind === 'bday' ? '生日將近' : '即將換歲（保險年齡）'}</div>
+        <div class="nm">${esc(e.c.name)}</div><div class="desc">${esc(e.desc)}</div>
+        <div class="days"><b>${e.days}</b><small>${e.days === 0 ? '就是今天' : '天'}</small></div></a>`).join('')}</div>`
+      : '<div class="card empty">未來 30 天沒有生日或保險年齡變動。</div>'}
+  </section>
+
+  <section class="sec cols2">
+    <div><div class="sec-h"><h2>今日待跟進</h2><span class="count">含逾期・${due.length}</span></div><div class="card">${todoHTML(due)}</div>
+      <div class="sec-h" style="margin-top:24px"><h2>本週待辦</h2><span class="count">未來 7 天・${week.length}</span></div><div class="card">${todoHTML(week)}</div></div>
+    <div><div class="sec-h"><h2>本月壽星</h2><span class="count">${m + 1} 月・${bdays.length} 位</span></div><div class="card">
+      ${bdays.length ? bdays.map(({ c, b }) => { const k = keyDates(c); const past = b.getDate() < t.getDate();
+        return `<a class="bday ${past ? 'past' : ''}" href="#/c/${c.id}"><div class="d">${b.getDate()}<small>${m + 1}月</small></div>
+        <div class="n">${esc(c.name)}<span>${past ? `已過・${k.age} 歲` : `將滿 ${k.turning} 歲`}</span></div>${stageChip(c.stage)}</a>`; }).join('') : '<div class="empty">這個月沒有壽星。</div>'}
+    </div></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>客戶資料夾</h2><span class="count">${list.length} / ${cs.length}</span></div>
+    <div class="filters">
+      <button class="fchip ${!ui.stage ? 'on' : ''}" data-act="f-stage" data-v="">全部</button>
+      ${STAGES.map(s => `<button class="fchip ${ui.stage === s ? 'on' : ''}" data-act="f-stage" data-v="${s}">${s}</button>`).join('')}
+      <span style="width:8px"></span>
+      ${allTags.map(s => `<button class="fchip ${ui.tag === s ? 'on' : ''}" data-act="f-tag" data-v="${esc(s)}">#${esc(s)}</button>`).join('')}
+      <select data-act="sort">
+        ${[['recent','最近互動'],['next','下次行動日'],['name','姓名'],['created','建檔時間']].map(([k, l]) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>排序：${l}</option>`).join('')}
+      </select>
+    </div>
+    ${list.length ? `<div class="clist">${list.map(cardHTML).join('')}</div>` : '<div class="card empty">沒有符合條件的客戶。</div>'}
+  </section>`;
+}
+function cardHTML(c) {
+  const k = keyDates(c), lc = lastContact(c), nx = openNext(c), t = today();
+  return `<a class="ccard" href="#/c/${c.id}">
+    <div class="t"><b>${esc(c.name)}</b>${c.nickname ? `<span>${esc(c.nickname)}</span>` : ''}${stageChip(c.stage)}</div>
+    ${c.tags.length ? `<div class="row">${c.tags.map(x => `<span class="chip tag">#${esc(x)}</span>`).join('')}</div>` : ''}
+    <div class="meta">${k ? `<span>${k.age} 歲・保險 ${k.insAge} 歲</span>` : ''}${c.occupation ? `<span>${esc(c.occupation)}</span>` : ''}<span>${lc ? `上次接觸 ${ago(diffDays(t, parseD(lc)))}` : '尚無紀錄'}</span></div>
+    ${nx ? `<div class="nx">→ ${fmtMD(parseD(nx.next.date))}　${esc(nx.next.purpose || '')}</div>` : ''}
+  </a>`;
+}
+
+/* ========== search ========== */
+function searchView() {
+  const q = query.trim().toLowerCase();
+  const hl = s => { s = String(s); const i = s.toLowerCase().indexOf(q); if (i < 0) return esc(s.slice(0, 80));
+    const st = Math.max(0, i - 28), en = Math.min(s.length, i + q.length + 50);
+    return (st ? '…' : '') + esc(s.slice(st, i)) + '<mark>' + esc(s.slice(i, i + q.length)) + '</mark>' + esc(s.slice(i + q.length, en)) + (en < s.length ? '…' : ''); };
+  const res = [];
+  state.clients.forEach(c => {
+    const hits = [];
+    const chk = (label, txt) => { if (txt && String(txt).toLowerCase().includes(q)) hits.push({ label, txt }); };
+    chk('姓名', c.name); chk('稱呼', c.nickname); chk('電話', c.phone); chk('LINE', c.line); chk('Email', c.email); chk('職業', c.occupation); chk('地址', c.address); chk('轉介紹人', c.referrer);
+    chk('標籤', c.tags.map(x => '#' + x).join(' ')); chk('階段', c.stage);
+    c.family.forEach(f => chk('家人', `${f.rel} ${f.name} ${f.note || ''}`));
+    c.memos.forEach(m => chk('生活情報', m.text));
+    COVER.forEach(([k, n]) => chk('保障・' + n, c.coverage[k]?.note));
+    c.policies.forEach(p => chk('既有保單', `${p.company} ${p.name} ${p.kind || ''} ${p.note || ''}`));
+    c.proposals.forEach(p => chk('提案 ' + fmtD(p.date), `${p.kind} ${p.version || ''} ${p.content || ''} ${p.product || ''}`));
+    c.logs.forEach(l => { chk('日誌 ' + fmtD(l.at), l.content); chk('痛點 ' + fmtD(l.at), l.pain); if (l.next) chk('下次行動', l.next.purpose); });
+    if (hits.length) res.push({ c, hits });
+  });
+  return `<div class="sec-h"><h2>搜尋「${esc(query)}」</h2><span class="count">${res.length} 位客戶</span><span class="sp"></span><button class="btn sm ghost" data-act="clear-q">清除</button></div>
+  ${res.length ? `<div class="sres">${res.map(({ c, hits }) => `<a class="card sitem" href="#/c/${c.id}">
+     <div class="row"><span class="nm">${esc(c.name)}</span>${stageChip(c.stage)}</div>
+     ${hits.slice(0, 5).map(h => `<div class="hit"><em>${esc(h.label)}</em><span>${hl(h.txt)}</span></div>`).join('')}
+     ${hits.length > 5 ? `<div class="hit"><em></em><span class="muted">還有 ${hits.length - 5} 處符合</span></div>` : ''}</a>`).join('')}</div>`
+    : '<div class="card empty">找不到相關內容。</div>'}`;
+}
+
+/* ========== client dossier ========== */
+function clientView(c) {
+  const k = keyDates(c), t = today(), nx = openNext(c);
+  const cov = c.coverage;
+  const logs = [...c.logs].sort((a, b) => b.at.localeCompare(a.at));
+  let year = '';
+  const tl = logs.map(l => { const y = l.at.slice(0, 4); const yh = y !== year ? `<div class="tl-year">${y}</div>` : ''; year = y; return yh + logHTML(c, l); }).join('');
+
+  return `
+  <div class="crumb"><a class="btn ghost sm" href="#/">← 返回首頁</a><span class="sp"></span>
+    <button class="btn sm" data-act="edit-client" data-c="${c.id}">編輯資料</button></div>
+
+  <div class="dhead">
+    <div>
+      <div class="row" style="margin-bottom:8px">
+        <select class="stagesel st-${stageIdx(c.stage)}" data-act="stage" data-c="${c.id}">${STAGES.map(s => `<option ${s === c.stage ? 'selected' : ''}>${s}</option>`).join('')}</select>
+        ${c.tags.map(x => `<span class="chip tag">#${esc(x)}</span>`).join('')}
+      </div>
+      <h1>${esc(c.name)}${c.nickname ? `<small>${esc(c.nickname)}</small>` : ''}</h1>
+      <div class="contact">
+        ${c.phone ? `<a href="tel:${esc(c.phone.replace(/[^\d+]/g, ''))}">☏ ${esc(c.phone)}</a>` : ''}
+        ${c.line ? `<span>LINE ${esc(c.line)}</span>` : ''}
+        ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : ''}
+        ${c.occupation ? `<span>${esc(c.occupation)}${c.occClass ? `・職業第 ${esc(c.occClass)} 類` : ''}</span>` : ''}
+      </div>
+    </div>
+  </div>
+  ${nx ? (() => { const d = diffDays(parseD(nx.next.date), t); return `<div class="nextbar ${d < 0 ? 'over' : ''}">
+    <input type="checkbox" class="check" data-act="done-next" data-c="${c.id}" data-l="${nx.id}" title="完成">
+    <span>下次行動　<b>${fmtD(nx.next.date)}</b>（${relDay(d)}）　${esc(nx.next.purpose || '')}</span></div>`; })() : ''}
+
+  ${k ? `<div class="kd">
+    <div><div class="l">實歲</div><div class="v">${k.age}<small>歲</small></div><div class="s">${fmtD(c.birthday)}</div></div>
+    <div><div class="l">保險年齡</div><div class="v">${k.insAge}<small>歲</small></div><div class="s">${k.insAge > k.age ? '已過半年 +1' : '未滿半年'}</div></div>
+    <div class="${k.toB <= 30 ? 'hot' : ''}"><div class="l">距下次生日</div><div class="v">${k.toB}<small>天</small></div><div class="s">${fmtMD(k.nextBday)} 滿 ${k.turning} 歲</div></div>
+    <div class="${k.toIns <= 30 ? 'hot' : ''}"><div class="l">距保險年齡 +1</div><div class="v">${k.toIns}<small>天</small></div><div class="s">${fmtD(ymd(k.insChange))} 起 ${k.insNext} 歲</div></div>
+  </div>` : `<div class="kd none">尚未填寫生日 — <a href="#" data-act="edit-client" data-c="${c.id}">補上生日</a>，系統會自動計算實歲、保險年齡與換歲倒數。</div>`}
+
+  <div class="dgrid">
+    <div>
+      <div class="card">
+        <div class="card-h"><h3>基本資料</h3></div>
+        <dl class="info">
+          ${[['性別', c.gender], ['生日', fmtD(c.birthday)], ['職業', c.occupation], ['職業等級', c.occClass ? `第 ${c.occClass} 類` : ''], ['地址', c.address], ['轉介紹人', c.referrer], ['建檔', fmtD(ymd(new Date(c.createdAt)))]]
+            .filter(x => x[1]).map(([a, b]) => `<dt>${a}</dt><dd>${esc(b)}</dd>`).join('')}
+        </dl>
+        <div class="subh">家庭成員<span class="sp"></span><button class="iconbtn" data-act="add-fam" data-c="${c.id}">＋ 新增</button></div>
+        ${c.family.length ? c.family.map(f => { const fb = parseD(f.birthday);
+          return `<div class="fam" data-act="edit-fam" data-c="${c.id}" data-f="${f.id}"><span class="rel">${esc(f.rel)}</span><span class="nm">${esc(f.name)}</span>
+            <span class="ex">${fb ? `${ageOn(fb, t)} 歲` : ''}${f.note ? `${fb ? '・' : ''}${esc(f.note)}` : ''}</span></div>`; }).join('') : '<div class="empty">尚未記錄家庭結構</div>'}
+      </div>
+
+      <div class="card">
+        <div class="card-h"><h3>生活情報便利貼</h3><span class="sp"></span><button class="iconbtn" data-act="add-memo" data-c="${c.id}">＋ 貼一張</button></div>
+        ${c.memos.length ? `<div class="memos">${c.memos.map((m, i) => `<div class="memo-wrap">
+          <div class="memo c${(m.color ?? i) % 5}" contenteditable="plaintext-only" data-memo="${m.id}" data-c="${c.id}">${esc(m.text)}</div>
+          <button class="iconbtn del" data-act="del-memo" data-c="${c.id}" data-m="${m.id}" title="撕掉">×</button></div>`).join('')}</div>`
+          : '<div class="empty">禁忌、飲品偏好、最近換工作、小孩剛出生… 拜訪前看一眼就能開啟有溫度的對話。</div>'}
+      </div>
+
+      <div class="card">
+        <div class="card-h"><h3>保單整理與健診</h3><span class="covsum">${COVER.map(([kk]) => `<i class="${cov[kk]?.s || ''}"></i>`).join('')}</span></div>
+        <div class="cov">${COVER.map(([kk, n]) => { const s = cov[kk]?.s || '';
+          return `<div class="cov-row"><span class="n">${n}</span>
+            <button class="cstat ${s}" data-act="cycle-cov" data-c="${c.id}" data-k="${kk}">${CSTAT[s]}</button>
+            <div class="note" contenteditable="plaintext-only" data-covnote="${kk}" data-c="${c.id}">${esc(cov[kk]?.note || '')}</div></div>`; }).join('')}</div>
+
+        <div class="subh">既有保單概況<span class="sp"></span><button class="iconbtn" data-act="add-pol" data-c="${c.id}">＋ 新增</button></div>
+        ${c.policies.length ? c.policies.map(p => `<div class="pol" data-act="edit-pol" data-c="${c.id}" data-p="${p.id}">
+          <div class="t"><b>${esc(p.company)}</b><span>${esc(p.name)}</span>${p.kind ? `<span class="chip">${esc(p.kind)}</span>` : ''}<span class="r">${p.premium ? `$${money(p.premium)}/年` : ''}</span></div>
+          ${p.note ? `<div class="n">${esc(p.note)}</div>` : ''}</div>`).join('') : '<div class="empty">尚未整理舊保單</div>'}
+
+        <div class="subh">健診與建議書紀錄<span class="sp"></span><button class="iconbtn" data-act="add-prop" data-c="${c.id}">＋ 新增</button></div>
+        ${c.proposals.length ? [...c.proposals].sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(p => `<div class="pol" data-act="edit-prop" data-c="${c.id}" data-p="${p.id}">
+          <div class="t"><span class="serif">${fmtD(p.date)}</span><b>${esc(p.kind)}</b>${p.version ? `<span class="muted">${esc(p.version)}</span>` : ''}<span class="r"><span class="res ${p.result || 'open'}">${RESULTS[p.result || 'open']}</span></span></div>
+          ${p.content ? `<div class="n">${esc(p.content)}</div>` : ''}
+          ${p.result === 'won' && (p.product || p.premium) ? `<div class="n" style="color:var(--ok)">成交：${esc(p.product || '')}${p.premium ? `・年繳 $${money(p.premium)}` : ''}</div>` : ''}</div>`).join('') : '<div class="empty">尚無健診或建議書</div>'}
+      </div>
+
+      <div class="row" style="justify-content:flex-end"><button class="btn ghost sm danger" data-act="del-client" data-c="${c.id}">刪除此客戶卷宗</button></div>
+    </div>
+
+    <div>
+      <div class="card composer">
+        <div class="card-h"><h3>拜訪與對話日誌</h3><span class="sp"></span><span class="muted" style="font-size:12px">${c.logs.length} 筆</span></div>
+        <form data-form="log" data-c="${c.id}">${logFields()}<div class="act"><button class="btn primary">寫入時間軸</button></div></form>
+      </div>
+      <div class="tl">${tl || '<div class="empty" style="padding:10px 4px">還沒有任何紀錄，寫下第一次接觸吧。</div>'}</div>
+    </div>
+  </div>`;
+}
+function logFields(l = {}) {
+  const ty = l.type || 'visit', nx = l.next || {};
+  return `<div class="types">${Object.entries(LOGTYPES).map(([k, v]) => `<label><input type="radio" name="type" value="${k}" ${k === ty ? 'checked' : ''}><span>${v}</span></label>`).join('')}</div>
+  <div class="fgrid">
+    <label class="fld"><span>時間</span><input type="datetime-local" name="at" value="${esc(l.at || nowLocal())}" required></label>
+    <span></span>
+    <label class="fld full"><span>對話紀錄</span><textarea name="content" rows="3" placeholder="今天聊了什麼？對方原話、反應、決策者是誰…">${esc(l.content || '')}</textarea></label>
+    <label class="fld full"><span>關鍵情報與痛點（一行一點）</span><textarea name="pain" rows="2" placeholder="擔心實支實付額度不夠&#10;房貸剛下來需要壽險保障">${esc(l.pain || '')}</textarea></label>
+    <div class="nextbox">
+      <label class="fld"><span>下次聯繫日期</span><input type="date" name="nextDate" value="${esc(nx.date || '')}"></label>
+      <label class="fld"><span>目的</span><input name="nextPurpose" value="${esc(nx.purpose || '')}" placeholder="送建議書 v2、確認體檢時間…"></label>
+    </div>
+  </div>`;
+}
+function logHTML(c, l) {
+  const d = new Date(l.at), pains = (l.pain || '').split(/\n+/).map(s => s.trim()).filter(Boolean);
+  return `<div class="ev t-${l.type}">
+    <div class="d"><b>${d.getMonth() + 1}/${d.getDate()}</b><small>週${WD[d.getDay()]}・${pad(d.getHours())}:${pad(d.getMinutes())}</small></div>
+    <div class="b">
+      <div class="h"><span class="ty">${LOGTYPES[l.type] || ''}</span><span class="sp"></span><button class="iconbtn" data-act="edit-log" data-c="${c.id}" data-l="${l.id}">編輯</button></div>
+      ${l.content ? `<div class="txt">${esc(l.content)}</div>` : ''}
+      ${pains.length ? `<div class="pain">${pains.map(p => `<div>${esc(p)}</div>`).join('')}</div>` : ''}
+      ${l.next && l.next.date ? `<div class="nx ${l.next.done ? 'done' : ''}"><input type="checkbox" class="check" data-act="toggle-next" data-c="${c.id}" data-l="${l.id}" ${l.next.done ? 'checked' : ''}>
+        下次：${fmtD(l.next.date)}　${esc(l.next.purpose || '')}</div>` : ''}
+    </div></div>`;
+}
+function readLog(form, l) {
+  const fd = new FormData(form);
+  l.type = fd.get('type') || 'visit'; l.at = fd.get('at') || nowLocal();
+  l.content = (fd.get('content') || '').trim(); l.pain = (fd.get('pain') || '').trim();
+  const nd = fd.get('nextDate'), np = (fd.get('nextPurpose') || '').trim();
+  l.next = nd ? { date: nd, purpose: np, done: (l.next && l.next.date === nd) ? !!l.next.done : false } : null;
+  return l;
+}
+
+/* ========== modal & forms ========== */
+function fieldsHTML(spec, v = {}) {
+  return spec.map(f => { const val = v[f.k] ?? f.def ?? ''; let inp;
+    if (f.type === 'select') inp = `<select name="${f.k}">${f.options.map(o => { const [ov, ol] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(ov)}" ${String(val) === String(ov) ? 'selected' : ''}>${esc(ol)}</option>`; }).join('')}</select>`;
+    else if (f.type === 'textarea') inp = `<textarea name="${f.k}" rows="${f.rows || 3}" placeholder="${esc(f.ph || '')}">${esc(val)}</textarea>`;
+    else inp = `<input name="${f.k}" type="${f.type || 'text'}" value="${esc(val)}" placeholder="${esc(f.ph || '')}" ${f.req ? 'required' : ''} ${f.im ? `inputmode="${f.im}"` : ''}>`;
+    return `<label class="fld ${f.full ? 'full' : ''}"><span>${f.label}${f.req ? ' *' : ''}</span>${inp}</label>`; }).join('');
+}
+function modal({ title, body, submit = '儲存', onSubmit, danger }) {
+  const d = $('#modal');
+  d.innerHTML = `<form class="mform"><header><h3>${title}</h3><button type="button" class="x" data-close>×</button></header>
+    <div class="mbody">${body}</div>
+    <footer>${danger ? `<button type="button" class="btn ghost danger" data-danger>${danger.label}</button>` : ''}<span class="sp"></span>
+    <button type="button" class="btn ghost" data-close>${onSubmit ? '取消' : '關閉'}</button>${onSubmit ? `<button class="btn primary">${submit}</button>` : ''}</footer></form>`;
+  const form = d.querySelector('form');
+  form.onsubmit = e => { e.preventDefault(); if (onSubmit(new FormData(form), form) !== false) d.close(); };
+  d.querySelectorAll('[data-close]').forEach(b => b.onclick = () => d.close());
+  if (danger) form.querySelector('[data-danger]').onclick = () => { if (danger.fn() !== false) d.close(); };
+  d.showModal();
+  const first = form.querySelector('input:not([type=radio]):not([type=checkbox]),textarea'); if (first && matchMedia('(hover:hover)').matches) first.focus();
+}
+const obj = fd => Object.fromEntries([...fd.keys()].map(k => [k, String(fd.get(k) || '').trim()]));
+
+const CLIENT_SPEC = [
+  { k: 'name', label: '姓名', req: true }, { k: 'nickname', label: '稱呼', ph: '王哥、Amy 姐' },
+  { k: 'birthday', label: '生日', type: 'date' }, { k: 'gender', label: '性別', type: 'select', options: ['', '女', '男', '其他'] },
+  { k: 'phone', label: '電話', type: 'tel' }, { k: 'line', label: 'LINE ID / 名稱' },
+  { k: 'email', label: 'Email', type: 'email' }, { k: 'referrer', label: '轉介紹人' },
+  { k: 'occupation', label: '職業 / 公司', ph: '竹科工程師' }, { k: 'occClass', label: '職業等級', type: 'select', options: [['', '—'], ...[1, 2, 3, 4, 5, 6].map(n => [String(n), `第 ${n} 類`])] },
+  { k: 'address', label: '地址', full: true }
+];
+function clientForm(c) {
+  const isNew = !c; c = c || blankClient();
+  const extra = c.tags.filter(t => !TAGS.includes(t));
+  modal({
+    title: isNew ? '新增客戶卷宗' : `編輯・${esc(c.name)}`,
+    body: `<div class="fgrid">${fieldsHTML(CLIENT_SPEC, c)}
+      <label class="fld full"><span>跟進溫度</span><select name="stage">${STAGES.map(s => `<option ${s === c.stage ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
+      <div class="fld full"><span>關係與來源</span><div class="tagpick">${TAGS.map(t => `<label><input type="checkbox" name="tags" value="${t}" ${c.tags.includes(t) ? 'checked' : ''}><span>#${t}</span></label>`).join('')}</div></div>
+      <label class="fld full"><span>其他自訂標籤（以逗號分隔）</span><input name="tagsExtra" value="${esc(extra.join(', '))}" placeholder="VIP, 社團, 高資產"></label></div>`,
+    onSubmit: fd => {
+      const v = obj(fd);
+      if (!v.name) return false;
+      CLIENT_SPEC.forEach(f => c[f.k] = v[f.k] || '');
+      c.stage = v.stage;
+      c.tags = [...fd.getAll('tags'), ...v.tagsExtra.split(/[,，、\s#]+/).map(s => s.trim()).filter(Boolean)].filter((x, i, a) => a.indexOf(x) === i);
+      if (isNew) { state.clients.push(c); touch(c); location.hash = '#/c/' + c.id; }
+      else { touch(c); render(); }
+      toast(isNew ? '已建立客戶卷宗' : '已儲存');
+    }
+  });
+}
+function subForm({ c, list, item, title, spec, onSave }) {
+  const isNew = !item; item = item || { id: uid() };
+  modal({ title: (isNew ? '新增' : '編輯') + title, body: `<div class="fgrid">${fieldsHTML(spec, item)}</div>`,
+    danger: isNew ? null : { label: '刪除', fn: () => { if (!confirm('確定刪除？')) return false; c[list] = c[list].filter(x => x.id !== item.id); touch(c); render(); } },
+    onSubmit: fd => { Object.assign(item, obj(fd)); onSave && onSave(item); if (isNew) c[list].push(item); touch(c); render(); }
+  });
+}
+const FAM_SPEC = [{ k: 'rel', label: '關係', ph: '配偶、長子、母親', req: true }, { k: 'name', label: '姓名' }, { k: 'birthday', label: '生日', type: 'date' }, { k: 'note', label: '備註', ph: '同住、已投保…' }];
+const POL_SPEC = [{ k: 'company', label: '保險公司', req: true }, { k: 'name', label: '商品名稱' }, { k: 'kind', label: '主約 / 附約', type: 'select', options: ['', '主約', '附約', '團險', '其他'] },
+  { k: 'premium', label: '年繳保費', im: 'numeric' }, { k: 'start', label: '投保日', type: 'date' }, { k: 'insured', label: '被保險人', ph: '本人' },
+  { k: 'note', label: '重點 / 保障缺口', type: 'textarea', full: true, ph: '終身醫療日額 1000，無實支、無重大傷病' }];
+const PROP_SPEC = [{ k: 'date', label: '日期', type: 'date', req: true }, { k: 'kind', label: '類型', type: 'select', options: ['保單健診', '建議書', '保單檢視（售後）', '理賠協助'] },
+  { k: 'version', label: '版本', ph: 'v1、精簡版、預算 3 萬' }, { k: 'result', label: '結果', type: 'select', options: Object.entries(RESULTS) },
+  { k: 'content', label: '內容重點', type: 'textarea', full: true, ph: '補強實支至 20 萬＋重大傷病 50 萬' },
+  { k: 'product', label: '成交險種' }, { k: 'premium', label: '成交年繳保費', im: 'numeric' }];
+
+/* ========== backup ========== */
+function download(name, blob) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+const stamp = () => { const d = new Date(); return `${ymd(d)}_${pad(d.getHours())}${pad(d.getMinutes())}`; };
+function exportJSON(silent) {
+  if (!silent) { state.settings.lastBackup = new Date().toISOString(); save(); }
+  download(`客戶卷宗備份_${stamp()}.json`, new Blob([JSON.stringify({ ...state, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' }));
+  if (!silent) { toast('已匯出備份檔'); render(); }
+}
+function loadScript(src) { return new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }); }
+async function exportExcel() {
+  const C = state.clients;
+  const sheets = {
+    '客戶': C.map(c => { const k = keyDates(c); return { 姓名: c.name, 稱呼: c.nickname, 性別: c.gender, 生日: c.birthday, 實歲: k?.age ?? '', 保險年齡: k?.insAge ?? '', 電話: c.phone, LINE: c.line, Email: c.email, 職業: c.occupation, 職業等級: c.occClass, 地址: c.address, 轉介紹人: c.referrer, 標籤: c.tags.join('、'), 跟進溫度: c.stage,
+      家庭成員: c.family.map(f => `${f.rel}${f.name}${f.birthday ? '(' + f.birthday + ')' : ''}`).join('；'), 生活情報: c.memos.map(m => m.text).join('；'),
+      ...Object.fromEntries(COVER.map(([kk, n]) => [n, [CSTAT[c.coverage[kk]?.s || ''], c.coverage[kk]?.note].filter(Boolean).join('：')])) }; }),
+    '拜訪日誌': C.flatMap(c => [...c.logs].sort((a, b) => b.at.localeCompare(a.at)).map(l => ({ 客戶: c.name, 時間: l.at.replace('T', ' '), 形式: LOGTYPES[l.type], 對話紀錄: l.content, 痛點: l.pain, 下次日期: l.next?.date || '', 下次目的: l.next?.purpose || '', 已完成: l.next ? (l.next.done ? '是' : '否') : '' }))),
+    '既有保單': C.flatMap(c => c.policies.map(p => ({ 客戶: c.name, 保險公司: p.company, 商品: p.name, 主附約: p.kind, 年繳保費: p.premium, 投保日: p.start, 被保險人: p.insured, 重點: p.note }))),
+    '健診與建議書': C.flatMap(c => c.proposals.map(p => ({ 客戶: c.name, 日期: p.date, 類型: p.kind, 版本: p.version, 結果: RESULTS[p.result || 'open'], 內容: p.content, 成交險種: p.product, 成交保費: p.premium })))
+  };
+  try {
+    if (!window.XLSX) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+    const wb = XLSX.utils.book_new();
+    for (const [n, rows] of Object.entries(sheets)) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows.length ? rows : [{}]), n);
+    XLSX.writeFile(wb, `客戶卷宗_${stamp()}.xlsx`);
+  } catch (e) { // 離線時改出 CSV
+    const rows = sheets['客戶']; const head = Object.keys(rows[0] || { 姓名: '' });
+    const csv = [head, ...rows.map(r => head.map(h => r[h] ?? ''))].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    download(`客戶卷宗_${stamp()}.csv`, new Blob(['﻿' + csv], { type: 'text/csv' }));
+  }
+  toast('已匯出 Excel');
+}
+function backupModal() {
+  const lb = state.settings.lastBackup;
+  const n = state.clients.length, logs = state.clients.reduce((s, c) => s + c.logs.length, 0);
+  modal({ title: '備份 / 還原', body: `<p class="muted" style="margin-top:0;font-size:13.5px">目前共 ${n} 位客戶、${logs} 筆日誌。資料儲存在這個瀏覽器中；${lb ? `上次備份：${fmtD(ymd(new Date(lb)))}` : '尚未備份過'}。<br>建議每月底匯出 .json 存進 Google Drive / iCloud，換手機時再用「還原」匯入。</p>
+    <div class="bk">
+      <button type="button" class="btn" data-act="export-json"><b>⤓ 匯出完整備份（.json）</b><small>可完整還原所有資料，十年後也讀得到</small></button>
+      <button type="button" class="btn" data-act="export-xlsx"><b>⤓ 匯出 Excel（.xlsx）</b><small>客戶、拜訪日誌、既有保單、建議書分頁，方便列印或篩選</small></button>
+      <button type="button" class="btn" data-act="import"><b>⤒ 從 .json 還原</b><small>會先自動下載一份目前資料，再以備份檔取代</small></button>
+    </div>` });
+}
+$('#importFile').addEventListener('change', e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    let data; try { data = JSON.parse(r.result); } catch (err) { return alert('檔案格式錯誤，無法讀取。'); }
+    if (!data || !Array.isArray(data.clients)) return alert('這不是客戶卷宗的備份檔。');
+    const merge = state.clients.length && confirm(`備份檔含 ${data.clients.length} 位客戶。\n\n按「確定」＝合併（同一位客戶以備份檔版本為準）\n按「取消」＝改為完全取代目前資料`);
+    if (!merge && state.clients.length && !confirm('將以備份檔「完全取代」目前資料，目前資料會先自動下載一份。確定？')) return;
+    if (state.clients.length) exportJSON(true);
+    data.clients.forEach(normalize);
+    if (merge) { const map = new Map(state.clients.map(c => [c.id, c])); data.clients.forEach(c => map.set(c.id, c)); state.clients = [...map.values()]; }
+    else state = { v: 1, clients: data.clients, settings: { ...(data.settings || {}) } };
+    save(); $('#modal').close(); location.hash = '#/'; render(); toast('還原完成');
+  };
+  r.readAsText(f);
+});
+
+/* ========== demo data ========== */
+function demo() {
+  const t = today(), off = (days, years = 0) => { const d = new Date(t.getTime() + days * DAY); d.setFullYear(d.getFullYear() - years); return ymd(d); };
+  const at = (days, h = 14) => `${off(days)}T${pad(h)}:30`;
+  const a = Object.assign(blankClient(), { name: '陳美玲', nickname: '美玲姐', gender: '女', birthday: off(12, 38), phone: '0912-345-678', line: 'meiling.chen', occupation: '國小老師', occClass: '1', tags: ['緣故'], stage: '建議書討論',
+    family: [{ id: uid(), rel: '配偶', name: '林志明', birthday: off(-200, 40), note: '工程師' }, { id: uid(), rel: '長女', name: '林小晴', birthday: off(-90, 6) }],
+    memos: [{ id: uid(), text: '拿鐵去冰、不加糖', color: 0 }, { id: uid(), text: '週三下午沒課，比較好約', color: 1 }, { id: uid(), text: '婆婆去年癌症住院，對癌症險很有感', color: 2 }],
+    coverage: { life: { s: 'gap', note: '僅公保' }, med: { s: 'none', note: '' }, hosp: { s: 'full', note: '日額 2000' }, cancer: { s: 'gap', note: '一次金 10 萬偏低' } },
+    policies: [{ id: uid(), company: '某人壽', name: '終身醫療', kind: '主約', premium: '18600', start: off(-3650), note: '日額 2000，無實支實付' }],
+    proposals: [{ id: uid(), date: off(-20), kind: '保單健診', version: '', result: 'open', content: '缺實支與重大傷病，壽險額度僅公保' }, { id: uid(), date: off(-5), kind: '建議書', version: 'v1 預算 3 萬', result: 'open', content: '實支 20 萬＋重大傷病 50 萬' }],
+    logs: [{ id: uid(), type: 'visit', at: at(-20, 15), content: '在學校附近咖啡廳聊，先做保單健診。提到婆婆住院時自付很多雙人房差額。', pain: '擔心實支實付額度不夠\n對癌症新藥自費很焦慮', next: { date: off(-5), purpose: '送建議書 v1', done: true } },
+      { id: uid(), type: 'line', at: at(-2, 21), content: '她說先生覺得保費有點高，想看精簡版。', pain: '預算上限約年繳 2.5 萬', next: { date: off(0), purpose: '提供精簡版建議書 v2', done: false } }] });
+  const b = Object.assign(blankClient(), { name: '王大明', nickname: '王哥', gender: '男', birthday: off(-165, 41), phone: '0988-111-222', occupation: '科技業主管', occClass: '1', referrer: '陳美玲', tags: ['轉介紹', '職域'], stage: '保單健診中',
+    family: [{ id: uid(), rel: '配偶', name: '張雅婷' }, { id: uid(), rel: '長子', name: '王小宇', birthday: off(-30, 1), note: '剛滿週歲' }],
+    memos: [{ id: uid(), text: '房貸剛下來 1,200 萬', color: 3 }, { id: uid(), text: '不喝咖啡，喝無糖綠茶', color: 4 }],
+    coverage: { life: { s: 'none', note: '只有團險 3 倍年薪' }, acc: { s: 'gap', note: '' } },
+    logs: [{ id: uid(), type: 'call', at: at(-1, 12), content: '美玲轉介紹，電話破冰。剛升主管、小孩剛滿週歲。', pain: '房貸剛下來需要壽險保障\n離職後團險就沒了', next: { date: off(3), purpose: '面談做保單健診', done: false } }] });
+  const c = Object.assign(blankClient(), { name: '李淑芬', gender: '女', birthday: off(-400, 55), phone: '02-2345-6789', occupation: '自營早餐店', occClass: '2', tags: ['陌生開發'], stage: '售後服務',
+    coverage: { life: { s: 'full' }, med: { s: 'full' }, hosp: { s: 'full' }, ci: { s: 'full' }, cancer: { s: 'gap' }, acc: { s: 'full' }, ltc: { s: 'none', note: '下次年度檢視再談' } },
+    proposals: [{ id: uid(), date: off(-700), kind: '建議書', version: 'v2', result: 'won', product: '實支實付＋重大傷病', premium: '32000', content: '' }],
+    logs: [{ id: uid(), type: 'visit', at: at(-700, 10), content: '簽約完成。', pain: '', next: null }, { id: uid(), type: 'line', at: at(-30, 9), content: '協助申請門診手術理賠，已收到款項，很感謝。', pain: '', next: { date: off(25), purpose: '年度保單檢視＋聊長照', done: false } }] });
+  state.clients.push(a, b, c); save(); render(); toast('已載入 3 位範例客戶（可隨時刪除）');
+}
+
+/* ========== events ========== */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const act = el.dataset.act, c = el.dataset.c ? getC(el.dataset.c) : null;
+  if (el.tagName === 'SELECT') return;
+  switch (act) {
+    case 'new-client': clientForm(); break;
+    case 'edit-client': e.preventDefault(); clientForm(c); break;
+    case 'del-client':
+      if (confirm(`確定刪除「${c.name}」的整份卷宗？此動作無法復原（除非你有備份）。`)) { state.clients = state.clients.filter(x => x !== c); save(); location.hash = '#/'; toast('已刪除'); }
+      break;
+    case 'demo': demo(); break;
+    case 'backup': backupModal(); break;
+    case 'export-json': exportJSON(); break;
+    case 'export-xlsx': exportExcel(); break;
+    case 'import': $('#importFile').click(); break;
+    case 'clear-q': query = ''; $('#q').value = ''; render(); break;
+    case 'f-stage': ui.stage = el.dataset.v; render(); break;
+    case 'f-tag': ui.tag = ui.tag === el.dataset.v ? '' : el.dataset.v; render(); break;
+    case 'done-next': case 'toggle-next': {
+      const l = c.logs.find(x => x.id === el.dataset.l); if (!l || !l.next) break;
+      l.next.done = act === 'done-next' ? true : el.checked; touch(c);
+      if (act === 'done-next') toast('已完成：' + (l.next.purpose || '待辦'));
+      setTimeout(render, act === 'done-next' ? 250 : 0); break;
+    }
+    case 'add-memo': { const m = { id: uid(), text: '', color: c.memos.length % 5 }; c.memos.push(m); touch(c); render(); const n = $(`[data-memo="${m.id}"]`); n && n.focus(); break; }
+    case 'del-memo': c.memos = c.memos.filter(m => m.id !== el.dataset.m); touch(c); render(); break;
+    case 'cycle-cov': { const k = el.dataset.k; c.coverage[k] = c.coverage[k] || { s: '', note: '' }; const i = CORDER.indexOf(c.coverage[k].s || ''); c.coverage[k].s = CORDER[(i + 1) % CORDER.length]; touch(c); render(); break; }
+    case 'add-fam': subForm({ c, list: 'family', title: '家庭成員', spec: FAM_SPEC }); break;
+    case 'edit-fam': subForm({ c, list: 'family', item: c.family.find(x => x.id === el.dataset.f), title: '家庭成員', spec: FAM_SPEC }); break;
+    case 'add-pol': subForm({ c, list: 'policies', title: '既有保單', spec: POL_SPEC }); break;
+    case 'edit-pol': subForm({ c, list: 'policies', item: c.policies.find(x => x.id === el.dataset.p), title: '既有保單', spec: POL_SPEC }); break;
+    case 'add-prop': subForm({ c, list: 'proposals', title: '健診 / 建議書', spec: PROP_SPEC.map(f => f.k === 'date' ? { ...f, def: ymd(today()) } : f) }); break;
+    case 'edit-prop': subForm({ c, list: 'proposals', item: c.proposals.find(x => x.id === el.dataset.p), title: '健診 / 建議書', spec: PROP_SPEC }); break;
+    case 'edit-log': {
+      const l = c.logs.find(x => x.id === el.dataset.l);
+      modal({ title: '編輯日誌', body: logFields(l), onSubmit: (fd, form) => { readLog(form, l); touch(c); render(); },
+        danger: { label: '刪除此筆', fn: () => { if (!confirm('確定刪除這筆日誌？')) return false; c.logs = c.logs.filter(x => x !== l); touch(c); render(); } } });
+      break;
+    }
+  }
+});
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.act === 'stage') { const c = getC(el.dataset.c); c.stage = el.value; touch(c); render(); toast('跟進溫度：' + c.stage); }
+  if (el.dataset.act === 'sort') { ui.sort = el.value; render(); }
+});
+document.addEventListener('submit', e => {
+  const f = e.target; if (f.dataset.form !== 'log') return;
+  e.preventDefault();
+  const c = getC(f.dataset.c); const l = readLog(f, { id: uid() });
+  if (!l.content && !l.pain && !l.next) { toast('先寫點內容吧'); return; }
+  c.logs.push(l); touch(c); render(); toast('已寫入時間軸' + (l.next ? '，下次行動已排入待辦' : ''));
+});
+document.addEventListener('focusout', e => {
+  const el = e.target;
+  if (el.dataset.memo) {
+    const c = getC(el.dataset.c), m = c.memos.find(x => x.id === el.dataset.memo); if (!m) return;
+    const txt = el.innerText.replace(/\n+$/, '').trim();
+    if (!txt) { c.memos = c.memos.filter(x => x !== m); touch(c); setTimeout(render, 0); }
+    else if (txt !== m.text) { m.text = txt; touch(c); }
+  }
+  if (el.dataset.covnote) {
+    const c = getC(el.dataset.c), k = el.dataset.covnote; c.coverage[k] = c.coverage[k] || { s: '', note: '' };
+    const txt = el.innerText.trim(); if (txt !== (c.coverage[k].note || '')) { c.coverage[k].note = txt; touch(c); }
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.target.dataset && e.target.dataset.covnote && e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
+  if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) { e.preventDefault(); $('#q').focus(); }
+});
+$('#q').addEventListener('input', e => {
+  query = e.target.value;
+  if (location.hash.startsWith('#/c/')) { if (query) location.hash = '#/'; } else render();
+});
+// 跨分頁同步
+window.addEventListener('storage', e => { if (e.key === KEY) { state = load(); render(); } });
+
+render();
+</script>
+</body>
+</html>
