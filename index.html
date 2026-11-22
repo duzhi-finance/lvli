@@ -298,6 +298,52 @@ dialog::backdrop{background:rgba(42,39,35,.35)}
 
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:all .25s;pointer-events:none;z-index:99}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.tabs{display:flex;gap:2px}
+.tabs a{height:34px;display:inline-flex;align-items:center;padding:0 12px;border-radius:999px;text-decoration:none;font-size:14px;color:var(--ink2)}
+.tabs a.on{background:var(--accent-soft);color:#6E5530;font-weight:500}
+.tabs a b{font-weight:500;font-size:11px;margin-left:5px;color:var(--muted)}
+@media(max-width:720px){.tabs{order:2}}
+
+/* prospect list */
+.goal{display:flex;align-items:center;gap:16px;margin-top:18px}
+.goal .bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.goal .bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.goal .num{font-family:var(--serif);font-size:15px;white-space:nowrap}
+.goal .num b{font-size:22px;font-weight:600}
+.funnel{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.funnel button{border:none;background:none;border-left:1px solid var(--line);padding:12px 14px;text-align:left;cursor:pointer}
+.funnel button:first-child{border-left:none}
+.funnel button.on{background:var(--accent-soft)}
+.funnel b{display:block;font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.3}
+.funnel span{font-size:12px;color:var(--muted)}
+@media(max-width:600px){.funnel{grid-template-columns:repeat(3,1fr)}.funnel button:nth-child(4){border-left:none}.funnel button:nth-child(n+4){border-top:1px solid var(--line)}}
+.quick{display:grid;grid-template-columns:1.3fr 1fr auto auto auto;gap:8px;align-items:center}
+.quick input,.quick select{height:40px;border:1px solid var(--line);border-radius:8px;background:#FDFCFA;padding:0 11px;outline:none;min-width:0}
+.quick input:focus,.quick select:focus{border-color:var(--accent);background:#fff}
+@media(max-width:720px){.quick{grid-template-columns:1fr 1fr}.quick input[name=name]{grid-column:1/-1}}
+.quick .hint{grid-column:1/-1;font-size:12px;color:var(--muted)}
+.plist{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.prow{display:grid;grid-template-columns:34px minmax(90px,150px) minmax(0,1fr) 104px 96px;gap:12px;align-items:center;padding:10px 16px;border-top:1px solid var(--line)}
+.prow:first-child{border-top:none}
+.prow.dim{opacity:.55}
+.prow .nm{font-family:var(--serif);font-weight:600;font-size:16px;line-height:1.3;overflow:hidden;text-overflow:ellipsis}
+.prow .nm small{display:block;font-family:var(--sans);font-weight:400;font-size:12px;color:var(--muted)}
+.prow .note{font-size:13.5px;color:var(--ink2);outline:none;min-height:22px;border-bottom:1px dashed transparent;white-space:pre-wrap;word-break:break-word}
+.prow .note:focus{border-bottom-color:var(--line2)}
+.prow .note:empty::before{content:"關係、背景、可切入的需求…";color:var(--faint)}
+.prow .src{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
+.grade{width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);background:var(--card);font-family:var(--serif);font-weight:600;cursor:pointer;font-size:14px}
+.grade.A{background:var(--ink);border-color:var(--ink);color:#fff}
+.grade.B{background:var(--accent-soft);border-color:var(--accent);color:#6E5530}
+.grade.C{color:var(--muted)}
+.pstat{height:30px;border:1px solid var(--line);border-radius:999px;background:var(--card);padding:0 8px;font-size:12.5px;width:100%}
+.prow .ops{display:flex;justify-content:flex-end;gap:2px}
+@media(max-width:720px){
+  .prow{grid-template-columns:34px 1fr auto;grid-template-areas:"g n s" "g t t" "g o o";row-gap:6px}
+  .prow .g{grid-area:g;align-self:start}.prow .n{grid-area:n}.prow .t{grid-area:t}.prow .s{grid-area:s;width:110px}.prow .ops{grid-area:o;justify-content:flex-start}
+}
+.pfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.pfoot .sp{flex:1}
 @media print{.top,.composer,.crumb .btn,.iconbtn{display:none!important}body{background:#fff}}
 </style>
 </head>
@@ -305,9 +351,10 @@ dialog::backdrop{background:rgba(42,39,35,.35)}
 <div class="top">
   <div class="wrap">
     <a class="brand" href="#/">客戶卷宗<small>Client Dossier</small></a>
+    <nav class="tabs" id="tabs"></nav>
     <label class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="搜尋姓名、對話、保單、備忘…" autocomplete="off">
+      <input id="q" type="search" placeholder="搜尋客戶、名單、對話、保單…" autocomplete="off">
     </label>
     <div class="topbtns">
       <button class="btn" data-act="backup">備份 / 還原</button>
@@ -378,8 +425,8 @@ function blankClient() {
 }
 function normalize(c) { const b = blankClient(); for (const k in b) if (c[k] === undefined) c[k] = b[k]; return c; }
 function load() {
-  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.clients)) { s.clients.forEach(normalize); s.settings = s.settings || {}; return s; } } catch (e) {}
-  return { v: 1, clients: [], settings: {} };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.clients)) { s.clients.forEach(normalize); s.settings = s.settings || {}; s.prospects = s.prospects || []; return s; } } catch (e) {}
+  return { v: 1, clients: [], prospects: [], settings: {} };
 }
 let state = load();
 function save() {
@@ -412,8 +459,11 @@ const stageChip = s => `<span class="chip stage st-${stageIdx(s)}">${esc(s)}</sp
 function render() {
   const h = location.hash.replace(/^#\/?/, '');
   const app = $('#app');
+  const onList = h.startsWith('list');
+  $('#tabs').innerHTML = `<a href="#/" class="${!onList && !h.startsWith('c/') ? 'on' : ''}">首頁</a><a href="#/list" class="${onList ? 'on' : ''}">名單<b>${state.prospects.filter(p => !p.clientId && p.status !== 'pass').length}</b></a>`;
   if (h.startsWith('c/')) { const c = getC(h.slice(2)); if (c) { app.innerHTML = clientView(c); return; } }
-  app.innerHTML = query ? searchView() : homeView();
+  if (query) { app.innerHTML = searchView(); return; }
+  app.innerHTML = onList ? listView() : homeView();
 }
 window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
 
@@ -428,7 +478,7 @@ function homeView() {
       <button class="btn primary" data-act="new-client">＋ 建立第一位客戶</button>
       <button class="btn" data-act="demo">載入範例看看</button>
       <button class="btn ghost" data-act="import">從備份還原</button>
-    </div></div>`;
+    </div><p style="margin-top:28px"><a href="#/list">或者，先從「列名單」開始 →</a></p></div>`;
 
   // focus: 30 days
   const ev = [];
@@ -468,6 +518,7 @@ function homeView() {
   <div class="hero">
     <div><div class="eyebrow">${t.getFullYear()} · ${pad(t.getMonth()+1)} · ${pad(t.getDate())}　星期${WD[t.getDay()]}</div><h1>今日卷宗</h1></div>
     <div class="stats">
+      <div><a href="#/list" style="text-decoration:none"><b>${state.prospects.filter(p => !p.clientId && p.status !== 'pass').length}</b><span>名單待開發</span></a></div>
       <div><b>${cs.length}</b><span>位客戶</span></div>
       <div><b>${due.length}</b><span>今日待跟進</span></div>
       <div><b>${cs.filter(c => c.stage === '已成交' || c.stage === '售後服務').length}</b><span>已成交 / 售後</span></div>
@@ -538,12 +589,114 @@ function searchView() {
     c.logs.forEach(l => { chk('日誌 ' + fmtD(l.at), l.content); chk('痛點 ' + fmtD(l.at), l.pain); if (l.next) chk('下次行動', l.next.purpose); });
     if (hits.length) res.push({ c, hits });
   });
+  const pres = state.prospects.filter(p => !p.clientId && [p.name, p.rel, p.phone, p.note, (p.tags || []).join(' ')].join(' ').toLowerCase().includes(q));
   return `<div class="sec-h"><h2>搜尋「${esc(query)}」</h2><span class="count">${res.length} 位客戶</span><span class="sp"></span><button class="btn sm ghost" data-act="clear-q">清除</button></div>
   ${res.length ? `<div class="sres">${res.map(({ c, hits }) => `<a class="card sitem" href="#/c/${c.id}">
      <div class="row"><span class="nm">${esc(c.name)}</span>${stageChip(c.stage)}</div>
      ${hits.slice(0, 5).map(h => `<div class="hit"><em>${esc(h.label)}</em><span>${hl(h.txt)}</span></div>`).join('')}
      ${hits.length > 5 ? `<div class="hit"><em></em><span class="muted">還有 ${hits.length - 5} 處符合</span></div>` : ''}</a>`).join('')}</div>`
-    : '<div class="card empty">找不到相關內容。</div>'}`;
+    : (pres.length ? '' : '<div class="card empty">找不到相關內容。</div>')}
+  ${pres.length ? `<div class="sec-h" style="margin-top:28px"><h2>名單</h2><span class="count">${pres.length} 位尚未建檔</span></div>
+    <div class="plist">${pres.map(prowHTML).join('')}</div>` : ''}`;
+}
+
+/* ========== prospect list（列名單） ========== */
+const PSTAT = { todo: '待聯繫', tried: '已聯繫', booked: '已約訪', pass: '暫不考慮' };
+const GRADES = ['A', 'B', 'C'];
+const GRADE_TIP = 'A：熟、有需求、有經濟力｜B：普通、待了解｜C：較生疏或時機未到（點擊切換）';
+let pui = { status: '', grade: '', tag: '', src: TAGS[1], g: 'B' };
+function prowHTML(p) {
+  const c = p.clientId ? getC(p.clientId) : null;
+  return `<div class="prow ${p.status === 'pass' && !c ? 'dim' : ''}">
+    <div class="g"><button class="grade ${p.grade}" data-act="p-grade" data-p="${p.id}" title="${GRADE_TIP}">${p.grade || '–'}</button></div>
+    <div class="n"><div class="nm">${esc(p.name)}<small>${esc(p.rel || '')}${p.phone ? `${p.rel ? '・' : ''}${esc(p.phone)}` : ''}</small></div>
+      ${(p.tags || []).length ? `<div class="src">${p.tags.map(t => `<span class="chip tag">#${esc(t)}</span>`).join('')}</div>` : ''}</div>
+    <div class="t"><div class="note" contenteditable="plaintext-only" data-pnote="${p.id}">${esc(p.note || '')}</div></div>
+    ${c ? `<div class="s"><a class="chip stage st-${stageIdx(c.stage)}" href="#/c/${c.id}" style="text-decoration:none">已建檔・${esc(c.stage)}</a></div>`
+      : `<div class="s"><select class="pstat" data-act="p-status" data-p="${p.id}">${Object.entries(PSTAT).map(([k, v]) => `<option value="${k}" ${p.status === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div>`}
+    <div class="ops">${c ? `<a class="btn sm ghost" href="#/c/${c.id}">開啟卷宗</a>` : `<button class="btn sm" data-act="p-convert" data-p="${p.id}">建檔 →</button>`}
+      <button class="iconbtn" data-act="p-edit" data-p="${p.id}">⋯</button></div>
+  </div>`;
+}
+function listView() {
+  const P = state.prospects, goal = Number(state.settings.listGoal) || 100;
+  const cnt = k => P.filter(p => k === 'client' ? p.clientId : !p.clientId && p.status === k).length;
+  const allTags = [...new Set([...TAGS, ...P.flatMap(p => p.tags || [])])];
+  let list = P.filter(p => {
+    if (pui.status === 'client' ? !p.clientId : pui.status ? (p.clientId || p.status !== pui.status) : false) return false;
+    if (pui.grade && p.grade !== pui.grade) return false;
+    if (pui.tag && !(p.tags || []).includes(pui.tag)) return false;
+    return true;
+  });
+  const rank = p => (p.clientId ? 30 : p.status === 'pass' ? 20 : 0) + GRADES.indexOf(p.grade || 'C');
+  list.sort((a, b) => rank(a) - rank(b) || b.createdAt - a.createdAt);
+  return `
+  <div class="hero">
+    <div><div class="eyebrow">Prospect List</div><h1>名單</h1></div>
+  </div>
+  <div class="goal"><span class="num"><b>${P.length}</b> / <a href="#" data-act="p-goal" title="修改目標">${goal}</a> 位</span><div class="bar"><i style="width:${Math.min(100, P.length / goal * 100)}%"></i></div><span class="muted" style="font-size:13px">${P.length >= goal ? '達標！再往上加' : `還差 ${goal - P.length} 位`}</span></div>
+  <div class="funnel">
+    ${[['', '全部', P.length], ['todo', '待聯繫', cnt('todo')], ['tried', '已聯繫', cnt('tried')], ['booked', '已約訪', cnt('booked')], ['client', '已建檔', cnt('client')], ['pass', '暫不考慮', cnt('pass')]]
+      .map(([k, l, n]) => `<button class="${pui.status === k ? 'on' : ''}" data-act="p-fstat" data-v="${k}"><b>${n}</b><span>${l}</span></button>`).join('')}
+  </div>
+
+  <section class="sec">
+    <form class="card quick" data-form="prospect">
+      <input name="name" placeholder="輸入姓名，按 Enter 加入名單" autocomplete="off" required>
+      <input name="rel" placeholder="關係 / 怎麼認識（大學同學、前同事）" autocomplete="off">
+      <select name="tag">${allTags.map(t => `<option ${t === pui.src ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+      <select name="grade" title="${GRADE_TIP}">${GRADES.map(g => `<option ${g === pui.g ? 'selected' : ''}>${g}</option>`).join('')}</select>
+      <button class="btn primary">加入</button>
+      <div class="hint">連續輸入不用動手指，來源與分級會沿用上一筆。一次有很多人？用下方「批次貼上」。</div>
+    </form>
+  </section>
+
+  <section class="sec">
+    <div class="filters">
+      ${['', ...GRADES].map(g => `<button class="fchip ${pui.grade === g ? 'on' : ''}" data-act="p-fgrade" data-v="${g}">${g ? g + ' 級' : '全部分級'}</button>`).join('')}
+      <span style="width:8px"></span>
+      ${allTags.map(t => `<button class="fchip ${pui.tag === t ? 'on' : ''}" data-act="p-ftag" data-v="${esc(t)}">#${esc(t)}</button>`).join('')}
+    </div>
+    ${list.length ? `<div class="plist">${list.map(prowHTML).join('')}</div>` : `<div class="card empty">${P.length ? '沒有符合條件的名單。' : '先把腦中想得到的人都寫下來：家人、同學、前同事、社團、常去店家的老闆… 不用先判斷會不會買。'}</div>`}
+    <div class="pfoot"><button class="btn sm" data-act="p-batch">批次貼上</button><span class="sp"></span><span class="muted" style="font-size:12px">${GRADE_TIP}</span></div>
+  </section>`;
+}
+function newProspect(o) { return { id: uid(), name: '', rel: '', phone: '', note: '', tags: [], grade: 'B', status: 'todo', clientId: '', createdAt: Date.now(), ...o }; }
+function convertProspect(p) {
+  const c = blankClient();
+  Object.assign(c, { name: p.name, phone: p.phone || '', tags: [...(p.tags || [])], stage: STAGES[0] });
+  const memo = [p.rel, p.note].filter(Boolean).join('\n');
+  if (memo) c.memos.push({ id: uid(), text: memo, color: 0 });
+  state.clients.push(c); p.clientId = c.id; save();
+  location.hash = '#/c/' + c.id; toast(`已為「${p.name}」建立客戶卷宗`);
+}
+function prospectForm(p) {
+  const spec = [{ k: 'name', label: '姓名', req: true }, { k: 'phone', label: '電話', type: 'tel' }, { k: 'rel', label: '關係 / 怎麼認識', full: true },
+    { k: 'grade', label: '分級', type: 'select', options: GRADES }, { k: 'status', label: '狀態', type: 'select', options: Object.entries(PSTAT) },
+    { k: 'tagsText', label: '來源標籤（逗號分隔）', full: true }, { k: 'note', label: '備註', type: 'textarea', full: true }];
+  modal({ title: '編輯名單', body: `<div class="fgrid">${fieldsHTML(spec, { ...p, tagsText: (p.tags || []).join(', ') })}</div>`,
+    danger: { label: '刪除', fn: () => { if (!confirm(`從名單移除「${p.name}」？`)) return false; state.prospects = state.prospects.filter(x => x !== p); save(); render(); } },
+    onSubmit: fd => { const v = obj(fd); if (!v.name) return false;
+      Object.assign(p, { name: v.name, phone: v.phone, rel: v.rel, grade: v.grade, status: v.status, note: v.note, tags: v.tagsText.split(/[,，、\s#]+/).filter(Boolean) });
+      save(); render(); } });
+}
+function batchForm() {
+  const allTags = [...new Set([...TAGS, ...state.prospects.flatMap(p => p.tags || [])])];
+  modal({ title: '批次貼上名單', submit: '全部加入',
+    body: `<p class="muted" style="margin-top:0;font-size:13.5px">一行一位。可以從手機通訊錄、LINE 好友、畢業紀念冊整理後直接貼上。<br>格式：<b>姓名</b>　或　<b>姓名 關係／備註</b>（中間用空白、逗號或 Tab 隔開）</p>
+      <div class="fgrid"><label class="fld full"><span>名單</span><textarea name="lines" rows="9" placeholder="林育成 大學室友，剛當爸爸&#10;張雅婷 前同事&#10;黃老闆 巷口早餐店"></textarea></label>
+      <label class="fld"><span>來源標籤</span><select name="tag">${allTags.map(t => `<option ${t === pui.src ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></label>
+      <label class="fld"><span>預設分級</span><select name="grade">${GRADES.map(g => `<option ${g === 'B' ? 'selected' : ''}>${g}</option>`).join('')}</select></label></div>`,
+    onSubmit: fd => {
+      const have = new Set(state.prospects.map(p => p.name));
+      let add = 0, dup = 0;
+      String(fd.get('lines') || '').split(/\n/).map(l => l.trim()).filter(Boolean).forEach(l => {
+        const m = l.match(/^([^\s,，、\t]+)[\s,，、\t]*(.*)$/); if (!m) return;
+        if (have.has(m[1])) { dup++; return; } have.add(m[1]);
+        state.prospects.push(newProspect({ name: m[1], rel: m[2], tags: [fd.get('tag')], grade: fd.get('grade') })); add++;
+      });
+      save(); render(); toast(`已加入 ${add} 位${dup ? `，略過重複 ${dup} 位` : ''}`);
+    } });
 }
 
 /* ========== client dossier ========== */
@@ -757,6 +910,7 @@ async function exportExcel() {
       ...Object.fromEntries(COVER.map(([kk, n]) => [n, [CSTAT[c.coverage[kk]?.s || ''], c.coverage[kk]?.note].filter(Boolean).join('：')])) }; }),
     '拜訪日誌': C.flatMap(c => [...c.logs].sort((a, b) => b.at.localeCompare(a.at)).map(l => ({ 客戶: c.name, 時間: l.at.replace('T', ' '), 形式: LOGTYPES[l.type], 對話紀錄: l.content, 痛點: l.pain, 下次日期: l.next?.date || '', 下次目的: l.next?.purpose || '', 已完成: l.next ? (l.next.done ? '是' : '否') : '' }))),
     '既有保單': C.flatMap(c => c.policies.map(p => ({ 客戶: c.name, 保險公司: p.company, 商品: p.name, 主附約: p.kind, 年繳保費: p.premium, 投保日: p.start, 被保險人: p.insured, 重點: p.note }))),
+    '名單': (state.prospects || []).map(p => ({ 姓名: p.name, 關係: p.rel, 電話: p.phone, 來源: (p.tags || []).join('、'), 分級: p.grade, 狀態: p.clientId ? '已建檔' : PSTAT[p.status], 備註: p.note, 加入日: ymd(new Date(p.createdAt)) })),
     '健診與建議書': C.flatMap(c => c.proposals.map(p => ({ 客戶: c.name, 日期: p.date, 類型: p.kind, 版本: p.version, 結果: RESULTS[p.result || 'open'], 內容: p.content, 成交險種: p.product, 成交保費: p.premium })))
   };
   try {
@@ -774,10 +928,10 @@ async function exportExcel() {
 function backupModal() {
   const lb = state.settings.lastBackup;
   const n = state.clients.length, logs = state.clients.reduce((s, c) => s + c.logs.length, 0);
-  modal({ title: '備份 / 還原', body: `<p class="muted" style="margin-top:0;font-size:13.5px">目前共 ${n} 位客戶、${logs} 筆日誌。資料儲存在這個瀏覽器中；${lb ? `上次備份：${fmtD(ymd(new Date(lb)))}` : '尚未備份過'}。<br>建議每月底匯出 .json 存進 Google Drive / iCloud，換手機時再用「還原」匯入。</p>
+  modal({ title: '備份 / 還原', body: `<p class="muted" style="margin-top:0;font-size:13.5px">目前共 ${n} 位客戶、${state.prospects.length} 位名單、${logs} 筆日誌。資料儲存在這個瀏覽器中；${lb ? `上次備份：${fmtD(ymd(new Date(lb)))}` : '尚未備份過'}。<br>建議每月底匯出 .json 存進 Google Drive / iCloud，換手機時再用「還原」匯入。</p>
     <div class="bk">
       <button type="button" class="btn" data-act="export-json"><b>⤓ 匯出完整備份（.json）</b><small>可完整還原所有資料，十年後也讀得到</small></button>
-      <button type="button" class="btn" data-act="export-xlsx"><b>⤓ 匯出 Excel（.xlsx）</b><small>客戶、拜訪日誌、既有保單、建議書分頁，方便列印或篩選</small></button>
+      <button type="button" class="btn" data-act="export-xlsx"><b>⤓ 匯出 Excel（.xlsx）</b><small>客戶、拜訪日誌、既有保單、建議書、名單分頁，方便列印或篩選</small></button>
       <button type="button" class="btn" data-act="import"><b>⤒ 從 .json 還原</b><small>會先自動下載一份目前資料，再以備份檔取代</small></button>
     </div>` });
 }
@@ -787,12 +941,13 @@ $('#importFile').addEventListener('change', e => {
   r.onload = () => {
     let data; try { data = JSON.parse(r.result); } catch (err) { return alert('檔案格式錯誤，無法讀取。'); }
     if (!data || !Array.isArray(data.clients)) return alert('這不是客戶卷宗的備份檔。');
-    const merge = state.clients.length && confirm(`備份檔含 ${data.clients.length} 位客戶。\n\n按「確定」＝合併（同一位客戶以備份檔版本為準）\n按「取消」＝改為完全取代目前資料`);
-    if (!merge && state.clients.length && !confirm('將以備份檔「完全取代」目前資料，目前資料會先自動下載一份。確定？')) return;
-    if (state.clients.length) exportJSON(true);
-    data.clients.forEach(normalize);
-    if (merge) { const map = new Map(state.clients.map(c => [c.id, c])); data.clients.forEach(c => map.set(c.id, c)); state.clients = [...map.values()]; }
-    else state = { v: 1, clients: data.clients, settings: { ...(data.settings || {}) } };
+    const merge = (state.clients.length || state.prospects.length) && confirm(`備份檔含 ${data.clients.length} 位客戶。\n\n按「確定」＝合併（同一位客戶以備份檔版本為準）\n按「取消」＝改為完全取代目前資料`);
+    if (!merge && (state.clients.length || state.prospects.length) && !confirm('將以備份檔「完全取代」目前資料，目前資料會先自動下載一份。確定？')) return;
+    if (state.clients.length || state.prospects.length) exportJSON(true);
+    data.clients.forEach(normalize); data.prospects = data.prospects || [];
+    if (merge) { const map = new Map(state.clients.map(c => [c.id, c])); data.clients.forEach(c => map.set(c.id, c)); state.clients = [...map.values()];
+      const pm = new Map(state.prospects.map(p => [p.id, p])); data.prospects.forEach(p => pm.set(p.id, p)); state.prospects = [...pm.values()]; }
+    else state = { v: 1, clients: data.clients, prospects: data.prospects, settings: { ...(data.settings || {}) } };
     save(); $('#modal').close(); location.hash = '#/'; render(); toast('還原完成');
   };
   r.readAsText(f);
@@ -831,9 +986,17 @@ document.addEventListener('click', e => {
     case 'new-client': clientForm(); break;
     case 'edit-client': e.preventDefault(); clientForm(c); break;
     case 'del-client':
-      if (confirm(`確定刪除「${c.name}」的整份卷宗？此動作無法復原（除非你有備份）。`)) { state.clients = state.clients.filter(x => x !== c); save(); location.hash = '#/'; toast('已刪除'); }
+      if (confirm(`確定刪除「${c.name}」的整份卷宗？此動作無法復原（除非你有備份）。`)) { state.clients = state.clients.filter(x => x !== c); state.prospects.forEach(p => { if (p.clientId === c.id) p.clientId = ''; }); save(); location.hash = '#/'; toast('已刪除'); }
       break;
     case 'demo': demo(); break;
+    case 'p-grade': { const p = state.prospects.find(x => x.id === el.dataset.p); p.grade = GRADES[(GRADES.indexOf(p.grade) + 1) % 3]; save(); render(); break; }
+    case 'p-convert': convertProspect(state.prospects.find(x => x.id === el.dataset.p)); break;
+    case 'p-edit': prospectForm(state.prospects.find(x => x.id === el.dataset.p)); break;
+    case 'p-batch': batchForm(); break;
+    case 'p-fstat': pui.status = el.dataset.v; render(); break;
+    case 'p-fgrade': pui.grade = el.dataset.v; render(); break;
+    case 'p-ftag': pui.tag = pui.tag === el.dataset.v ? '' : el.dataset.v; render(); break;
+    case 'p-goal': { e.preventDefault(); const g = prompt('名單目標人數', state.settings.listGoal || 100); if (g && Number(g) > 0) { state.settings.listGoal = Number(g); save(); render(); } break; }
     case 'backup': backupModal(); break;
     case 'export-json': exportJSON(); break;
     case 'export-xlsx': exportExcel(); break;
@@ -868,9 +1031,18 @@ document.addEventListener('change', e => {
   const el = e.target;
   if (el.dataset.act === 'stage') { const c = getC(el.dataset.c); c.stage = el.value; touch(c); render(); toast('跟進溫度：' + c.stage); }
   if (el.dataset.act === 'sort') { ui.sort = el.value; render(); }
+  if (el.dataset.act === 'p-status') { const p = state.prospects.find(x => x.id === el.dataset.p); p.status = el.value; save(); render(); }
 });
 document.addEventListener('submit', e => {
-  const f = e.target; if (f.dataset.form !== 'log') return;
+  const f = e.target;
+  if (f.dataset.form === 'prospect') {
+    e.preventDefault(); const fd = new FormData(f), name = String(fd.get('name') || '').trim(); if (!name) return;
+    if (state.prospects.some(p => p.name === name) && !confirm(`名單裡已經有「${name}」，仍要加入？`)) return;
+    pui.src = fd.get('tag'); pui.g = fd.get('grade');
+    state.prospects.push(newProspect({ name, rel: String(fd.get('rel') || '').trim(), tags: [pui.src], grade: pui.g }));
+    save(); render(); toast(`已加入名單：${name}`); const n = $('.quick input[name=name]'); n && n.focus(); return;
+  }
+  if (f.dataset.form !== 'log') return;
   e.preventDefault();
   const c = getC(f.dataset.c); const l = readLog(f, { id: uid() });
   if (!l.content && !l.pain && !l.next) { toast('先寫點內容吧'); return; }
@@ -884,6 +1056,10 @@ document.addEventListener('focusout', e => {
     if (!txt) { c.memos = c.memos.filter(x => x !== m); touch(c); setTimeout(render, 0); }
     else if (txt !== m.text) { m.text = txt; touch(c); }
   }
+  if (el.dataset.pnote) {
+    const p = state.prospects.find(x => x.id === el.dataset.pnote); const txt = el.innerText.trim();
+    if (p && txt !== (p.note || '')) { p.note = txt; save(); }
+  }
   if (el.dataset.covnote) {
     const c = getC(el.dataset.c), k = el.dataset.covnote; c.coverage[k] = c.coverage[k] || { s: '', note: '' };
     const txt = el.innerText.trim(); if (txt !== (c.coverage[k].note || '')) { c.coverage[k].note = txt; touch(c); }
@@ -895,7 +1071,7 @@ document.addEventListener('keydown', e => {
 });
 $('#q').addEventListener('input', e => {
   query = e.target.value;
-  if (location.hash.startsWith('#/c/')) { if (query) location.hash = '#/'; } else render();
+  if (location.hash.startsWith('#/c/') && query) location.hash = '#/'; else render();
 });
 // 跨分頁同步
 window.addEventListener('storage', e => { if (e.key === KEY) { state = load(); render(); } });
