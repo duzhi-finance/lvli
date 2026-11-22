@@ -353,6 +353,75 @@ dialog::backdrop{background:rgba(42,39,35,.35)}
 }
 .pfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
 .pfoot .sp{flex:1}
+/* cockpit */
+.rings{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:720px){.rings{grid-template-columns:1fr;gap:12px}}
+.rc{display:flex;gap:14px;align-items:center;min-width:0}
+.rc b{display:block;font-family:var(--serif);font-weight:600;font-size:16px;letter-spacing:.06em}
+.rc span{display:block;font-size:12.5px;color:var(--muted);line-height:1.55}
+.rc a{color:var(--ink);font-weight:600}
+.ring{width:64px;height:64px;flex:none}
+.ring .tr{fill:none;stroke:var(--line);stroke-width:4}
+.ring .pg{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;transition:stroke-dasharray .6s}
+.ring.done .pg{stroke:var(--ok)}
+.ring text{font-family:var(--num);font-size:15px;fill:var(--ink)}
+.ring.done text{fill:var(--ok);font-size:18px}
+.warm{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid var(--line)}
+.warm .who{flex:1;min-width:0;display:flex;flex-wrap:wrap;column-gap:10px;align-items:baseline}
+.ccard .t b{white-space:nowrap}.ccard .t span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.warm .nm{font-family:var(--serif);font-weight:600}.warm .nm a{text-decoration:none}
+.warm .why{font-size:12.5px;color:var(--muted)}.warm .sp{flex:1}
+.fcard .care{margin-top:10px}
+.fcard a.nm{display:block;text-decoration:none}
+.gdot{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-family:var(--num);font-weight:600;font-size:14px;border:1px solid var(--line2);background:var(--card);color:var(--ink2);flex:none;padding:0;cursor:pointer;line-height:1}
+.gdot.A{background:var(--ink);border-color:var(--ink);color:#fff}
+.gdot.B{background:var(--accent-soft);border-color:var(--accent);color:#6E5530}
+.gdot.D{border-style:dashed;color:var(--faint)}
+.ccard .t{align-items:center}
+.grade.D{border-style:dashed;color:var(--faint)}
+/* SOP */
+.stages{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
+.stg{position:relative;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 6px 10px;cursor:pointer;text-align:left;overflow:hidden;min-width:0}
+.stg span{display:block;font-size:12px;color:var(--muted)}
+.stg b{display:block;font-family:var(--serif);font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stg i{position:absolute;left:0;bottom:0;height:3px;background:var(--accent)}
+.stg.past{background:var(--ok-soft);border-color:transparent}.stg.past i{background:var(--ok)}
+.stg.cur{border-color:var(--accent)}
+.stg.on{box-shadow:inset 0 0 0 1px var(--ink);border-color:var(--ink)}
+@media(max-width:520px){.stg b{font-size:11px}.stg span{font-size:11px}}
+.sgoal{font-size:13.5px;color:var(--ink2);margin-bottom:8px}
+.sit{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px solid var(--line);cursor:pointer;font-size:14.5px}
+.sit:first-child{border-top:none}
+.sit input{margin-top:3px}.sit span{flex:1}.sit em{font-style:normal;color:var(--muted);font-size:14px}
+.sit input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line2)}
+.cheat{margin-top:10px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:#FDFCFA}
+.cheat summary{cursor:pointer;font-size:13.5px;color:var(--accent);font-weight:600}
+.cheat p{margin:8px 0 4px;font-size:14px;color:var(--ink2)}
+.qa{padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}.qa:first-of-type{margin-top:8px}
+.qa b{display:block;font-weight:600}.qa span{color:var(--ink2)}
+/* triage */
+.tri{max-width:560px;margin:0 auto}
+.flash{padding:28px 24px;position:relative;overflow:hidden}
+.pace{position:absolute;left:0;top:0;right:0;height:2px}
+.pace i{display:block;height:100%;background:var(--accent-soft);animation:pace 3s linear forwards}
+@keyframes pace{from{width:0}to{width:100%;background:var(--accent)}}
+@media(prefers-reduced-motion:reduce){.pace i{animation:none}}
+.fname{font-family:var(--serif);font-weight:600;font-size:38px;letter-spacing:.08em;margin:6px 0 12px;line-height:1.3;word-break:break-word}
+.trirel{width:100%;height:42px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:#FDFCFA;outline:none}
+.trirel:focus{border-color:var(--accent)}
+.trirow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
+.trirow > span{font-size:12.5px;color:var(--muted);width:64px}
+.gbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}
+.gbtn{border:1px solid var(--line2);background:var(--card);border-radius:12px;padding:12px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:transform .1s}
+.gbtn:active{transform:scale(.97)}
+.gbtn kbd{font-family:var(--num);font-size:12px;color:var(--faint)}
+.gbtn b{font-family:var(--num);font-size:30px;font-weight:600;line-height:1.1}
+.gbtn span{font-size:12.5px;color:var(--ink2)}
+.gbtn.gA{background:var(--ink);border-color:var(--ink)}.gbtn.gA b,.gbtn.gA span{color:#fff}.gbtn.gA kbd{color:#aaa}
+.gbtn.gB{background:var(--accent-soft);border-color:var(--accent)}
+.gbtn.gD{border-style:dashed}
+.tsum{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0 22px}
+.tsum b{display:block;font-size:34px;font-weight:600}.tsum span{font-size:12.5px;color:var(--muted)}
 /* numerals: Cormorant Garamond */
 .num,.stats b,.fcard .days b,.kd .v,.ev .d b,.bday .d,.funnel b,.goal .num b,.todo .when,.tl-year,.grade,.pol .t .r,.nextbar b{font-family:var(--num)}
 .stats b{font-size:32px;font-weight:500}
@@ -472,6 +541,61 @@ const LOGTYPES = { visit:'面談拜訪', call:'線上 / 電話', line:'LINE 關�
 const COVER = [['life','壽險','萬'],['acc','意外','萬'],['med','醫療實支','萬'],['ci','重大傷病','萬'],['cancer','癌症','萬'],['ltc','長照','萬/月'],['hosp','住院日額','元/日']];
 const REL = { 配偶: '配偶', 父母: '子女', 子女: '父母', 兄弟姊妹: '兄弟姊妹', 親戚: '親戚', 同事: '同事', 朋友: '朋友', 轉介紹人: '轉介紹對象', 轉介紹對象: '轉介紹人', 其他: '其他' };
 const CLOSED = ['已成交', '售後服務'];
+/* 五階段收單 SOP：每階段的檢核項目、實戰話術與異議處理小抄 */
+const SOP = [
+  { goal: '建立信任，取得保單健診的機會', items: [['s1a', '說明來意：不推商品，先幫忙整理保單'], ['s1b', '了解家庭結構與工作近況'], ['s1c', '記下至少 2 則生活情報'], ['s1d', '取得保單健診同意，約好下次時間']],
+    script: '今天不是來推商品的。很多人手上有好幾張保單，卻說不清楚自己保了什麼。我可以免費幫你整理成一張表，看完你自己決定要不要調整。',
+    obj: [['我已經有保險了', '太好了，那更值得整理一次。我們只看現在的保障夠不夠用，不一定要買新的。'], ['我朋友就是做保險的', '有熟人照顧很安心。我這邊只是提供第二意見，整理好的表你也可以拿給他看。'], ['最近很忙', '了解。你把保單拍照傳給我，我整理好再約 20 分鐘跟你看結果就好。']] },
+  { goal: '整理保障現況，讓客戶自己看見缺口', items: [['s2a', '收齊既有保單或保單明細'], ['s2b', '填入六大保障的現有與建議額度'], ['s2c', '確認預算範圍與優先順序'], ['s2d', '用簡報檢視說明健診結果']],
+    script: '這張圖是你現在的保障全貌。虛線是依家庭責任估算的建議額度，色塊是你已經有的。我們一起看哪一塊最需要先補。',
+    obj: [['保費已經繳很多了', '我們先看錢有沒有花在刀口上。有時調整結構，總保費不變，保障反而更完整。'], ['我身體很好，用不到', '就是身體好的時候才買得到、也最便宜；等需要時，通常已經買不到了。'], ['我再想想', '當然。我先把健診結果傳給你，你最在意哪一項？下次我針對那一項準備。']] },
+  { goal: '提出方案、處理疑慮，確認決策者', items: [['s3a', '提出兩個方案（標準版 / 精簡版）'], ['s3b', '說明條款重點與除外責任'], ['s3c', '確認健康告知事項'], ['s3d', '確認決策者並約定簽約時間']],
+    script: '這兩個方案差在保障的厚度，不是好壞。預算有限的話，我建議先補醫療實支和重大傷病，壽險之後再加。',
+    obj: [['太貴了', '可以從精簡版開始，先補最大的缺口。你覺得每個月多少是舒服的？'], ['要跟家人商量', '應該的。約一個大家都在的時間，我直接說明，家人有問題當場就能問。'], ['網路上比較便宜', '網路投保適合單純的商品。我的價值在整體規劃，和理賠時陪你處理。']] },
+  { goal: '完成投保程序，送達保單並說明', items: [['s4a', '完成要保書填寫與簽名'], ['s4b', '安排體檢或照會（如需要）'], ['s4c', '確認首期保費繳納'], ['s4d', '送達保單並逐項說明']],
+    script: '保單核發後我會親自送過去，跟你把每一項保障和理賠方式說一遍。以後有任何狀況，第一個打給我。',
+    obj: [['想再比較一下', '可以理解。我把這份方案和你目前的保單整理在一起，你比較時就有完整的依據。'], ['體檢好麻煩', '我幫你預約好時間地點，大約 30 分鐘，也能順便了解自己的健康狀況。']] },
+  { goal: '長期經營，創造轉介紹', items: [['s5a', '設定生日與保險年齡提醒'], ['s5b', '協助理賠或保全變更'], ['s5c', '完成年度保單檢視'], ['s5d', '詢問是否有朋友也需要保單整理']],
+    script: '這一年用起來還好嗎？我每年都會幫客戶做一次保單檢視。身邊有朋友也搞不清楚自己的保單，歡迎介紹給我，我一樣先幫忙整理。',
+    obj: [['不好意思介紹朋友', '不用推薦買保險，只要說「我有個朋友會免費幫人整理保單」就好，對方需要再找我。'], ['最近沒什麼需求', '沒關係，那我們就做年度檢視，確認保障有沒有跟上生活的變化。']] }
+];
+let sopView = null;
+
+/* 今日三件事 */
+const DAILY_GOAL = { warm: 3, sop: 1, log: 1 };
+function todayRec() { return (state.daily || {})[ymd(today())] || { warm: [], sop: [], log: 0 }; }
+function mark(kind, id) {
+  state.daily = state.daily || {}; const k = ymd(today());
+  const d = state.daily[k] = state.daily[k] || { warm: [], sop: [], log: 0 };
+  if (kind === 'log') d.log++; else if (!d[kind].includes(id)) d[kind].push(id);
+  const cut = ymd(new Date(Date.now() - 60 * DAY)); Object.keys(state.daily).forEach(x => { if (x < cut) delete state.daily[x]; });
+}
+const dailyN = (r, k) => k === 'log' ? r.log : r[k].length;
+
+/* 複製（LINE 話術） */
+function copyText(t, msg = '已複製，貼到 LINE 就能傳') {
+  const fallback = () => showCopy(t);
+  try { navigator.clipboard.writeText(t).then(() => toast(msg), fallback); } catch (e) { fallback(); }
+}
+function showCopy(t, title = '複製訊息') {
+  modal({ title, body: `<textarea id="copybox" rows="9" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;line-height:1.7">${esc(t)}</textarea>
+    <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" style="font-size:12.5px">可以先修改再複製</span><button type="button" class="btn primary sm" data-act="copy-box">複製</button></div>` });
+}
+const callName = c => c.nickname || c.name;
+function careScript(c, kind) {
+  const k = keyDates(c), n = callName(c);
+  if (kind === 'bday') return `${n}，${fmtMD(k.nextBday)} 是你的生日吧！先跟你說聲生日快樂 🎂\n最近好嗎？有空一起喝杯咖啡，幫你慶生一下。`;
+  return `${n}，跟你分享一個小提醒：你的保險年齡會在 ${fmtMD(k.insChange)} 多一歲，同樣的保障，保費會往上調一級。\n之前聊過的規劃如果還想看看，可以在這之前再一起確認一次。不急，你方便時跟我說就好 🙂`;
+}
+function lineRecap(c, l) {
+  const d = new Date(l.at), pains = (l.pain || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
+  const out = [`${callName(c)}您好，謝謝您 ${d.getMonth() + 1}/${d.getDate()} 撥空${l.type === 'visit' ? '和我見面' : '和我聊聊'}！`, '', '幫您整理今天討論的重點：'];
+  if (pains.length) pains.forEach(x => out.push('・' + x));
+  else if (l.content) l.content.split(/\n+/).filter(Boolean).slice(0, 3).forEach(x => out.push('・' + x.trim()));
+  if (l.next && l.next.date) { const nd = parseD(l.next.date); out.push('', `下一步：${nd.getMonth() + 1}/${nd.getDate()}（${WD[nd.getDay()]}）${l.next.purpose || '再跟您聯繫'}`); }
+  out.push('', '有任何問題隨時 LINE 我 🙂');
+  return out.join('\n');
+}
 const CSTAT = { '':'未檢視', full:'已規劃完整', gap:'尚有缺口', none:'完全空白' };
 const CORDER = ['', 'full', 'gap', 'none'];
 const RESULTS = { open:'討論中', won:'已成交', lost:'未成交' };
@@ -518,12 +642,12 @@ function keyDates(c) {
 /* ========== state ========== */
 function blankClient() {
   return { id: uid(), name: '', nickname: '', gender: '', birthday: '', phone: '', line: '', email: '', address: '', occupation: '', occClass: '', referrer: '',
-    tags: [], stage: STAGES[0], family: [], links: [], memos: [], coverage: {}, policies: [], proposals: [], logs: [], createdAt: Date.now(), updatedAt: Date.now() };
+    grade: 'B', sop: {}, tags: [], stage: STAGES[0], family: [], links: [], memos: [], coverage: {}, policies: [], proposals: [], logs: [], createdAt: Date.now(), updatedAt: Date.now() };
 }
 function normalize(c) { const b = blankClient(); for (const k in b) if (c[k] === undefined) c[k] = b[k]; return c; }
 function load() {
-  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.clients)) { s.clients.forEach(normalize); s.settings = s.settings || {}; s.prospects = s.prospects || []; return s; } } catch (e) {}
-  return { v: 1, clients: [], prospects: [], settings: {} };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.clients)) { s.clients.forEach(normalize); s.settings = s.settings || {}; s.prospects = s.prospects || []; s.daily = s.daily || {}; return s; } } catch (e) {}
+  return { v: 1, clients: [], prospects: [], settings: {}, daily: {} };
 }
 let state = load();
 function save() {
@@ -536,7 +660,9 @@ function save() {
 const cloud = { col: null, status: 'local', synced: {}, ready: false, timer: 0, running: false, again: false };
 const docKey = id => 'c_' + id;
 function stateDocs() {
-  const d = { meta: { settings: state.settings || {} }, prospects: { list: state.prospects || [] } };
+  const d = { meta: { settings: state.settings || {}, daily: state.daily || {} } };
+  const P = state.prospects || [];   // 名單分段存放（每段 300 位），上千位也不會超過單筆上限
+  for (let i = 0; i * 300 < Math.max(P.length, 1); i++) d['p_' + i] = { list: P.slice(i * 300, i * 300 + 300) };
   state.clients.forEach(c => { d[docKey(c.id)] = c; });
   return d;
 }
@@ -599,7 +725,9 @@ function applyRemote(snap) {
   rerender();
 }
 function fromDocs(d) {
-  return { v: 1, settings: (d.meta && d.meta.settings) || {}, prospects: (d.prospects && d.prospects.list) || [],
+  const pk = Object.keys(d).filter(k => /^p_\d+$/.test(k)).sort((a, b) => a.slice(2) - b.slice(2));
+  const prospects = pk.length ? pk.flatMap(k => d[k].list || []) : ((d.prospects && d.prospects.list) || []);
+  return { v: 1, settings: (d.meta && d.meta.settings) || {}, daily: (d.meta && d.meta.daily) || {}, prospects,
     clients: Object.keys(d).filter(k => k.startsWith('c_')).map(k => normalize(d[k])) };
 }
 function rerender() {   // 不打斷正在輸入的欄位
@@ -681,16 +809,17 @@ function covOverall(c) {
 function render() {
   const h = location.hash.replace(/^#\/?/, '').replace(/^c\/([^/]+)\/gap$/, 'gap-$1').replace(/^c\//, 'c-');
   const app = $('#app');
-  const onList = h.startsWith('list');
+  const onList = h.startsWith('list') || h === 'triage';
   $('#tabs').innerHTML = `<a href="#home" class="${!onList && !h.startsWith('c-') ? 'on' : ''}">首頁</a><a href="#list" class="${onList ? 'on' : ''}">名單<b>${state.prospects.filter(p => !p.clientId && p.status !== 'pass').length}</b></a>`;
   const gm = h.match(/^gap-(.+)$/);
   document.body.classList.toggle('present', !!gm);
   if (gm) { const c = getC(gm[1]); if (c) { app.innerHTML = gapView(c); return; } }
   if (h.startsWith('c-')) { const c = getC(h.slice(2)); if (c) { app.innerHTML = clientView(c); return; } }
+  if (h === 'triage') { app.innerHTML = triageView(); return; }
   if (query) { app.innerHTML = searchView(); return; }
   app.innerHTML = onList ? listView() : homeView();
 }
-window.addEventListener('hashchange', () => { covEdit = false; render(); window.scrollTo(0, 0); });
+window.addEventListener('hashchange', () => { covEdit = false; sopView = null; render(); window.scrollTo(0, 0); });
 
 /* ========== home ========== */
 function homeView() {
@@ -707,7 +836,7 @@ function homeView() {
 
   // focus: 30 days
   const ev = [];
-  cs.forEach(c => { const k = keyDates(c); if (!k) return;
+  cs.forEach(c => { const k = keyDates(c); if (!k || !['A', 'B'].includes(c.grade || 'B')) return;
     if (k.toB <= 30) ev.push({ c, kind: 'bday', days: k.toB, date: k.nextBday, desc: `${fmtMD(k.nextBday)}（${WD[k.nextBday.getDay()]}）生日・將滿 ${k.turning} 歲` });
     if (k.toIns <= 30) ev.push({ c, kind: 'ins', days: k.toIns, date: k.insChange, desc: `${fmtMD(k.insChange)} 起保險年齡 ${k.insAge} → ${k.insNext} 歲・把握促成` });
   });
@@ -729,7 +858,8 @@ function homeView() {
     : '<div class="empty">沒有待辦，很好。</div>';
 
   // list
-  let list = cs.filter(c => (!ui.stage || c.stage === ui.stage) && (!ui.tag || c.tags.includes(ui.tag)));
+  const hiddenCD = cs.filter(c => !['A', 'B'].includes(c.grade || 'B')).length;
+  let list = cs.filter(c => (!ui.stage || c.stage === ui.stage) && (!ui.tag || c.tags.includes(ui.tag)) && (ui.showCD || ['A', 'B'].includes(c.grade || 'B')));
   const sorters = {
     recent: (a, b) => (lastContact(b) || '').localeCompare(lastContact(a) || '') || b.updatedAt - a.updatedAt,
     next: (a, b) => ((openNext(a)?.next.date) || '9999').localeCompare((openNext(b)?.next.date) || '9999'),
@@ -750,14 +880,16 @@ function homeView() {
     </div>
   </div>
   ${nudge}
+  ${cockpitHTML()}
 
   <section class="sec">
-    <div class="sec-h"><h2>30 天內關懷與促成契機</h2><span class="count">${ev.length} 則</span></div>
-    ${ev.length ? `<div class="focus">${ev.map(e => `<a class="fcard k-${e.kind}" href="#c-${e.c.id}">
-        <div class="k"><span class="dot"></span>${e.kind === 'bday' ? '生日將近' : '即將換歲（保險年齡）'}</div>
-        <div class="nm">${esc(e.c.name)}</div><div class="desc">${esc(e.desc)}</div>
-        <div class="days"><b>${e.days}</b><small>${e.days === 0 ? '就是今天' : '天'}</small></div></a>`).join('')}</div>`
-      : '<div class="card empty">未來 30 天沒有生日或保險年齡變動。</div>'}
+    <div class="sec-h"><h2>黃金關懷名單</h2><span class="count">A / B 級・30 天內・${ev.length} 則</span></div>
+    ${ev.length ? `<div class="focus">${ev.map(e => `<div class="fcard k-${e.kind}">
+        <div class="k"><span class="dot"></span>${e.kind === 'bday' ? '生日倒數' : '保險年齡即將 +1 歲'}</div>
+        <a class="nm" href="#c-${e.c.id}">${esc(e.c.name)}</a><div class="desc">${esc(e.desc)}</div>
+        <button class="btn sm care" data-act="copy-care" data-c="${e.c.id}" data-k="${e.kind}">複製 LINE 話術</button>
+        <div class="days"><b>${e.days}</b><small>${e.days === 0 ? '就是今天' : '天'}</small></div></div>`).join('')}</div>`
+      : '<div class="card empty">未來 30 天，A / B 級客戶沒有生日或保險年齡變動。</div>'}
   </section>
 
   <section class="sec cols2">
@@ -781,6 +913,7 @@ function homeView() {
       ${STAGES.map(s => `<button class="fchip ${ui.stage === s ? 'on' : ''}" data-act="f-stage" data-v="${s}">${s}</button>`).join('')}
       <span style="width:8px"></span>
       ${allTags.map(s => `<button class="fchip ${ui.tag === s ? 'on' : ''}" data-act="f-tag" data-v="${esc(s)}">#${esc(s)}</button>`).join('')}
+      ${hiddenCD ? `<button class="fchip ${ui.showCD ? 'on' : ''}" data-act="f-cd">${ui.showCD ? '隱藏' : '顯示'} C / D 級（${hiddenCD}）</button>` : ''}
       <select data-act="sort">
         ${[['recent','最近互動'],['next','下次行動日'],['name','姓名'],['created','建檔時間']].map(([k, l]) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>排序：${l}</option>`).join('')}
       </select>
@@ -788,10 +921,42 @@ function homeView() {
     ${list.length ? `<div class="clist">${list.map(cardHTML).join('')}</div>` : '<div class="card empty">沒有符合條件的客戶。</div>'}
   </section>`;
 }
+function ring(n, goal) {
+  const r = 24, C = 2 * Math.PI * r, f = Math.min(1, n / goal);
+  return `<svg class="ring ${f >= 1 ? 'done' : ''}" viewBox="0 0 60 60" aria-hidden="true"><circle class="tr" cx="30" cy="30" r="${r}"/><circle class="pg" cx="30" cy="30" r="${r}" stroke-dasharray="${(C * f).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 30 30)"/>
+    <text x="30" y="35" text-anchor="middle">${f >= 1 ? '✓' : `${n}/${goal}`}</text></svg>`;
+}
+function warmCandidates(rec) {
+  const t = today(), out = [];
+  state.prospects.filter(p => !p.clientId && p.status === 'todo' && (p.grade === 'A' || p.grade === 'B') && !rec.warm.includes('p' + p.id))
+    .sort((a, b) => a.grade.localeCompare(b.grade)).forEach(p => out.push({ kind: 'p', id: p.id, name: p.name, why: `名單 ${p.grade} 級・${GRADE_LABEL[p.grade]}` }));
+  state.clients.filter(c => ['A', 'B'].includes(c.grade || 'B') && !rec.warm.includes(c.id)).map(c => { const lc = lastContact(c); return { c, d: lc ? diffDays(t, parseD(lc)) : 999 }; })
+    .filter(x => x.d >= 30).sort((a, b) => b.d - a.d).forEach(({ c, d }) => out.push({ kind: 'c', id: c.id, name: c.name, why: d === 999 ? '還沒有聯繫紀錄' : `已 ${d} 天沒聯繫` }));
+  return out.slice(0, 5);
+}
+function cockpitHTML() {
+  const rec = todayRec(), done = Object.keys(DAILY_GOAL).filter(k => dailyN(rec, k) >= DAILY_GOAL[k]).length;
+  const cand = warmCandidates(rec);
+  const sopC = state.clients.filter(c => !CLOSED.includes(c.stage) && ['A', 'B'].includes(c.grade || 'B')).sort((a, b) => ((openNext(a)?.next.date) || '9999').localeCompare((openNext(b)?.next.date) || '9999'))[0];
+  const card = (k, title, hint) => `<div class="rc ${dailyN(rec, k) >= DAILY_GOAL[k] ? 'ok' : ''}">${ring(dailyN(rec, k), DAILY_GOAL[k])}<div><b>${title}</b><span>${hint}</span></div></div>`;
+  return `<section class="sec cockpit">
+    <div class="sec-h"><h2>今日三件事</h2><span class="count">已完成 ${done} / 3</span></div>
+    <div class="card">
+      <div class="rings">
+        ${card('warm', '暖身聯繫 3 人', '寫日誌、名單改成已聯繫，或在下方按「已聯繫」')}
+        ${card('sop', '推進 1 位收單 SOP', sopC ? `建議：<a href="#c-${sopC.id}">${esc(sopC.name)}</a>・${esc(sopC.stage)}` : '在客戶頁勾選檢核表')}
+        ${card('log', '歸檔 1 筆拜訪對話', '在客戶頁寫入時間軸')}
+      </div>
+      ${cand.length ? `<div class="subh" style="margin-top:20px">今天可以暖身的人</div>
+        ${cand.map(x => `<div class="warm"><span class="who"><span class="nm">${x.kind === 'c' ? `<a href="#c-${x.id}">${esc(x.name)}</a>` : esc(x.name)}</span><span class="why">${esc(x.why)}</span></span>
+          <button class="iconbtn" data-act="copy-hi" data-n="${esc(x.name)}">複製問候</button><button class="btn sm" data-act="warm-done" data-kind="${x.kind}" data-id="${x.id}">已聯繫 ✓</button></div>`).join('')}` : ''}
+    </div>
+  </section>`;
+}
 function cardHTML(c) {
   const k = keyDates(c), lc = lastContact(c), nx = openNext(c), t = today();
   return `<a class="ccard" href="#c-${c.id}">
-    <div class="t"><b>${esc(c.name)}</b>${c.nickname ? `<span>${esc(c.nickname)}</span>` : ''}${stageChip(c.stage)}</div>
+    <div class="t"><span class="gdot ${c.grade || 'B'}">${c.grade || 'B'}</span><b>${esc(c.name)}</b>${c.nickname ? `<span>${esc(c.nickname)}</span>` : ''}${stageChip(c.stage)}</div>
     ${c.tags.length ? `<div class="row">${c.tags.map(x => `<span class="chip tag">#${esc(x)}</span>`).join('')}</div>` : ''}
     <div class="meta">${k ? `<span>${k.age} 歲・保險 ${k.insAge} 歲</span>` : ''}${c.occupation ? `<span>${esc(c.occupation)}</span>` : ''}<span>${lc ? `上次接觸 ${ago(diffDays(t, parseD(lc)))}` : '尚無紀錄'}</span></div>
     ${nx ? `<div class="nx">→ ${fmtMD(parseD(nx.next.date))}　${esc(nx.next.purpose || '')}</div>` : ''}
@@ -831,14 +996,18 @@ function searchView() {
 
 /* ========== prospect list（列名單） ========== */
 const PSTAT = { todo: '待聯繫', tried: '已聯繫', booked: '已約訪', pass: '暫不考慮' };
-const GRADES = ['A', 'B', 'C'];
-const GRADE_TIP = 'A：熟、有需求、有經濟力｜B：普通、待了解｜C：較生疏或時機未到（點擊切換）';
-let pui = { status: '', grade: '', tag: '', src: TAGS[1], g: 'B' };
+const GRADES = ['A', 'B', 'C', 'D'];
+const GRADE_LABEL = { A: '馬上約', B: '先暖身', C: '放著養', D: '先隱藏' };
+const GRADE_TIP = 'A 馬上約｜B 先暖身｜C 放著養｜D 先隱藏（點擊切換）';
+const KNOWN = ['1 年內', '1–3 年', '3–10 年', '10 年以上'];
+let pui = { status: '', grade: 'AB', tag: '', src: TAGS[1], g: 'B' };
+let tri = { done: { A: 0, B: 0, C: 0, D: 0 } };
+const gradeOK = (g, f) => f === 'AB' ? (g === 'A' || g === 'B') : !f || g === f;
 function prowHTML(p) {
   const c = p.clientId ? getC(p.clientId) : null;
   return `<div class="prow ${p.status === 'pass' && !c ? 'dim' : ''}">
     <div class="g"><button class="grade ${p.grade}" data-act="p-grade" data-p="${p.id}" title="${GRADE_TIP}">${p.grade || '–'}</button></div>
-    <div class="n"><div class="nm">${esc(p.name)}<small>${esc([p.rel, p.phone, p.referrerId && getC(p.referrerId) ? getC(p.referrerId).name + ' 介紹' : ''].filter(Boolean).join('・'))}</small></div>
+    <div class="n"><div class="nm">${esc(p.name)}<small>${esc([p.rel, p.known ? '認識 ' + p.known : '', p.phone, p.referrerId && getC(p.referrerId) ? getC(p.referrerId).name + ' 介紹' : ''].filter(Boolean).join('・'))}</small></div>
       ${(p.tags || []).length ? `<div class="src">${p.tags.map(t => `<span class="chip tag">#${esc(t)}</span>`).join('')}</div>` : ''}</div>
     <div class="t"><div class="note" contenteditable="plaintext-only" data-pnote="${p.id}">${esc(p.note || '')}</div></div>
     ${c ? `<div class="s"><a class="chip stage st-${stageIdx(c.stage)}" href="#c-${c.id}" style="text-decoration:none">已建檔・${esc(c.stage)}</a></div>`
@@ -853,11 +1022,12 @@ function listView() {
   const allTags = [...new Set([...TAGS, ...P.flatMap(p => p.tags || [])])];
   let list = P.filter(p => {
     if (pui.status === 'client' ? !p.clientId : pui.status ? (p.clientId || p.status !== pui.status) : false) return false;
-    if (pui.grade && p.grade !== pui.grade) return false;
+    if (pui.grade && (p.triaged === false || !gradeOK(p.grade, pui.grade))) return false;
     if (pui.tag && !(p.tags || []).includes(pui.tag)) return false;
     return true;
   });
-  const rank = p => (p.clientId ? 30 : p.status === 'pass' ? 20 : 0) + GRADES.indexOf(p.grade || 'C');
+  const rank = p => (p.clientId ? 30 : p.status === 'pass' ? 20 : 0) + (p.triaged === false ? 5 : GRADES.indexOf(p.grade || 'C'));
+  const untri = P.filter(p => p.triaged === false && !p.clientId).length;
   list.sort((a, b) => rank(a) - rank(b) || b.createdAt - a.createdAt);
   return `
   <div class="hero">
@@ -869,20 +1039,21 @@ function listView() {
       .map(([k, l, n]) => `<button class="${pui.status === k ? 'on' : ''}" data-act="p-fstat" data-v="${k}"><b>${n}</b><span>${l}</span></button>`).join('')}
   </div>
 
+  ${untri ? `<div class="nudge" style="border-style:solid;background:var(--card)">有 <b class="num" style="font-size:20px;margin:0 4px">${untri}</b> 位尚未分流。用閃卡一張一張快速分成 A / B / C / D。<span class="sp"></span><a class="btn sm primary" href="#triage">開始閃卡分流</a></div>` : ''}
   <section class="sec">
     <form class="card quick" data-form="prospect">
       <input name="name" placeholder="輸入姓名，按 Enter 加入名單" autocomplete="off" required>
       <input name="rel" placeholder="關係 / 怎麼認識（大學同學、前同事）" autocomplete="off">
       <select name="tag">${allTags.map(t => `<option ${t === pui.src ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
-      <select name="grade" title="${GRADE_TIP}">${GRADES.map(g => `<option ${g === pui.g ? 'selected' : ''}>${g}</option>`).join('')}</select>
+      <select name="grade" title="${GRADE_TIP}">${GRADES.map(g => `<option value="${g}" ${g === pui.g ? 'selected' : ''}>${g}・${GRADE_LABEL[g]}</option>`).join('')}</select>
       <button class="btn primary">加入</button>
-      <div class="hint">連續輸入不用動手指，來源與分級會沿用上一筆。一次有很多人？用下方「批次貼上」。</div>
+      <div class="hint">連續輸入不用動手指，來源與分級會沿用上一筆。一次有幾十、上百人？用下方「批次貼上」再閃卡分流。</div>
     </form>
   </section>
 
   <section class="sec">
     <div class="filters">
-      ${['', ...GRADES].map(g => `<button class="fchip ${pui.grade === g ? 'on' : ''}" data-act="p-fgrade" data-v="${g}">${g ? g + ' 級' : '全部分級'}</button>`).join('')}
+      ${[['AB', 'A + B 級'], ...GRADES.map(g => [g, `${g}・${GRADE_LABEL[g]}`]), ['', '全部']].map(([g, l]) => `<button class="fchip ${pui.grade === g ? 'on' : ''}" data-act="p-fgrade" data-v="${g}">${l}</button>`).join('')}
       <span style="width:8px"></span>
       ${allTags.map(t => `<button class="fchip ${pui.tag === t ? 'on' : ''}" data-act="p-ftag" data-v="${esc(t)}">#${esc(t)}</button>`).join('')}
     </div>
@@ -890,10 +1061,10 @@ function listView() {
     <div class="pfoot"><button class="btn sm" data-act="p-batch">批次貼上</button><span class="sp"></span><span class="muted" style="font-size:12px">${GRADE_TIP}</span></div>
   </section>`;
 }
-function newProspect(o) { return { id: uid(), name: '', rel: '', phone: '', note: '', tags: [], grade: 'B', status: 'todo', clientId: '', createdAt: Date.now(), ...o }; }
+function newProspect(o) { return { id: uid(), name: '', rel: '', phone: '', note: '', known: '', tags: [], grade: 'B', status: 'todo', clientId: '', createdAt: Date.now(), ...o }; }
 function convertProspect(p) {
   const c = blankClient();
-  Object.assign(c, { name: p.name, phone: p.phone || '', tags: [...(p.tags || [])], stage: STAGES[0] });
+  Object.assign(c, { name: p.name, phone: p.phone || '', grade: GRADES.includes(p.grade) ? p.grade : 'B', tags: [...(p.tags || [])], stage: STAGES[0] });
   const memo = [p.rel, p.note].filter(Boolean).join('\n');
   if (memo) c.memos.push({ id: uid(), text: memo, color: 0 });
   const r = p.referrerId && getC(p.referrerId); if (r) { addLink(c, '轉介紹人', r); if (!c.tags.includes('轉介紹')) c.tags.push('轉介紹'); }
@@ -902,33 +1073,61 @@ function convertProspect(p) {
 }
 function prospectForm(p) {
   const spec = [{ k: 'name', label: '姓名', req: true }, { k: 'phone', label: '電話', type: 'tel' }, { k: 'rel', label: '關係 / 怎麼認識', full: true },
-    { k: 'grade', label: '分級', type: 'select', options: GRADES }, { k: 'status', label: '狀態', type: 'select', options: Object.entries(PSTAT) },
+    { k: 'grade', label: '分級', type: 'select', options: GRADES.map(g => [g, `${g}・${GRADE_LABEL[g]}`]) }, { k: 'known', label: '認識多久', type: 'select', options: ['', ...KNOWN] }, { k: 'status', label: '狀態', type: 'select', options: Object.entries(PSTAT) },
     { k: 'tagsText', label: '來源標籤（逗號分隔）', full: true },
     { k: 'referrerId', label: '轉介紹人（系統內客戶）', type: 'select', full: true, options: [['', '—'], ...state.clients.slice().sort(byName).map(o => [o.id, o.name])] }, { k: 'note', label: '備註', type: 'textarea', full: true }];
   modal({ title: '編輯名單', body: `<div class="fgrid">${fieldsHTML(spec, { ...p, tagsText: (p.tags || []).join(', ') })}</div>`,
     danger: { label: '刪除', fn: async () => { if (!await ask(`從名單移除「${p.name}」？`, '移除')) return false; state.prospects = state.prospects.filter(x => x !== p); save(); render(); } },
     onSubmit: fd => { const v = obj(fd); if (!v.name) return false;
-      Object.assign(p, { name: v.name, phone: v.phone, rel: v.rel, grade: v.grade, status: v.status, note: v.note, referrerId: v.referrerId, tags: v.tagsText.split(/[,，、\s#]+/).filter(Boolean) });
+      Object.assign(p, { name: v.name, phone: v.phone, rel: v.rel, grade: v.grade, known: v.known, triaged: true, status: v.status, note: v.note, referrerId: v.referrerId, tags: v.tagsText.split(/[,，、\s#]+/).filter(Boolean) });
       save(); render(); } });
 }
 function batchForm() {
   const allTags = [...new Set([...TAGS, ...state.prospects.flatMap(p => p.tags || [])])];
   modal({ title: '批次貼上名單', submit: '全部加入',
-    body: `<p class="muted" style="margin-top:0;font-size:13.5px">一行一位。可以從手機通訊錄、LINE 好友、畢業紀念冊整理後直接貼上。<br>格式：<b>姓名</b>　或　<b>姓名 關係／備註</b>（中間用空白、逗號或 Tab 隔開）</p>
+    body: `<p class="muted" style="margin-top:0;font-size:13.5px">一行一位，幾十或上百人都可以。LINE 好友、通訊錄複製過來直接貼上。<br>格式：<b>姓名</b>　或　<b>姓名 關係／備註</b>（中間用空白、逗號或 Tab 隔開）。加入後會進入閃卡分流。</p>
       <div class="fgrid"><label class="fld full"><span>名單</span><textarea name="lines" rows="9" placeholder="林育成 大學室友，剛當爸爸&#10;張雅婷 前同事&#10;黃老闆 巷口早餐店"></textarea></label>
       <label class="fld"><span>來源標籤</span><select name="tag">${allTags.map(t => `<option ${t === pui.src ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select></label>
-      <label class="fld"><span>預設分級</span><select name="grade">${GRADES.map(g => `<option ${g === 'B' ? 'selected' : ''}>${g}</option>`).join('')}</select></label></div>`,
+</div>`,
     onSubmit: fd => {
       const have = new Set(state.prospects.map(p => p.name));
       let add = 0, dup = 0;
-      String(fd.get('lines') || '').split(/\n/).map(l => l.trim()).filter(Boolean).forEach(l => {
+      String(fd.get('lines') || '').split(/\n/).map(l => l.replace(/^[\s\d.、)）•・*\-]+/, '').trim()).filter(Boolean).forEach(l => {
         const m = l.match(/^([^\s,，、\t]+)[\s,，、\t]*(.*)$/); if (!m) return;
         if (have.has(m[1])) { dup++; return; } have.add(m[1]);
-        state.prospects.push(newProspect({ name: m[1], rel: m[2], tags: [fd.get('tag')], grade: fd.get('grade') })); add++;
+        state.prospects.push(newProspect({ name: m[1], rel: m[2], tags: [fd.get('tag')], grade: '', triaged: false })); add++;
       });
-      save(); render(); toast(`已加入 ${add} 位${dup ? `，略過重複 ${dup} 位` : ''}`);
+      pui.src = fd.get('tag'); tri = { done: { A: 0, B: 0, C: 0, D: 0 } };
+      save(); toast(`已加入 ${add} 位${dup ? `，略過重複 ${dup} 位` : ''}`);
+      if (add) location.hash = '#triage'; else render();
     } });
 }
+
+/* ========== 閃卡分流 ========== */
+const triQueue = () => state.prospects.filter(p => p.triaged === false && !p.clientId);
+function triageView() {
+  const q = triQueue(), p = q[0], did = Object.values(tri.done).reduce((a, b) => a + b, 0), total = q.length + did;
+  if (!p) return `<div class="tri"><div class="crumb"><a class="btn ghost sm" href="#list">← 回名單</a></div>
+    <div class="card flash" style="text-align:center"><div class="eyebrow">閃卡分流</div><div class="fname">${did ? '分流完成' : '沒有待分流的名單'}</div>
+    ${did ? `<div class="tsum">${GRADES.map(g => `<div><b class="num">${tri.done[g]}</b><span>${g}・${GRADE_LABEL[g]}</span></div>`).join('')}</div>` : '<p class="muted">在名單頁按「批次貼上」，貼上一串名字就能開始。</p>'}
+    <a class="btn primary" href="#list">回名單</a></div></div>`;
+  const tags = [...new Set([...TAGS, ...state.prospects.flatMap(x => x.tags || [])])];
+  return `<div class="tri">
+    <div class="crumb"><a class="btn ghost sm" href="#list">← 回名單</a><span class="sp"></span><span class="muted num" style="font-size:16px">${did + 1} / ${total}</span></div>
+    <div class="bar" style="margin-bottom:16px"><i style="width:${did / total * 100}%"></i></div>
+    <div class="card flash" id="flash" data-p="${p.id}">
+      <div class="pace"><i></i></div>
+      <div class="fname">${esc(p.name)}</div>
+      <input id="triRel" class="trirel" value="${esc(p.rel || '')}" placeholder="怎麼認識？（可留空）" autocomplete="off">
+      <div class="trirow"><span>認識多久</span>${KNOWN.map(k => `<button class="fchip ${p.known === k ? 'on' : ''}" data-act="tri-known" data-v="${k}">${k}</button>`).join('')}</div>
+      <div class="trirow"><span>來源</span>${tags.map(t => `<button class="fchip ${(p.tags || []).includes(t) ? 'on' : ''}" data-act="tri-src" data-v="${esc(t)}">#${esc(t)}</button>`).join('')}</div>
+      <div class="gbtns">${GRADES.map((g, i) => `<button class="gbtn g${g}" data-act="tri-grade" data-v="${g}"><kbd>${i + 1}</kbd><b>${g}</b><span>${GRADE_LABEL[g]}</span></button>`).join('')}</div>
+      <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn sm ghost" data-act="tri-skip">略過 (S)</button><span class="muted" style="font-size:12.5px">鍵盤 1 / 2 / 3 / 4 直接分級</span></div>
+    </div></div>`;
+}
+function triP() { const p = state.prospects.find(x => x.id === ($('#flash') || {}).dataset?.p); if (p && $('#triRel')) p.rel = $('#triRel').value.trim(); return p; }
+function triGrade(g) { const p = triP(); if (!p) return; p.grade = g; p.triaged = true; tri.done[g]++; save(); render(); }
+function triSkip() { const p = triP(); if (!p) return; state.prospects = state.prospects.filter(x => x !== p).concat(p); save(); render(); }
 
 /* ========== client dossier ========== */
 function clientView(c) {
@@ -945,6 +1144,7 @@ function clientView(c) {
   <div class="dhead">
     <div>
       <div class="row" style="margin-bottom:8px">
+        <button class="gdot ${c.grade || 'B'}" data-act="c-grade" data-c="${c.id}" title="${GRADE_TIP}">${c.grade || 'B'}</button>
         <select class="stagesel st-${stageIdx(c.stage)}" data-act="stage" data-c="${c.id}">${STAGES.map(s => `<option ${s === c.stage ? 'selected' : ''}>${s}</option>`).join('')}</select>
         ${c.tags.map(x => `<span class="chip tag">#${esc(x)}</span>`).join('')}
       </div>
@@ -1011,12 +1211,28 @@ function clientView(c) {
     </div>
 
     <div>
+      ${sopCard(c)}
       <div class="card composer">
         <div class="card-h"><h3>拜訪與對話日誌</h3><span class="sp"></span><span class="muted" style="font-size:12px">${c.logs.length} 筆</span></div>
         <form data-form="log" data-c="${c.id}">${logFields()}<div class="act"><button class="btn primary">寫入時間軸</button></div></form>
       </div>
       <div class="tl">${tl || '<div class="empty" style="padding:10px 4px">還沒有任何紀錄，寫下第一次接觸吧。</div>'}</div>
     </div>
+  </div>`;
+}
+function sopCard(c) {
+  const cur = Math.max(0, STAGES.indexOf(c.stage)), v = sopView ?? cur, S = SOP[v], sop = c.sop || {};
+  const doneN = i => SOP[i].items.filter(([id]) => sop[id]).length;
+  const all = S.items.every(([id]) => sop[id]);
+  return `<div class="card sop">
+    <div class="card-h"><h3>收單 SOP 檢核表</h3><span class="sp"></span><span class="muted" style="font-size:12px">目前：Stage ${cur + 1}</span></div>
+    <div class="stages">${SOP.map((x, i) => `<button class="stg ${i === v ? 'on' : ''} ${i < cur ? 'past' : ''} ${i === cur ? 'cur' : ''}" data-act="sop-view" data-v="${i}">
+      <span class="num">Stage ${i + 1}</span><b>${STAGES[i]}</b><i style="width:${doneN(i) / x.items.length * 100}%"></i></button>`).join('')}</div>
+    <div class="sgoal">${esc(S.goal)}</div>
+    <div class="sitems">${S.items.map(([id, t]) => `<label class="sit"><input type="checkbox" class="check" data-act="sop-item" data-c="${c.id}" data-i="${id}" ${sop[id] ? 'checked' : ''}><span>${esc(t)}</span>${sop[id] ? `<em class="num">${fmtMD(parseD(sop[id]))}</em>` : ''}</label>`).join('')}</div>
+    <details class="cheat"><summary>實戰話術</summary><p>「${esc(S.script)}」</p><button type="button" class="iconbtn" data-act="copy-script" data-v="${v}">複製</button></details>
+    <details class="cheat"><summary>異議處理小抄・${S.obj.length} 則</summary>${S.obj.map(([q, a]) => `<div class="qa"><b>「${esc(q)}」</b><span>${esc(a)}</span></div>`).join('')}</details>
+    ${v === cur && all && cur < 4 ? `<div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn primary sm" data-act="sop-next" data-c="${c.id}">完成！進入 Stage ${cur + 2}：${STAGES[cur + 1]} →</button></div>` : ''}
   </div>`;
 }
 function linksCard(c) {
@@ -1116,7 +1332,7 @@ function logHTML(c, l) {
   return `<div class="ev t-${l.type}">
     <div class="d"><b>${d.getMonth() + 1}/${d.getDate()}</b><small>週${WD[d.getDay()]}・${pad(d.getHours())}:${pad(d.getMinutes())}</small></div>
     <div class="b">
-      <div class="h"><span class="ty">${LOGTYPES[l.type] || ''}</span><span class="sp"></span><button class="iconbtn" data-act="edit-log" data-c="${c.id}" data-l="${l.id}">編輯</button></div>
+      <div class="h"><span class="ty">${LOGTYPES[l.type] || ''}</span><span class="sp"></span><button class="iconbtn" data-act="line-recap" data-c="${c.id}" data-l="${l.id}">LINE 會後整理</button><button class="iconbtn" data-act="edit-log" data-c="${c.id}" data-l="${l.id}">編輯</button></div>
       ${l.content ? `<div class="txt">${esc(l.content)}</div>` : ''}
       ${pains.length ? `<div class="pain">${pains.map(p => `<div>${esc(p)}</div>`).join('')}</div>` : ''}
       ${l.next && l.next.date ? `<div class="nx ${l.next.done ? 'done' : ''}"><input type="checkbox" class="check" data-act="toggle-next" data-c="${c.id}" data-l="${l.id}" ${l.next.done ? 'checked' : ''}>
@@ -1181,6 +1397,7 @@ const CLIENT_SPEC = [
   { k: 'phone', label: '電話', type: 'tel' }, { k: 'line', label: 'LINE ID / 名稱' },
   { k: 'email', label: 'Email', type: 'email' }, { k: 'referrer', label: '轉介紹人（系統外）' },
   { k: 'occupation', label: '職業 / 公司', ph: '竹科工程師' }, { k: 'occClass', label: '職業等級', type: 'select', options: [['', '—'], ...[1, 2, 3, 4, 5, 6].map(n => [String(n), `第 ${n} 類`])] },
+  { k: 'grade', label: '分級', type: 'select', options: GRADES.map(g => [g, `${g}・${GRADE_LABEL[g]}`]) },
   { k: 'address', label: '地址', full: true }
 ];
 function clientForm(c) {
@@ -1197,7 +1414,7 @@ function clientForm(c) {
     onSubmit: fd => {
       const v = obj(fd);
       if (!v.name) return false;
-      CLIENT_SPEC.forEach(f => c[f.k] = v[f.k] || '');
+      CLIENT_SPEC.forEach(f => c[f.k] = v[f.k] || ''); c.grade = c.grade || 'B';
       c.stage = v.stage;
       c.tags = [...fd.getAll('tags'), ...v.tagsExtra.split(/[,，、\s#]+/).map(s => s.trim()).filter(Boolean)].filter((x, i, a) => a.indexOf(x) === i);
       const newRef = v.refId || '';
@@ -1246,13 +1463,13 @@ function loadScript(src) { return new Promise((ok, no) => { const s = document.c
 async function exportExcel() {
   const C = state.clients;
   const sheets = {
-    '客戶': C.map(c => { const k = keyDates(c); return { 姓名: c.name, 稱呼: c.nickname, 性別: c.gender, 生日: c.birthday, 實歲: k?.age ?? '', 保險年齡: k?.insAge ?? '', 電話: c.phone, LINE: c.line, Email: c.email, 職業: c.occupation, 職業等級: c.occClass, 地址: c.address, 轉介紹人: c.referrer, 標籤: c.tags.join('、'), 跟進溫度: c.stage,
+    '客戶': C.map(c => { const k = keyDates(c); return { 姓名: c.name, 稱呼: c.nickname, 分級: c.grade || 'B', SOP完成項: Object.keys(c.sop || {}).length, 性別: c.gender, 生日: c.birthday, 實歲: k?.age ?? '', 保險年齡: k?.insAge ?? '', 電話: c.phone, LINE: c.line, Email: c.email, 職業: c.occupation, 職業等級: c.occClass, 地址: c.address, 轉介紹人: c.referrer, 標籤: c.tags.join('、'), 跟進溫度: c.stage,
       家庭成員: c.family.map(f => `${f.rel}${f.name}${f.birthday ? '(' + f.birthday + ')' : ''}`).join('；'), 生活情報: c.memos.map(m => m.text).join('；'),
       關係連結: c.links.map(l => `${l.rel}：${getC(l.to)?.name || ''}`).join('、'),
       ...Object.fromEntries(COVER.map(([kk, n, u]) => { const x = covInfo(c.coverage[kk]); return [n, [CSTAT[x.s], x.target > 0 ? `${fmtN(x.have || 0)}/${fmtN(x.target)}${u}` : x.have != null ? `${fmtN(x.have)}${u}` : '', c.coverage[kk]?.note].filter(Boolean).join('：')]; })) }; }),
     '拜訪日誌': C.flatMap(c => [...c.logs].sort((a, b) => b.at.localeCompare(a.at)).map(l => ({ 客戶: c.name, 時間: l.at.replace('T', ' '), 形式: LOGTYPES[l.type], 對話紀錄: l.content, 痛點: l.pain, 下次日期: l.next?.date || '', 下次目的: l.next?.purpose || '', 已完成: l.next ? (l.next.done ? '是' : '否') : '' }))),
     '既有保單': C.flatMap(c => c.policies.map(p => ({ 客戶: c.name, 保險公司: p.company, 商品: p.name, 主附約: p.kind, 年繳保費: p.premium, 投保日: p.start, 被保險人: p.insured, 重點: p.note }))),
-    '名單': (state.prospects || []).map(p => ({ 姓名: p.name, 關係: p.rel, 電話: p.phone, 來源: (p.tags || []).join('、'), 分級: p.grade, 狀態: p.clientId ? '已建檔' : PSTAT[p.status], 備註: p.note, 加入日: ymd(new Date(p.createdAt)) })),
+    '名單': (state.prospects || []).map(p => ({ 姓名: p.name, 關係: p.rel, 認識多久: p.known || '', 電話: p.phone, 來源: (p.tags || []).join('、'), 分級: p.grade, 狀態: p.clientId ? '已建檔' : PSTAT[p.status], 備註: p.note, 加入日: ymd(new Date(p.createdAt)) })),
     '健診與建議書': C.flatMap(c => c.proposals.map(p => ({ 客戶: c.name, 日期: p.date, 類型: p.kind, 版本: p.version, 結果: RESULTS[p.result || 'open'], 內容: p.content, 成交險種: p.product, 成交保費: p.premium })))
   };
   try {
@@ -1305,7 +1522,7 @@ $('#importFile').addEventListener('change', e => {
 function demo() {
   const t = today(), off = (days, years = 0) => { const d = new Date(t.getTime() + days * DAY); d.setFullYear(d.getFullYear() - years); return ymd(d); };
   const at = (days, h = 14) => `${off(days)}T${pad(h)}:30`;
-  const a = Object.assign(blankClient(), { name: '陳美玲', nickname: '美玲姐', gender: '女', birthday: off(12, 38), phone: '0912-345-678', line: 'meiling.chen', occupation: '國小老師', occClass: '1', tags: ['緣故'], stage: '建議書討論',
+  const a = Object.assign(blankClient(), { name: '陳美玲', nickname: '美玲姐', gender: '女', birthday: off(12, 38), phone: '0912-345-678', line: 'meiling.chen', occupation: '國小老師', occClass: '1', grade: 'A', tags: ['緣故'], stage: '建議書討論',
     family: [{ id: uid(), rel: '配偶', name: '林志明', birthday: off(-200, 40), note: '工程師' }, { id: uid(), rel: '長女', name: '林小晴', birthday: off(-90, 6) }],
     memos: [{ id: uid(), text: '拿鐵去冰、不加糖', color: 0 }, { id: uid(), text: '週三下午沒課，比較好約', color: 1 }, { id: uid(), text: '婆婆去年癌症住院，對癌症險很有感', color: 2 }],
     coverage: { life: { have: '100', target: '500', note: '僅公保' }, acc: { have: '100', target: '100' }, med: { have: '0', target: '20', note: '舊醫療只有日額，無實支' }, ci: { have: '0', target: '50' }, cancer: { have: '10', target: '50', note: '一次金 10 萬偏低' }, ltc: { have: '0', target: '3' }, hosp: { s: 'full', have: '2000' } },
@@ -1313,7 +1530,7 @@ function demo() {
     proposals: [{ id: uid(), date: off(-20), kind: '保單健診', version: '', result: 'open', content: '缺實支與重大傷病，壽險額度僅公保' }, { id: uid(), date: off(-5), kind: '建議書', version: 'v1 預算 3 萬', result: 'open', content: '實支 20 萬＋重大傷病 50 萬' }],
     logs: [{ id: uid(), type: 'visit', at: at(-20, 15), content: '在學校附近咖啡廳聊，先做保單健診。提到婆婆住院時自付很多雙人房差額。', pain: '擔心實支實付額度不夠\n對癌症新藥自費很焦慮', next: { date: off(-5), purpose: '送建議書 v1', done: true } },
       { id: uid(), type: 'line', at: at(-2, 21), content: '她說先生覺得保費有點高，想看精簡版。', pain: '預算上限約年繳 2.5 萬', next: { date: off(0), purpose: '提供精簡版建議書 v2', done: false } }] });
-  const b = Object.assign(blankClient(), { name: '王大明', nickname: '王哥', gender: '男', birthday: off(-165, 41), phone: '0988-111-222', occupation: '科技業主管', occClass: '1', tags: ['轉介紹', '職域'], stage: '保單健診中',
+  const b = Object.assign(blankClient(), { name: '王大明', nickname: '王哥', gender: '男', birthday: off(-165, 41), phone: '0988-111-222', occupation: '科技業主管', occClass: '1', grade: 'A', tags: ['轉介紹', '職域'], stage: '保單健診中',
     family: [{ id: uid(), rel: '配偶', name: '張雅婷' }, { id: uid(), rel: '長子', name: '王小宇', birthday: off(-30, 1), note: '剛滿週歲' }],
     memos: [{ id: uid(), text: '房貸剛下來 1,200 萬', color: 3 }, { id: uid(), text: '不喝咖啡，喝無糖綠茶', color: 4 }],
     coverage: { life: { have: '300', target: '1500', note: '只有團險 3 倍年薪，房貸 1,200 萬' }, acc: { have: '100', target: '300' }, med: { have: '5', target: '30' } },
@@ -1326,7 +1543,8 @@ function demo() {
   const d = Object.assign(blankClient(), { name: '林志明', gender: '男', birthday: off(-200, 40), occupation: '機械工程師', tags: ['緣故'], stage: '初訪破冰' });
   addLink(d, '配偶', a);
   state.prospects.push(newProspect({ name: '周佳慧', rel: '美玲的同事，剛生二寶', tags: ['轉介紹'], grade: 'A', status: 'booked', referrerId: a.id }),
-    newProspect({ name: '黃老闆', rel: '巷口早餐店', tags: ['陌生開發'], grade: 'C' }));
+    newProspect({ name: '黃老闆', rel: '巷口早餐店', tags: ['陌生開發'], grade: 'C' }),
+    ...['林育成', '張雅婷', '陳志豪', 'Amy 吳', '小胖'].map(n => newProspect({ name: n, tags: ['緣故'], grade: '', triaged: false })));
   state.clients.push(a, b, c, d); save(); render(); toast('已載入範例客戶與名單（可隨時刪除）');
 }
 
@@ -1342,11 +1560,30 @@ document.addEventListener('click', async e => {
       if (await ask(`確定刪除「${c.name}」的整份資料夾？\n此動作無法復原（除非你有備份）。`, '刪除')) { state.clients = state.clients.filter(x => x !== c); state.prospects.forEach(p => { if (p.clientId === c.id) p.clientId = ''; if (p.referrerId === c.id) p.referrerId = ''; }); state.clients.forEach(x => { x.links = x.links.filter(l => l.to !== c.id); }); save(); location.hash = '#home'; toast('已刪除'); }
       break;
     case 'demo': demo(); break;
+    case 'copy-care': copyText(careScript(c, el.dataset.k)); break;
+    case 'copy-hi': copyText(`${el.dataset.n}，好久不見！最近好嗎？突然想到你，想問問你最近過得怎麼樣 🙂`); break;
+    case 'copy-box': copyText($('#copybox').value); break;
+    case 'copy-script': copyText(SOP[+el.dataset.v].script, '已複製話術'); break;
+    case 'line-recap': showCopy(lineRecap(c, c.logs.find(x => x.id === el.dataset.l)), 'LINE 會後整理訊息'); break;
+    case 'warm-done': {
+      if (el.dataset.kind === 'p') { const p = state.prospects.find(x => x.id === el.dataset.id); if (p) { p.status = 'tried'; mark('warm', 'p' + p.id); } }
+      else mark('warm', el.dataset.id);
+      save(); render(); toast('暖身聯繫 +1'); break;
+    }
+    case 'f-cd': ui.showCD = !ui.showCD; render(); break;
+    case 'c-grade': c.grade = GRADES[(GRADES.indexOf(c.grade || 'B') + 1) % 4]; touch(c); render(); toast(`分級：${c.grade}・${GRADE_LABEL[c.grade]}`); break;
+    case 'sop-view': sopView = +el.dataset.v; render(); break;
+    case 'sop-item': { c.sop = c.sop || {}; if (el.checked) { c.sop[el.dataset.i] = ymd(today()); mark('sop', c.id); } else delete c.sop[el.dataset.i]; touch(c); render(); break; }
+    case 'sop-next': { const i = STAGES.indexOf(c.stage); c.stage = STAGES[Math.min(4, i + 1)]; sopView = null; mark('sop', c.id); touch(c); render(); toast('進入 ' + c.stage); break; }
+    case 'tri-grade': triGrade(el.dataset.v); break;
+    case 'tri-skip': triSkip(); break;
+    case 'tri-known': { const p = triP(); p.known = p.known === el.dataset.v ? '' : el.dataset.v; save(); render(); break; }
+    case 'tri-src': { const p = triP(); const t = el.dataset.v; p.tags = (p.tags || []).includes(t) ? p.tags.filter(x => x !== t) : [...(p.tags || []), t]; save(); render(); break; }
     case 'add-link': linkForm(c); break;
     case 'del-link': { const o = getC(el.dataset.to); if (!await ask(`解除與「${o ? o.name : ''}」的「${el.dataset.rel}」關係？`, '解除')) break; removeLink(c, el.dataset.rel, el.dataset.to); touch(c); render(); break; }
     case 'cov-edit': covEdit = !covEdit; render(); break;
     case 'print': window.print(); break;
-    case 'p-grade': { const p = state.prospects.find(x => x.id === el.dataset.p); p.grade = GRADES[(GRADES.indexOf(p.grade) + 1) % 3]; save(); render(); break; }
+    case 'p-grade': { const p = state.prospects.find(x => x.id === el.dataset.p); p.grade = GRADES[(GRADES.indexOf(p.grade) + 1) % 4]; p.triaged = true; save(); render(); break; }
     case 'p-convert': convertProspect(state.prospects.find(x => x.id === el.dataset.p)); break;
     case 'p-edit': prospectForm(state.prospects.find(x => x.id === el.dataset.p)); break;
     case 'p-batch': batchForm(); break;
@@ -1389,7 +1626,7 @@ document.addEventListener('change', e => {
   if (el.dataset.act === 'stage') { const c = getC(el.dataset.c); c.stage = el.value; touch(c); render(); toast('跟進溫度：' + c.stage); }
   if (el.dataset.act === 'sort') { ui.sort = el.value; render(); }
   if (el.dataset.covnum) { const c = getC(el.dataset.c), k = el.dataset.k; c.coverage[k] = c.coverage[k] || { s: '', note: '' }; c.coverage[k][el.dataset.covnum] = el.value.replace(/[^\d.]/g, ''); el.value = c.coverage[k][el.dataset.covnum]; touch(c); }
-  if (el.dataset.act === 'p-status') { const p = state.prospects.find(x => x.id === el.dataset.p); p.status = el.value; save(); render(); }
+  if (el.dataset.act === 'p-status') { const p = state.prospects.find(x => x.id === el.dataset.p); p.status = el.value; if (el.value === 'tried' || el.value === 'booked') mark('warm', 'p' + p.id); save(); render(); }
 });
 document.addEventListener('submit', async e => {
   const f = e.target;
@@ -1404,7 +1641,7 @@ document.addEventListener('submit', async e => {
   e.preventDefault();
   const c = getC(f.dataset.c); const l = readLog(f, { id: uid() });
   if (!l.content && !l.pain && !l.next) { toast('先寫點內容吧'); return; }
-  c.logs.push(l); touch(c); render(); toast('已寫入時間軸' + (l.next ? '，下次行動已排入待辦' : ''));
+  c.logs.push(l); mark('log'); mark('warm', c.id); touch(c); render(); toast('已寫入時間軸' + (l.next ? '，下次行動已排入待辦' : ''));
 });
 document.addEventListener('focusout', e => {
   const el = e.target;
@@ -1425,6 +1662,12 @@ document.addEventListener('focusout', e => {
 });
 document.addEventListener('keydown', e => {
   if (e.target.dataset && e.target.dataset.covnote && e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
+  const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
+  if (location.hash === '#triage' && !$('#modal').open && !$('#ask').open) {
+    if (e.target.id === 'triRel' && e.key === 'Enter') { e.preventDefault(); e.target.blur(); return; }
+    if (!typing && /^[1-4]$/.test(e.key)) { e.preventDefault(); triGrade(GRADES[+e.key - 1]); return; }
+    if (!typing && (e.key === 's' || e.key === 'S')) { e.preventDefault(); triSkip(); return; }
+  }
   if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) { e.preventDefault(); $('#q').focus(); }
 });
 $('#q').addEventListener('input', e => {
