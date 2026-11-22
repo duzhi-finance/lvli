@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F8F6F2">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>客戶卷宗</title>
+<title>履歷</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F8F6F2; --card:#FFFFFF; --line:#E8E2D7; --line2:#D8CFBF;
@@ -19,12 +19,13 @@
   --ok:#5C7A57; --ok-soft:#E9F0E6;
   --blue:#56708A; --blue-soft:#E7EDF3;
   --serif:"Noto Serif TC","Songti TC",serif;
+  --num:"Cormorant Garamond","Noto Serif TC",serif;
   --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
   --r:10px;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.8;letter-spacing:.04em;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
 a{color:inherit}
 button,input,select,textarea{font:inherit;color:inherit}
 .serif{font-family:var(--serif)}
@@ -35,7 +36,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* top bar */
 .top{position:sticky;top:0;z-index:20;background:rgba(248,246,242,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:14px;height:64px}
-.brand{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.08em;text-decoration:none;white-space:nowrap}
+.brand{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.08em;text-decoration:none;white-space:nowrap}
 .brand small{font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:.2em;color:var(--muted);margin-left:8px;text-transform:uppercase}
 .search{flex:1;position:relative;max-width:520px;margin-left:auto}
 .search input{width:100%;height:40px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:0 16px 0 38px;outline:none;transition:border-color .2s}
@@ -66,11 +67,11 @@ main{padding:28px 0 80px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
 .sec{margin-top:36px}
 .sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
-.sec-h h2{font-family:var(--serif);font-weight:600;font-size:19px;margin:0;letter-spacing:.04em}
+.sec-h h2{font-family:var(--serif);font-weight:600;font-size:19px;margin:0;letter-spacing:.08em}
 .sec-h .count{font-size:13px;color:var(--muted)}
 .sec-h .sp{flex:1}
 .card-h{display:flex;align-items:center;gap:10px;margin:-2px 0 14px}
-.card-h h3{font-family:var(--serif);font-weight:600;font-size:16px;margin:0;letter-spacing:.04em}
+.card-h h3{font-family:var(--serif);font-weight:600;font-size:16px;margin:0;letter-spacing:.08em}
 .card-h .sp{flex:1}
 .eyebrow{font-size:11px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
 .empty{color:var(--faint);font-size:14px;padding:6px 0}
@@ -88,7 +89,7 @@ hr.thin{border:none;border-top:1px solid var(--line);margin:16px 0}
 
 /* home */
 .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.hero h1{font-family:var(--serif);font-weight:600;font-size:30px;margin:4px 0 0;letter-spacing:.06em}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:30px;margin:4px 0 0;letter-spacing:.08em}
 .hero .date{font-family:var(--serif);color:var(--ink2);font-size:15px}
 .stats{display:flex;gap:28px}
 .stats div{text-align:right}
@@ -161,7 +162,7 @@ hr.thin{border:none;border-top:1px solid var(--line);margin:16px 0}
 .crumb{display:flex;align-items:center;gap:8px;margin-bottom:18px}
 .crumb .sp{flex:1}
 .dhead{display:flex;gap:24px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
-.dhead h1{font-family:var(--serif);font-weight:700;font-size:34px;margin:0;letter-spacing:.06em;line-height:1.25}
+.dhead h1{font-family:var(--serif);font-weight:600;font-size:34px;margin:0;letter-spacing:.08em;line-height:1.25}
 .dhead h1 small{font-weight:500;font-size:16px;color:var(--muted);margin-left:10px;letter-spacing:.02em}
 .dhead .contact{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink2);margin-top:10px}
 .dhead .contact a{text-decoration:none;border-bottom:1px solid var(--line2)}
@@ -206,7 +207,7 @@ hr.thin{border:none;border-top:1px solid var(--line);margin:16px 0}
 @media(hover:none){.memo-wrap .del{opacity:.6}}
 
 .cov{display:flex;flex-direction:column}
-.cov-row{display:grid;grid-template-columns:118px auto 1fr;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.cov-row{padding:10px 0;border-top:1px solid var(--line)}
 .cov-row:first-child{border-top:none;padding-top:0}
 .cov-row .n{font-size:14px}
 .cstat{height:24px;padding:0 10px;border-radius:999px;font-size:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--muted);white-space:nowrap;user-select:none}
@@ -216,7 +217,7 @@ hr.thin{border:none;border-top:1px solid var(--line);margin:16px 0}
 .cov-row .note{font-size:13px;color:var(--ink2);outline:none;min-height:22px;border-bottom:1px dashed transparent;white-space:pre-wrap;word-break:break-word}
 .cov-row .note:focus{border-bottom-color:var(--line2)}
 .cov-row .note:empty::before{content:"備註…";color:var(--faint)}
-@media(max-width:480px){.cov-row{grid-template-columns:96px auto}.cov-row .cstat{justify-self:start}.cov-row .note{grid-column:1/-1}}
+@media(max-width:480px){.cov-row.edit{grid-template-columns:1fr auto}.cov-row.edit .n{grid-column:1/-1}}
 .covsum{display:flex;gap:4px;margin-left:auto}
 .covsum i{width:8px;height:8px;border-radius:2px;background:var(--line)}
 .covsum i.full{background:var(--ok)}.covsum i.gap{background:var(--gap)}.covsum i.none{background:var(--warn)}
@@ -243,7 +244,7 @@ hr.thin{border:none;border-top:1px solid var(--line);margin:16px 0}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fld{display:flex;flex-direction:column;gap:4px;min-width:0}
 .fld.full{grid-column:1/-1}
-.fld > span{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.fld > span{font-size:12px;color:var(--muted);letter-spacing:.08em}
 .fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:#FDFCFA;padding:8px 11px;outline:none;transition:border-color .15s;min-height:40px}
 .fld textarea{resize:vertical;line-height:1.6}
 .fld ::placeholder{color:var(--faint)}
@@ -344,13 +345,98 @@ dialog::backdrop{background:rgba(42,39,35,.35)}
 }
 .pfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
 .pfoot .sp{flex:1}
+/* numerals: Cormorant Garamond */
+.num,.stats b,.fcard .days b,.kd .v,.ev .d b,.bday .d,.funnel b,.goal .num b,.todo .when,.tl-year,.grade,.pol .t .r,.nextbar b{font-family:var(--num);font-variant-numeric:lining-nums}
+.stats b{font-size:32px;font-weight:500}
+.fcard .days b{font-size:36px;font-weight:500}
+.kd .v{font-size:40px;font-weight:500;line-height:1.15}
+.kd .v small{font-family:var(--serif);font-size:13px}
+.ev .d b{font-size:21px}
+.bday .d{font-size:27px}
+.funnel b{font-size:32px;font-weight:500}
+.goal .num b{font-size:30px;font-weight:500}
+.todo .when{font-size:18px}
+.tl-year{font-size:17px}
+.grade{font-size:17px}
+.pol .t .r,.nextbar b{font-size:16.5px}
+
+.cov-row .amt b,.pbar .amt b,.covall b,.patron .ph2 b,.pov b.num,.amts input,.patrons .bday b{font-variant-numeric:lining-nums}
+/* relationship links */
+.lk{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.lk:first-of-type{border-top:none}
+.lk .rel{width:64px;flex:none;font-size:12px;color:var(--muted)}
+.lk .nm{font-family:var(--serif);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line2)}
+.lk .iconbtn{margin-left:auto}
+.patron{margin-top:12px;background:var(--accent-soft);border-radius:8px;padding:12px 14px}
+.patron .ph2{font-size:13px;color:#6E5530;margin-bottom:4px}
+.patron .ph2 span{font-family:var(--serif);font-weight:600;margin-right:8px;letter-spacing:.08em}
+.patron .ph2 b{font-family:var(--num);font-size:22px;font-weight:600;margin:0 3px}
+.patron .pr{display:flex;align-items:center;gap:8px;padding:5px 0;text-decoration:none;font-size:14px;border-top:1px solid rgba(154,122,76,.15)}
+.patron .pr .who{font-family:var(--serif);font-weight:600}
+.patron .won{font-size:12px;color:var(--ok);margin-left:auto}
+.patrons .bday b{font-family:var(--num);font-size:22px;font-weight:600}
+
+/* coverage bars */
+.cov-row .ct{display:flex;align-items:baseline;gap:10px}
+.cov-row .ct .sp{flex:1}
+.cov-row .amt{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.cov-row .amt b{font-family:var(--num);font-size:19px;font-weight:600;color:var(--ink)}
+.sh{font-size:12px;min-width:74px;text-align:right;white-space:nowrap}
+.sh.gap,.sh.none{color:var(--warn)}.sh.full{color:var(--ok)}
+.bar{height:4px;border-radius:2px;background:#EEE3CC;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink2);border-radius:2px;transition:width .5s}
+.bar.full i{background:var(--ok)}
+.cov-row .note{margin-top:4px}
+.cov-row.edit{display:grid;grid-template-columns:90px 1fr auto;gap:6px 10px;align-items:center}
+.cov-row.edit .note{grid-column:1/-1;margin-top:0}
+.amts{display:flex;align-items:center;gap:6px;min-width:0}
+.amts input{width:74px;min-width:0;height:32px;border:1px solid var(--line);border-radius:6px;padding:0 8px;background:#FDFCFA;font-family:var(--num);font-size:17px;text-align:right;outline:none}
+.amts input:focus{border-color:var(--accent);background:#fff}
+.amts em{font-style:normal;font-size:12px;color:var(--muted);white-space:nowrap}
+.covall{font-size:12.5px;color:var(--muted);margin:-6px 0 14px;display:flex;align-items:baseline;gap:8px}
+.covall b{font-family:var(--num);font-size:22px;font-weight:600;color:var(--ink)}
+.covall .bar{flex:1;margin:0;align-self:center}
+
+/* presentation */
+body.present .top{display:none}
+.present{max-width:880px;margin:0 auto}
+.present .ph{font-family:var(--serif);font-weight:600;font-size:40px;letter-spacing:.08em;margin:6px 0 0;line-height:1.3}
+.present .ph small{font-size:19px;font-weight:400;color:var(--ink2);margin-left:12px}
+.pov{display:flex;gap:44px;flex-wrap:wrap;margin:26px 0 8px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pov .l{display:block;font-size:12px;color:var(--muted);letter-spacing:.12em}
+.pov b{font-family:var(--serif);font-size:26px;font-weight:600;letter-spacing:.08em}
+.pov b.num{font-family:var(--num);font-size:48px;line-height:1.1;font-weight:500;letter-spacing:0}
+.pov b.num small{font-size:22px}
+.pov .s{display:block;font-size:13px;color:var(--warn)}
+.pgrid{display:grid;grid-template-columns:340px 1fr;gap:40px;align-items:center;margin-top:24px}
+@media(max-width:760px){.pgrid{grid-template-columns:1fr;gap:16px}.present .ph{font-size:32px}}
+.radar{width:100%;max-width:360px;margin:0 auto;display:block;overflow:visible}
+.radar .ring{fill:none;stroke:var(--line)}.radar .axis{stroke:var(--line)}
+.radar .tgt{fill:none;stroke:var(--accent);stroke-dasharray:4 4;stroke-width:1.2}
+.radar .have{fill:rgba(154,122,76,.16);stroke:var(--ink2);stroke-width:1.5;stroke-linejoin:round}
+.radar circle{fill:var(--ink2)}
+.radar text{font-size:12.5px;fill:var(--ink2);font-family:var(--sans)}
+.legend{display:flex;gap:18px;justify-content:center;font-size:12px;color:var(--muted);margin-top:4px}
+.legend i{display:inline-block;width:18px;border-top:1.5px dashed var(--accent);vertical-align:middle;margin-right:6px}
+.legend i.h{width:10px;height:10px;border:1px solid var(--ink2);background:rgba(154,122,76,.25)}
+.pbar{padding:14px 0;border-top:1px solid var(--line)}
+.pbar:first-child{border-top:none}
+.pbar .ct{display:flex;align-items:baseline;gap:12px}
+.pbar .ct .sp{flex:1}
+.pbar .n{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.08em}
+.pbar .amt{font-size:13px;color:var(--muted);white-space:nowrap}
+.pbar .amt b{font-family:var(--num);font-size:26px;color:var(--ink);font-weight:600}
+.pbar .bar{height:6px;border-radius:3px;margin-top:8px}
+.pbar .nt{font-size:13px;color:var(--ink2);margin-top:4px}
+.present .foot{font-size:12px;color:var(--muted);margin-top:32px;border-top:1px solid var(--line);padding-top:14px}
+@media print{body.present main{padding:0}.present .crumb{display:none}}
 @media print{.top,.composer,.crumb .btn,.iconbtn{display:none!important}body{background:#fff}}
 </style>
 </head>
 <body>
 <div class="top">
   <div class="wrap">
-    <a class="brand" href="#/">客戶卷宗<small>Client Dossier</small></a>
+    <a class="brand" href="#/">履歷<small>Lvli</small></a>
     <nav class="tabs" id="tabs"></nav>
     <label class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -374,7 +460,9 @@ const KEY = 'lvli.crm.v1';
 const STAGES = ['初訪破冰','保單健診中','建議書討論','已成交','售後服務'];
 const TAGS = ['轉介紹','緣故','職域','陌生開發'];
 const LOGTYPES = { visit:'面談拜訪', call:'線上 / 電話', line:'LINE 關鍵對話' };
-const COVER = [['life','壽險'],['med','醫療實支'],['hosp','住院日額'],['ci','重大傷病 / 重疾'],['cancer','癌症'],['acc','意外 / 意外實支'],['ltc','失能 / 長照']];
+const COVER = [['life','壽險','萬'],['acc','意外','萬'],['med','醫療實支','萬'],['ci','重大傷病','萬'],['cancer','癌症','萬'],['ltc','長照','萬/月'],['hosp','住院日額','元/日']];
+const REL = { 配偶: '配偶', 父母: '子女', 子女: '父母', 兄弟姊妹: '兄弟姊妹', 親戚: '親戚', 同事: '同事', 朋友: '朋友', 轉介紹人: '轉介紹對象', 轉介紹對象: '轉介紹人', 其他: '其他' };
+const CLOSED = ['已成交', '售後服務'];
 const CSTAT = { '':'未檢視', full:'已規劃完整', gap:'尚有缺口', none:'完全空白' };
 const CORDER = ['', 'full', 'gap', 'none'];
 const RESULTS = { open:'討論中', won:'已成交', lost:'未成交' };
@@ -421,7 +509,7 @@ function keyDates(c) {
 /* ========== state ========== */
 function blankClient() {
   return { id: uid(), name: '', nickname: '', gender: '', birthday: '', phone: '', line: '', email: '', address: '', occupation: '', occClass: '', referrer: '',
-    tags: [], stage: STAGES[0], family: [], memos: [], coverage: {}, policies: [], proposals: [], logs: [], createdAt: Date.now(), updatedAt: Date.now() };
+    tags: [], stage: STAGES[0], family: [], links: [], memos: [], coverage: {}, policies: [], proposals: [], logs: [], createdAt: Date.now(), updatedAt: Date.now() };
 }
 function normalize(c) { const b = blankClient(); for (const k in b) if (c[k] === undefined) c[k] = b[k]; return c; }
 function load() {
@@ -454,6 +542,41 @@ function allTodos() {
 }
 function stageIdx(s) { const i = STAGES.indexOf(s); return i < 0 ? 4 : i; }
 const stageChip = s => `<span class="chip stage st-${stageIdx(s)}">${esc(s)}</span>`;
+const byName = (a, b) => a.name.localeCompare(b.name, 'zh-Hant');
+
+/* relationship links（互相綁定） */
+function addLink(a, rel, b) {
+  if (!a || !b || a === b) return;
+  if (!a.links.some(l => l.to === b.id && l.rel === rel)) a.links.push({ id: uid(), rel, to: b.id });
+  const inv = REL[rel] || '其他';
+  if (!b.links.some(l => l.to === a.id && l.rel === inv)) b.links.push({ id: uid(), rel: inv, to: a.id });
+}
+function removeLink(a, rel, bId) {
+  a.links = a.links.filter(l => !(l.to === bId && l.rel === rel));
+  const b = getC(bId); if (b) b.links = b.links.filter(l => !(l.to === a.id && l.rel === (REL[rel] || '其他')));
+}
+const deals = c => Math.max(c.proposals.filter(p => p.result === 'won').length, CLOSED.includes(c.stage) ? 1 : 0);
+function referrals(c) {
+  const cl = c.links.filter(l => l.rel === '轉介紹對象').map(l => getC(l.to)).filter(Boolean);
+  const pr = state.prospects.filter(p => p.referrerId === c.id && !p.clientId);
+  return { cl, pr, total: cl.length + pr.length, deals: cl.reduce((s, x) => s + deals(x), 0) };
+}
+
+/* coverage amounts（既有 vs 建議額度） */
+let covEdit = false;
+const numv = v => { const n = parseFloat(String(v ?? '').replace(/,/g, '')); return isFinite(n) ? n : null; };
+const fmtN = n => n == null ? '' : n.toLocaleString('zh-TW', { maximumFractionDigits: 2 });
+function covInfo(cv = {}) {
+  const have = numv(cv.have), target = numv(cv.target);
+  let s = cv.s || '', auto = false;
+  if (target > 0) { auto = true; s = (have || 0) >= target ? 'full' : (have || 0) > 0 ? 'gap' : 'none'; }
+  const ratio = target > 0 ? Math.min(1, (have || 0) / target) : null;
+  return { have, target, s, auto, ratio, short: target > 0 ? Math.max(0, target - (have || 0)) : null };
+}
+function covOverall(c) {
+  const xs = COVER.map(([k]) => covInfo(c.coverage[k])).filter(x => x.target > 0);
+  return xs.length ? Math.round(xs.reduce((s, x) => s + x.ratio, 0) / xs.length * 100) : null;
+}
 
 /* ========== router ========== */
 function render() {
@@ -461,18 +584,21 @@ function render() {
   const app = $('#app');
   const onList = h.startsWith('list');
   $('#tabs').innerHTML = `<a href="#/" class="${!onList && !h.startsWith('c/') ? 'on' : ''}">首頁</a><a href="#/list" class="${onList ? 'on' : ''}">名單<b>${state.prospects.filter(p => !p.clientId && p.status !== 'pass').length}</b></a>`;
+  const gm = h.match(/^c\/([^/]+)\/gap$/);
+  document.body.classList.toggle('present', !!gm);
+  if (gm) { const c = getC(gm[1]); if (c) { app.innerHTML = gapView(c); return; } }
   if (h.startsWith('c/')) { const c = getC(h.slice(2)); if (c) { app.innerHTML = clientView(c); return; } }
   if (query) { app.innerHTML = searchView(); return; }
   app.innerHTML = onList ? listView() : homeView();
 }
-window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
+window.addEventListener('hashchange', () => { covEdit = false; render(); window.scrollTo(0, 0); });
 
 /* ========== home ========== */
 function homeView() {
   const t = today(), cs = state.clients;
   if (!cs.length) return `<div class="welcome">
-    <div class="eyebrow">Client Dossier</div>
-    <h1>你的第一本客戶卷宗</h1>
+    <div class="eyebrow">Lvli</div>
+    <h1>每位客戶，都是一份會長大的履歷</h1>
     <p>每位客戶一個專屬資料夾：關鍵日期、生活情報、保單缺口與每一次拜訪對話，全部收在同一頁。資料只存在這台裝置的瀏覽器裡，記得定期備份。</p>
     <div class="row" style="justify-content:center;gap:10px">
       <button class="btn primary" data-act="new-client">＋ 建立第一位客戶</button>
@@ -516,7 +642,7 @@ function homeView() {
 
   return `
   <div class="hero">
-    <div><div class="eyebrow">${t.getFullYear()} · ${pad(t.getMonth()+1)} · ${pad(t.getDate())}　星期${WD[t.getDay()]}</div><h1>今日卷宗</h1></div>
+    <div><div class="eyebrow"><span class="num" style="font-size:15px">${t.getFullYear()}.${pad(t.getMonth()+1)}.${pad(t.getDate())}</span>　星期${WD[t.getDay()]}</div><h1>今天</h1></div>
     <div class="stats">
       <div><a href="#/list" style="text-decoration:none"><b>${state.prospects.filter(p => !p.clientId && p.status !== 'pass').length}</b><span>名單待開發</span></a></div>
       <div><b>${cs.length}</b><span>位客戶</span></div>
@@ -542,7 +668,11 @@ function homeView() {
       ${bdays.length ? bdays.map(({ c, b }) => { const k = keyDates(c); const past = b.getDate() < t.getDate();
         return `<a class="bday ${past ? 'past' : ''}" href="#/c/${c.id}"><div class="d">${b.getDate()}<small>${m + 1}月</small></div>
         <div class="n">${esc(c.name)}<span>${past ? `已過・${k.age} 歲` : `將滿 ${k.turning} 歲`}</span></div>${stageChip(c.stage)}</a>`; }).join('') : '<div class="empty">這個月沒有壽星。</div>'}
-    </div></div>
+    </div>
+    ${(() => { const ps = cs.map(c => ({ c, r: referrals(c) })).filter(x => x.r.total).sort((a, b) => b.r.total - a.r.total || b.r.deals - a.r.deals).slice(0, 8);
+      return ps.length ? `<div class="sec-h" style="margin-top:24px"><h2>轉介紹貴人</h2><span class="count">年底感謝別漏掉</span></div><div class="card patrons">
+        ${ps.map(({ c, r }) => `<a class="bday" href="#/c/${c.id}"><div class="n">${esc(c.name)}<span>介紹 ${r.total} 位・成交 ${r.deals} 件</span></div>${stageChip(c.stage)}</a>`).join('')}</div>` : ''; })()}
+    </div>
   </section>
 
   <section class="sec">
@@ -609,12 +739,12 @@ function prowHTML(p) {
   const c = p.clientId ? getC(p.clientId) : null;
   return `<div class="prow ${p.status === 'pass' && !c ? 'dim' : ''}">
     <div class="g"><button class="grade ${p.grade}" data-act="p-grade" data-p="${p.id}" title="${GRADE_TIP}">${p.grade || '–'}</button></div>
-    <div class="n"><div class="nm">${esc(p.name)}<small>${esc(p.rel || '')}${p.phone ? `${p.rel ? '・' : ''}${esc(p.phone)}` : ''}</small></div>
+    <div class="n"><div class="nm">${esc(p.name)}<small>${esc([p.rel, p.phone, p.referrerId && getC(p.referrerId) ? getC(p.referrerId).name + ' 介紹' : ''].filter(Boolean).join('・'))}</small></div>
       ${(p.tags || []).length ? `<div class="src">${p.tags.map(t => `<span class="chip tag">#${esc(t)}</span>`).join('')}</div>` : ''}</div>
     <div class="t"><div class="note" contenteditable="plaintext-only" data-pnote="${p.id}">${esc(p.note || '')}</div></div>
     ${c ? `<div class="s"><a class="chip stage st-${stageIdx(c.stage)}" href="#/c/${c.id}" style="text-decoration:none">已建檔・${esc(c.stage)}</a></div>`
       : `<div class="s"><select class="pstat" data-act="p-status" data-p="${p.id}">${Object.entries(PSTAT).map(([k, v]) => `<option value="${k}" ${p.status === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div>`}
-    <div class="ops">${c ? `<a class="btn sm ghost" href="#/c/${c.id}">開啟卷宗</a>` : `<button class="btn sm" data-act="p-convert" data-p="${p.id}">建檔 →</button>`}
+    <div class="ops">${c ? `<a class="btn sm ghost" href="#/c/${c.id}">開啟資料夾</a>` : `<button class="btn sm" data-act="p-convert" data-p="${p.id}">建檔 →</button>`}
       <button class="iconbtn" data-act="p-edit" data-p="${p.id}">⋯</button></div>
   </div>`;
 }
@@ -667,17 +797,19 @@ function convertProspect(p) {
   Object.assign(c, { name: p.name, phone: p.phone || '', tags: [...(p.tags || [])], stage: STAGES[0] });
   const memo = [p.rel, p.note].filter(Boolean).join('\n');
   if (memo) c.memos.push({ id: uid(), text: memo, color: 0 });
+  const r = p.referrerId && getC(p.referrerId); if (r) { addLink(c, '轉介紹人', r); if (!c.tags.includes('轉介紹')) c.tags.push('轉介紹'); }
   state.clients.push(c); p.clientId = c.id; save();
-  location.hash = '#/c/' + c.id; toast(`已為「${p.name}」建立客戶卷宗`);
+  location.hash = '#/c/' + c.id; toast(`已為「${p.name}」建立客戶資料夾`);
 }
 function prospectForm(p) {
   const spec = [{ k: 'name', label: '姓名', req: true }, { k: 'phone', label: '電話', type: 'tel' }, { k: 'rel', label: '關係 / 怎麼認識', full: true },
     { k: 'grade', label: '分級', type: 'select', options: GRADES }, { k: 'status', label: '狀態', type: 'select', options: Object.entries(PSTAT) },
-    { k: 'tagsText', label: '來源標籤（逗號分隔）', full: true }, { k: 'note', label: '備註', type: 'textarea', full: true }];
+    { k: 'tagsText', label: '來源標籤（逗號分隔）', full: true },
+    { k: 'referrerId', label: '轉介紹人（系統內客戶）', type: 'select', full: true, options: [['', '—'], ...state.clients.slice().sort(byName).map(o => [o.id, o.name])] }, { k: 'note', label: '備註', type: 'textarea', full: true }];
   modal({ title: '編輯名單', body: `<div class="fgrid">${fieldsHTML(spec, { ...p, tagsText: (p.tags || []).join(', ') })}</div>`,
     danger: { label: '刪除', fn: () => { if (!confirm(`從名單移除「${p.name}」？`)) return false; state.prospects = state.prospects.filter(x => x !== p); save(); render(); } },
     onSubmit: fd => { const v = obj(fd); if (!v.name) return false;
-      Object.assign(p, { name: v.name, phone: v.phone, rel: v.rel, grade: v.grade, status: v.status, note: v.note, tags: v.tagsText.split(/[,，、\s#]+/).filter(Boolean) });
+      Object.assign(p, { name: v.name, phone: v.phone, rel: v.rel, grade: v.grade, status: v.status, note: v.note, referrerId: v.referrerId, tags: v.tagsText.split(/[,，、\s#]+/).filter(Boolean) });
       save(); render(); } });
 }
 function batchForm() {
@@ -742,7 +874,7 @@ function clientView(c) {
       <div class="card">
         <div class="card-h"><h3>基本資料</h3></div>
         <dl class="info">
-          ${[['性別', c.gender], ['生日', fmtD(c.birthday)], ['職業', c.occupation], ['職業等級', c.occClass ? `第 ${c.occClass} 類` : ''], ['地址', c.address], ['轉介紹人', c.referrer], ['建檔', fmtD(ymd(new Date(c.createdAt)))]]
+          ${[['性別', c.gender], ['生日', fmtD(c.birthday)], ['職業', c.occupation], ['職業等級', c.occClass ? `第 ${c.occClass} 類` : ''], ['地址', c.address], ['轉介紹人', c.links.some(l => l.rel === '轉介紹人') ? '' : c.referrer], ['建檔', fmtD(ymd(new Date(c.createdAt)))]]
             .filter(x => x[1]).map(([a, b]) => `<dt>${a}</dt><dd>${esc(b)}</dd>`).join('')}
         </dl>
         <div class="subh">家庭成員<span class="sp"></span><button class="iconbtn" data-act="add-fam" data-c="${c.id}">＋ 新增</button></div>
@@ -750,6 +882,8 @@ function clientView(c) {
           return `<div class="fam" data-act="edit-fam" data-c="${c.id}" data-f="${f.id}"><span class="rel">${esc(f.rel)}</span><span class="nm">${esc(f.name)}</span>
             <span class="ex">${fb ? `${ageOn(fb, t)} 歲` : ''}${f.note ? `${fb ? '・' : ''}${esc(f.note)}` : ''}</span></div>`; }).join('') : '<div class="empty">尚未記錄家庭結構</div>'}
       </div>
+
+      ${linksCard(c)}
 
       <div class="card">
         <div class="card-h"><h3>生活情報便利貼</h3><span class="sp"></span><button class="iconbtn" data-act="add-memo" data-c="${c.id}">＋ 貼一張</button></div>
@@ -760,11 +894,7 @@ function clientView(c) {
       </div>
 
       <div class="card">
-        <div class="card-h"><h3>保單整理與健診</h3><span class="covsum">${COVER.map(([kk]) => `<i class="${cov[kk]?.s || ''}"></i>`).join('')}</span></div>
-        <div class="cov">${COVER.map(([kk, n]) => { const s = cov[kk]?.s || '';
-          return `<div class="cov-row"><span class="n">${n}</span>
-            <button class="cstat ${s}" data-act="cycle-cov" data-c="${c.id}" data-k="${kk}">${CSTAT[s]}</button>
-            <div class="note" contenteditable="plaintext-only" data-covnote="${kk}" data-c="${c.id}">${esc(cov[kk]?.note || '')}</div></div>`; }).join('')}</div>
+        ${covBlock(c)}
 
         <div class="subh">既有保單概況<span class="sp"></span><button class="iconbtn" data-act="add-pol" data-c="${c.id}">＋ 新增</button></div>
         ${c.policies.length ? c.policies.map(p => `<div class="pol" data-act="edit-pol" data-c="${c.id}" data-p="${p.id}">
@@ -778,7 +908,7 @@ function clientView(c) {
           ${p.result === 'won' && (p.product || p.premium) ? `<div class="n" style="color:var(--ok)">成交：${esc(p.product || '')}${p.premium ? `・年繳 $${money(p.premium)}` : ''}</div>` : ''}</div>`).join('') : '<div class="empty">尚無健診或建議書</div>'}
       </div>
 
-      <div class="row" style="justify-content:flex-end"><button class="btn ghost sm danger" data-act="del-client" data-c="${c.id}">刪除此客戶卷宗</button></div>
+      <div class="row" style="justify-content:flex-end"><button class="btn ghost sm danger" data-act="del-client" data-c="${c.id}">刪除此客戶資料夾</button></div>
     </div>
 
     <div>
@@ -788,6 +918,84 @@ function clientView(c) {
       </div>
       <div class="tl">${tl || '<div class="empty" style="padding:10px 4px">還沒有任何紀錄，寫下第一次接觸吧。</div>'}</div>
     </div>
+  </div>`;
+}
+function linksCard(c) {
+  const R = referrals(c), order = Object.keys(REL);
+  const ls = [...c.links].filter(l => l.rel !== '轉介紹對象').sort((a, b) => order.indexOf(a.rel) - order.indexOf(b.rel)).map(l => ({ l, o: getC(l.to) })).filter(x => x.o);
+  return `<div class="card">
+    <div class="card-h"><h3>關係連結</h3><span class="sp"></span><button class="iconbtn" data-act="add-link" data-c="${c.id}">＋ 綁定</button></div>
+    ${ls.map(({ l, o }) => `<div class="lk"><span class="rel">${esc(l.rel)}</span><a class="nm" href="#/c/${o.id}">${esc(o.name)}</a>${stageChip(o.stage)}
+      <button class="iconbtn" data-act="del-link" data-c="${c.id}" data-to="${o.id}" data-rel="${esc(l.rel)}" title="解除綁定">×</button></div>`).join('')}
+    ${!ls.length && !R.total ? '<div class="empty">綁定系統內的配偶、父母、子女或轉介紹人，點名字就能跳到對方的資料夾。</div>' : ''}
+    ${R.total ? `<div class="patron"><div class="ph2"><span>貴人紀錄</span>介紹了<b>${R.total}</b>位・成交<b>${R.deals}</b>件</div>
+      ${R.cl.map(x => `<a class="pr" href="#/c/${x.id}"><span class="who">${esc(x.name)}</span>${stageChip(x.stage)}${deals(x) ? `<span class="won">✓ 成交 ${deals(x)} 件</span>` : ''}</a>`).join('')}
+      ${R.pr.map(p => `<a class="pr" href="#/list"><span class="who">${esc(p.name)}</span><span class="chip">名單・${PSTAT[p.status] || ''}</span></a>`).join('')}</div>` : ''}
+  </div>`;
+}
+function linkForm(c) {
+  const others = state.clients.filter(x => x !== c).sort(byName);
+  if (!others.length) { toast('系統裡還沒有其他客戶可以綁定'); return; }
+  modal({ title: `綁定關係・${esc(c.name)}`, submit: '綁定',
+    body: `<div class="fgrid">
+      <label class="fld"><span>對方是 ${esc(c.name)} 的…</span><select name="rel">${Object.keys(REL).filter(r => r !== '轉介紹對象').map(r => `<option>${r}</option>`).join('')}<option value="轉介紹對象">轉介紹對象（${esc(c.name)} 介紹來的）</option></select></label>
+      <label class="fld"><span>對象</span><select name="to" required><option value="">選擇客戶…</option>${others.map(o => `<option value="${o.id}">${esc(o.name)}${o.nickname ? `（${esc(o.nickname)}）` : ''}</option>`).join('')}</select></label></div>
+      <p class="muted" style="font-size:12.5px;margin-bottom:0">對方的資料夾會自動建立對應關係（例如 父母 ↔ 子女、轉介紹人 ↔ 轉介紹對象）。</p>`,
+    onSubmit: fd => { const o = getC(fd.get('to')); if (!o) return false; addLink(c, fd.get('rel'), o); touch(o); touch(c); render(); toast('已綁定'); } });
+}
+function covBlock(c) {
+  const cov = c.coverage, ov = covOverall(c);
+  const rows = COVER.map(([k, n, u]) => { const cv = cov[k] || {}, x = covInfo(cv);
+    const chip = x.auto ? `<span class="cstat ${x.s}" style="cursor:default">${CSTAT[x.s]}</span>` : `<button class="cstat ${x.s}" data-act="cycle-cov" data-c="${c.id}" data-k="${k}">${CSTAT[x.s]}</button>`;
+    const note = `<div class="note" contenteditable="plaintext-only" data-covnote="${k}" data-c="${c.id}">${esc(cv.note || '')}</div>`;
+    if (covEdit) return `<div class="cov-row edit"><span class="n">${n}</span>
+      <span class="amts"><input data-covnum="have" data-k="${k}" data-c="${c.id}" inputmode="decimal" value="${esc(cv.have ?? '')}" placeholder="現有"><em>/</em><input data-covnum="target" data-k="${k}" data-c="${c.id}" inputmode="decimal" value="${esc(cv.target ?? '')}" placeholder="目標"><em>${u}</em></span>
+      ${chip}${note}</div>`;
+    return `<div class="cov-row"><div class="ct"><span class="n">${n}</span><span class="sp"></span>
+      ${x.target > 0 ? `<span class="amt"><b>${fmtN(x.have || 0)}</b> / ${fmtN(x.target)} ${u}</span><span class="sh ${x.s}">${x.short > 0 ? `缺 ${fmtN(x.short)}` : '已達標'}</span>`
+        : `${x.have != null ? `<span class="amt"><b>${fmtN(x.have)}</b> ${u}</span>` : ''}${chip}`}</div>
+      ${x.target > 0 ? `<div class="bar ${x.s}"><i style="width:${(x.ratio * 100).toFixed(1)}%"></i></div>` : ''}
+      ${cv.note ? note : ''}</div>`; }).join('');
+  return `<div class="card-h"><h3>保單整理與健診</h3><span class="covsum">${COVER.map(([k]) => `<i class="${covInfo(cov[k]).s}"></i>`).join('')}</span></div>
+    <div class="row" style="margin:-4px 0 14px;gap:6px"><button class="btn sm ${covEdit ? 'primary' : ''}" data-act="cov-edit">${covEdit ? '完成' : '編輯額度'}</button>
+      <a class="btn sm ghost" href="#/c/${c.id}/gap">簡報檢視 ↗</a></div>
+    ${ov != null && !covEdit ? `<div class="covall">整體完成度 <b>${ov}%</b><div class="bar ${ov >= 100 ? 'full' : ''}"><i style="width:${ov}%"></i></div></div>` : ''}
+    ${covEdit ? '<div class="covall">填「現有 / 目標」額度後，狀態與進度條會自動計算；只填現有額度則可手動點選狀態。</div>' : ''}
+    <div class="cov">${rows}</div>`;
+}
+function radar(items) {
+  const N = items.length, cx = 180, cy = 175, R = 118;
+  const pt = (i, r) => { const a = -Math.PI / 2 + i * 2 * Math.PI / N; return [cx + Math.cos(a) * R * r, cy + Math.sin(a) * R * r]; };
+  const poly = f => items.map((x, i) => pt(i, f(x)).map(v => v.toFixed(1)).join(',')).join(' ');
+  return `<div><svg class="radar" viewBox="0 0 360 350" role="img" aria-label="保障雷達圖">
+    ${[.25, .5, .75].map(r => `<polygon class="ring" points="${poly(() => r)}"/>`).join('')}
+    ${items.map((x, i) => { const [X, Y] = pt(i, 1); return `<line class="axis" x1="${cx}" y1="${cy}" x2="${X.toFixed(1)}" y2="${Y.toFixed(1)}"/>`; }).join('')}
+    <polygon class="tgt" points="${poly(() => 1)}"/>
+    <polygon class="have" points="${poly(x => Math.max(x.ratio, .02))}"/>
+    ${items.map((x, i) => { const [X, Y] = pt(i, Math.max(x.ratio, .02)); return `<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="2.6"/>`; }).join('')}
+    ${items.map((x, i) => { const [X, Y] = pt(i, 1.17); const anc = Math.abs(X - cx) < 8 ? 'middle' : X > cx ? 'start' : 'end';
+      return `<text x="${X.toFixed(1)}" y="${(Y + 4).toFixed(1)}" text-anchor="${anc}">${esc(x.n)} ${Math.round(x.ratio * 100)}%</text>`; }).join('')}
+  </svg><div class="legend"><span><i></i>建議額度</span><span><i class="h"></i>現有保障</span></div></div>`;
+}
+function gapView(c) {
+  const items = COVER.map(([k, n, u]) => ({ k, n, u, note: (c.coverage[k] || {}).note, ...covInfo(c.coverage[k]) }));
+  const withT = items.filter(x => x.target > 0), shown = items.filter(x => x.target > 0 || x.have != null || x.s);
+  const ov = covOverall(c), worst = [...withT].sort((a, b) => a.ratio - b.ratio)[0];
+  return `<div class="present">
+    <div class="crumb"><a class="btn ghost sm" href="#/c/${c.id}">← 返回資料夾</a><span class="sp"></span><button class="btn sm" data-act="print">列印 / 存成 PDF</button></div>
+    <div class="eyebrow">保障健診・<span class="num" style="font-size:15px">${fmtD(ymd(today()))}</span></div>
+    <h1 class="ph">${esc(c.name)}<small>的保障全貌</small></h1>
+    ${ov != null ? `<div class="pov"><div><span class="l">整體完成度</span><b class="num">${ov}<small>%</small></b></div>
+      ${worst && worst.ratio < 1 ? `<div><span class="l">最需要補強</span><b>${worst.n}</b><span class="s">還差 ${fmtN(worst.short)} ${worst.u}</span></div>` : ''}
+      <div><span class="l">已達標</span><b class="num">${withT.filter(x => x.ratio >= 1).length}<small> / ${withT.length}</small></b></div></div>` : ''}
+    ${shown.length ? `<div class="pgrid" style="${withT.length >= 3 ? '' : 'grid-template-columns:1fr'}">${withT.length >= 3 ? radar(withT) : ''}<div>
+      ${shown.map(x => `<div class="pbar"><div class="ct"><span class="n">${x.n}</span><span class="sp"></span>
+        ${x.target > 0 ? `<span class="amt"><b>${fmtN(x.have || 0)}</b> / ${fmtN(x.target)} ${x.u}</span><span class="sh ${x.s}">${x.short > 0 ? `缺 ${fmtN(x.short)} ${x.u}` : '已達標'}</span>`
+          : `${x.have != null ? `<span class="amt"><b>${fmtN(x.have)}</b> ${x.u}</span>` : ''}<span class="cstat ${x.s}" style="cursor:default">${CSTAT[x.s]}</span>`}</div>
+        ${x.target > 0 ? `<div class="bar ${x.s}"><i style="width:${(x.ratio * 100).toFixed(1)}%"></i></div>` : ''}
+        ${x.note ? `<div class="nt">${esc(x.note)}</div>` : ''}</div>`).join('')}</div></div>`
+      : `<div class="card empty" style="margin-top:24px">尚未填入額度。回到資料夾，在「保單整理與健診」按「編輯額度」填入現有與目標額度。</div>`}
+    <p class="foot">建議額度為依家庭責任、收入與負債的初步估算，實際規劃以雙方討論與商品條款為準。</p>
   </div>`;
 }
 function logFields(l = {}) {
@@ -852,28 +1060,35 @@ const CLIENT_SPEC = [
   { k: 'name', label: '姓名', req: true }, { k: 'nickname', label: '稱呼', ph: '王哥、Amy 姐' },
   { k: 'birthday', label: '生日', type: 'date' }, { k: 'gender', label: '性別', type: 'select', options: ['', '女', '男', '其他'] },
   { k: 'phone', label: '電話', type: 'tel' }, { k: 'line', label: 'LINE ID / 名稱' },
-  { k: 'email', label: 'Email', type: 'email' }, { k: 'referrer', label: '轉介紹人' },
+  { k: 'email', label: 'Email', type: 'email' }, { k: 'referrer', label: '轉介紹人（系統外）' },
   { k: 'occupation', label: '職業 / 公司', ph: '竹科工程師' }, { k: 'occClass', label: '職業等級', type: 'select', options: [['', '—'], ...[1, 2, 3, 4, 5, 6].map(n => [String(n), `第 ${n} 類`])] },
   { k: 'address', label: '地址', full: true }
 ];
 function clientForm(c) {
   const isNew = !c; c = c || blankClient();
   const extra = c.tags.filter(t => !TAGS.includes(t));
+  const curRef = c.links.find(l => l.rel === '轉介紹人');
   modal({
-    title: isNew ? '新增客戶卷宗' : `編輯・${esc(c.name)}`,
+    title: isNew ? '新增客戶' : `編輯・${esc(c.name)}`,
     body: `<div class="fgrid">${fieldsHTML(CLIENT_SPEC, c)}
       <label class="fld full"><span>跟進溫度</span><select name="stage">${STAGES.map(s => `<option ${s === c.stage ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
       <div class="fld full"><span>關係與來源</span><div class="tagpick">${TAGS.map(t => `<label><input type="checkbox" name="tags" value="${t}" ${c.tags.includes(t) ? 'checked' : ''}><span>#${t}</span></label>`).join('')}</div></div>
-      <label class="fld full"><span>其他自訂標籤（以逗號分隔）</span><input name="tagsExtra" value="${esc(extra.join(', '))}" placeholder="VIP, 社團, 高資產"></label></div>`,
+      <label class="fld full"><span>其他自訂標籤（以逗號分隔）</span><input name="tagsExtra" value="${esc(extra.join(', '))}" placeholder="VIP, 社團, 高資產"></label>
+      <label class="fld full"><span>轉介紹人（綁定系統內客戶，可留空）</span><select name="refId"><option value="">—</option>${state.clients.filter(x => x !== c).sort(byName).map(o => `<option value="${o.id}" ${curRef && curRef.to === o.id ? 'selected' : ''}>${esc(o.name)}</option>`).join('')}</select></label></div>`,
     onSubmit: fd => {
       const v = obj(fd);
       if (!v.name) return false;
       CLIENT_SPEC.forEach(f => c[f.k] = v[f.k] || '');
       c.stage = v.stage;
       c.tags = [...fd.getAll('tags'), ...v.tagsExtra.split(/[,，、\s#]+/).map(s => s.trim()).filter(Boolean)].filter((x, i, a) => a.indexOf(x) === i);
+      const newRef = v.refId || '';
+      if ((curRef ? curRef.to : '') !== newRef) {
+        if (curRef) removeLink(c, '轉介紹人', curRef.to);
+        const r = getC(newRef); if (r) { addLink(c, '轉介紹人', r); touch(r); if (!c.tags.includes('轉介紹')) c.tags.push('轉介紹'); }
+      }
       if (isNew) { state.clients.push(c); touch(c); location.hash = '#/c/' + c.id; }
       else { touch(c); render(); }
-      toast(isNew ? '已建立客戶卷宗' : '已儲存');
+      toast(isNew ? '已建立客戶資料夾' : '已儲存');
     }
   });
 }
@@ -898,7 +1113,7 @@ function download(name, blob) { const a = document.createElement('a'); a.href = 
 const stamp = () => { const d = new Date(); return `${ymd(d)}_${pad(d.getHours())}${pad(d.getMinutes())}`; };
 function exportJSON(silent) {
   if (!silent) { state.settings.lastBackup = new Date().toISOString(); save(); }
-  download(`客戶卷宗備份_${stamp()}.json`, new Blob([JSON.stringify({ ...state, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' }));
+  download(`履歷備份_${stamp()}.json`, new Blob([JSON.stringify({ ...state, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' }));
   if (!silent) { toast('已匯出備份檔'); render(); }
 }
 function loadScript(src) { return new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }); }
@@ -907,7 +1122,8 @@ async function exportExcel() {
   const sheets = {
     '客戶': C.map(c => { const k = keyDates(c); return { 姓名: c.name, 稱呼: c.nickname, 性別: c.gender, 生日: c.birthday, 實歲: k?.age ?? '', 保險年齡: k?.insAge ?? '', 電話: c.phone, LINE: c.line, Email: c.email, 職業: c.occupation, 職業等級: c.occClass, 地址: c.address, 轉介紹人: c.referrer, 標籤: c.tags.join('、'), 跟進溫度: c.stage,
       家庭成員: c.family.map(f => `${f.rel}${f.name}${f.birthday ? '(' + f.birthday + ')' : ''}`).join('；'), 生活情報: c.memos.map(m => m.text).join('；'),
-      ...Object.fromEntries(COVER.map(([kk, n]) => [n, [CSTAT[c.coverage[kk]?.s || ''], c.coverage[kk]?.note].filter(Boolean).join('：')])) }; }),
+      關係連結: c.links.map(l => `${l.rel}：${getC(l.to)?.name || ''}`).join('、'),
+      ...Object.fromEntries(COVER.map(([kk, n, u]) => { const x = covInfo(c.coverage[kk]); return [n, [CSTAT[x.s], x.target > 0 ? `${fmtN(x.have || 0)}/${fmtN(x.target)}${u}` : x.have != null ? `${fmtN(x.have)}${u}` : '', c.coverage[kk]?.note].filter(Boolean).join('：')]; })) }; }),
     '拜訪日誌': C.flatMap(c => [...c.logs].sort((a, b) => b.at.localeCompare(a.at)).map(l => ({ 客戶: c.name, 時間: l.at.replace('T', ' '), 形式: LOGTYPES[l.type], 對話紀錄: l.content, 痛點: l.pain, 下次日期: l.next?.date || '', 下次目的: l.next?.purpose || '', 已完成: l.next ? (l.next.done ? '是' : '否') : '' }))),
     '既有保單': C.flatMap(c => c.policies.map(p => ({ 客戶: c.name, 保險公司: p.company, 商品: p.name, 主附約: p.kind, 年繳保費: p.premium, 投保日: p.start, 被保險人: p.insured, 重點: p.note }))),
     '名單': (state.prospects || []).map(p => ({ 姓名: p.name, 關係: p.rel, 電話: p.phone, 來源: (p.tags || []).join('、'), 分級: p.grade, 狀態: p.clientId ? '已建檔' : PSTAT[p.status], 備註: p.note, 加入日: ymd(new Date(p.createdAt)) })),
@@ -917,11 +1133,11 @@ async function exportExcel() {
     if (!window.XLSX) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
     const wb = XLSX.utils.book_new();
     for (const [n, rows] of Object.entries(sheets)) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows.length ? rows : [{}]), n);
-    XLSX.writeFile(wb, `客戶卷宗_${stamp()}.xlsx`);
+    XLSX.writeFile(wb, `履歷_${stamp()}.xlsx`);
   } catch (e) { // 離線時改出 CSV
     const rows = sheets['客戶']; const head = Object.keys(rows[0] || { 姓名: '' });
     const csv = [head, ...rows.map(r => head.map(h => r[h] ?? ''))].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
-    download(`客戶卷宗_${stamp()}.csv`, new Blob(['﻿' + csv], { type: 'text/csv' }));
+    download(`履歷_${stamp()}.csv`, new Blob(['﻿' + csv], { type: 'text/csv' }));
   }
   toast('已匯出 Excel');
 }
@@ -940,7 +1156,7 @@ $('#importFile').addEventListener('change', e => {
   const r = new FileReader();
   r.onload = () => {
     let data; try { data = JSON.parse(r.result); } catch (err) { return alert('檔案格式錯誤，無法讀取。'); }
-    if (!data || !Array.isArray(data.clients)) return alert('這不是客戶卷宗的備份檔。');
+    if (!data || !Array.isArray(data.clients)) return alert('這不是履歷的備份檔。');
     const merge = (state.clients.length || state.prospects.length) && confirm(`備份檔含 ${data.clients.length} 位客戶。\n\n按「確定」＝合併（同一位客戶以備份檔版本為準）\n按「取消」＝改為完全取代目前資料`);
     if (!merge && (state.clients.length || state.prospects.length) && !confirm('將以備份檔「完全取代」目前資料，目前資料會先自動下載一份。確定？')) return;
     if (state.clients.length || state.prospects.length) exportJSON(true);
@@ -960,21 +1176,26 @@ function demo() {
   const a = Object.assign(blankClient(), { name: '陳美玲', nickname: '美玲姐', gender: '女', birthday: off(12, 38), phone: '0912-345-678', line: 'meiling.chen', occupation: '國小老師', occClass: '1', tags: ['緣故'], stage: '建議書討論',
     family: [{ id: uid(), rel: '配偶', name: '林志明', birthday: off(-200, 40), note: '工程師' }, { id: uid(), rel: '長女', name: '林小晴', birthday: off(-90, 6) }],
     memos: [{ id: uid(), text: '拿鐵去冰、不加糖', color: 0 }, { id: uid(), text: '週三下午沒課，比較好約', color: 1 }, { id: uid(), text: '婆婆去年癌症住院，對癌症險很有感', color: 2 }],
-    coverage: { life: { s: 'gap', note: '僅公保' }, med: { s: 'none', note: '' }, hosp: { s: 'full', note: '日額 2000' }, cancer: { s: 'gap', note: '一次金 10 萬偏低' } },
+    coverage: { life: { have: '100', target: '500', note: '僅公保' }, acc: { have: '100', target: '100' }, med: { have: '0', target: '20', note: '舊醫療只有日額，無實支' }, ci: { have: '0', target: '50' }, cancer: { have: '10', target: '50', note: '一次金 10 萬偏低' }, ltc: { have: '0', target: '3' }, hosp: { s: 'full', have: '2000' } },
     policies: [{ id: uid(), company: '某人壽', name: '終身醫療', kind: '主約', premium: '18600', start: off(-3650), note: '日額 2000，無實支實付' }],
     proposals: [{ id: uid(), date: off(-20), kind: '保單健診', version: '', result: 'open', content: '缺實支與重大傷病，壽險額度僅公保' }, { id: uid(), date: off(-5), kind: '建議書', version: 'v1 預算 3 萬', result: 'open', content: '實支 20 萬＋重大傷病 50 萬' }],
     logs: [{ id: uid(), type: 'visit', at: at(-20, 15), content: '在學校附近咖啡廳聊，先做保單健診。提到婆婆住院時自付很多雙人房差額。', pain: '擔心實支實付額度不夠\n對癌症新藥自費很焦慮', next: { date: off(-5), purpose: '送建議書 v1', done: true } },
       { id: uid(), type: 'line', at: at(-2, 21), content: '她說先生覺得保費有點高，想看精簡版。', pain: '預算上限約年繳 2.5 萬', next: { date: off(0), purpose: '提供精簡版建議書 v2', done: false } }] });
-  const b = Object.assign(blankClient(), { name: '王大明', nickname: '王哥', gender: '男', birthday: off(-165, 41), phone: '0988-111-222', occupation: '科技業主管', occClass: '1', referrer: '陳美玲', tags: ['轉介紹', '職域'], stage: '保單健診中',
+  const b = Object.assign(blankClient(), { name: '王大明', nickname: '王哥', gender: '男', birthday: off(-165, 41), phone: '0988-111-222', occupation: '科技業主管', occClass: '1', tags: ['轉介紹', '職域'], stage: '保單健診中',
     family: [{ id: uid(), rel: '配偶', name: '張雅婷' }, { id: uid(), rel: '長子', name: '王小宇', birthday: off(-30, 1), note: '剛滿週歲' }],
     memos: [{ id: uid(), text: '房貸剛下來 1,200 萬', color: 3 }, { id: uid(), text: '不喝咖啡，喝無糖綠茶', color: 4 }],
-    coverage: { life: { s: 'none', note: '只有團險 3 倍年薪' }, acc: { s: 'gap', note: '' } },
+    coverage: { life: { have: '300', target: '1500', note: '只有團險 3 倍年薪，房貸 1,200 萬' }, acc: { have: '100', target: '300' }, med: { have: '5', target: '30' } },
     logs: [{ id: uid(), type: 'call', at: at(-1, 12), content: '美玲轉介紹，電話破冰。剛升主管、小孩剛滿週歲。', pain: '房貸剛下來需要壽險保障\n離職後團險就沒了', next: { date: off(3), purpose: '面談做保單健診', done: false } }] });
   const c = Object.assign(blankClient(), { name: '李淑芬', gender: '女', birthday: off(-400, 55), phone: '02-2345-6789', occupation: '自營早餐店', occClass: '2', tags: ['陌生開發'], stage: '售後服務',
     coverage: { life: { s: 'full' }, med: { s: 'full' }, hosp: { s: 'full' }, ci: { s: 'full' }, cancer: { s: 'gap' }, acc: { s: 'full' }, ltc: { s: 'none', note: '下次年度檢視再談' } },
     proposals: [{ id: uid(), date: off(-700), kind: '建議書', version: 'v2', result: 'won', product: '實支實付＋重大傷病', premium: '32000', content: '' }],
     logs: [{ id: uid(), type: 'visit', at: at(-700, 10), content: '簽約完成。', pain: '', next: null }, { id: uid(), type: 'line', at: at(-30, 9), content: '協助申請門診手術理賠，已收到款項，很感謝。', pain: '', next: { date: off(25), purpose: '年度保單檢視＋聊長照', done: false } }] });
-  state.clients.push(a, b, c); save(); render(); toast('已載入 3 位範例客戶（可隨時刪除）');
+  addLink(b, '轉介紹人', a); addLink(c, '轉介紹人', a);
+  const d = Object.assign(blankClient(), { name: '林志明', gender: '男', birthday: off(-200, 40), occupation: '機械工程師', tags: ['緣故'], stage: '初訪破冰' });
+  addLink(d, '配偶', a);
+  state.prospects.push(newProspect({ name: '周佳慧', rel: '美玲的同事，剛生二寶', tags: ['轉介紹'], grade: 'A', status: 'booked', referrerId: a.id }),
+    newProspect({ name: '黃老闆', rel: '巷口早餐店', tags: ['陌生開發'], grade: 'C' }));
+  state.clients.push(a, b, c, d); save(); render(); toast('已載入範例客戶與名單（可隨時刪除）');
 }
 
 /* ========== events ========== */
@@ -986,9 +1207,13 @@ document.addEventListener('click', e => {
     case 'new-client': clientForm(); break;
     case 'edit-client': e.preventDefault(); clientForm(c); break;
     case 'del-client':
-      if (confirm(`確定刪除「${c.name}」的整份卷宗？此動作無法復原（除非你有備份）。`)) { state.clients = state.clients.filter(x => x !== c); state.prospects.forEach(p => { if (p.clientId === c.id) p.clientId = ''; }); save(); location.hash = '#/'; toast('已刪除'); }
+      if (confirm(`確定刪除「${c.name}」的整份資料夾？此動作無法復原（除非你有備份）。`)) { state.clients = state.clients.filter(x => x !== c); state.prospects.forEach(p => { if (p.clientId === c.id) p.clientId = ''; if (p.referrerId === c.id) p.referrerId = ''; }); state.clients.forEach(x => { x.links = x.links.filter(l => l.to !== c.id); }); save(); location.hash = '#/'; toast('已刪除'); }
       break;
     case 'demo': demo(); break;
+    case 'add-link': linkForm(c); break;
+    case 'del-link': { const o = getC(el.dataset.to); if (!confirm(`解除與「${o ? o.name : ''}」的「${el.dataset.rel}」關係？`)) break; removeLink(c, el.dataset.rel, el.dataset.to); touch(c); render(); break; }
+    case 'cov-edit': covEdit = !covEdit; render(); break;
+    case 'print': window.print(); break;
     case 'p-grade': { const p = state.prospects.find(x => x.id === el.dataset.p); p.grade = GRADES[(GRADES.indexOf(p.grade) + 1) % 3]; save(); render(); break; }
     case 'p-convert': convertProspect(state.prospects.find(x => x.id === el.dataset.p)); break;
     case 'p-edit': prospectForm(state.prospects.find(x => x.id === el.dataset.p)); break;
@@ -1031,6 +1256,7 @@ document.addEventListener('change', e => {
   const el = e.target;
   if (el.dataset.act === 'stage') { const c = getC(el.dataset.c); c.stage = el.value; touch(c); render(); toast('跟進溫度：' + c.stage); }
   if (el.dataset.act === 'sort') { ui.sort = el.value; render(); }
+  if (el.dataset.covnum) { const c = getC(el.dataset.c), k = el.dataset.k; c.coverage[k] = c.coverage[k] || { s: '', note: '' }; c.coverage[k][el.dataset.covnum] = el.value.replace(/[^\d.]/g, ''); el.value = c.coverage[k][el.dataset.covnum]; touch(c); }
   if (el.dataset.act === 'p-status') { const p = state.prospects.find(x => x.id === el.dataset.p); p.status = el.value; save(); render(); }
 });
 document.addEventListener('submit', e => {
